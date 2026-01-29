@@ -1,0 +1,6 @@
+[gd_scene format=3 uid="uid://b5lu81kc72fsl"]
+
+[ext_resource type="Script" uid="uid://bl1to0j64rd80" path="res://src/global/input_detector.gd" id="1_6l0n6"]
+
+[node name="InputDetector" type="Node" unique_id=410384564]
+script = ExtResource("1_6l0n6")

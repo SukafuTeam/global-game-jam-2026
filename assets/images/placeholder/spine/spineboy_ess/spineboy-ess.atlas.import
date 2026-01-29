@@ -1,0 +1,16 @@
+[remap]
+
+importer="spine.atlas"
+type="SpineAtlasResource"
+uid="uid://b08yyii1fj3r4"
+path="res://.godot/imported/spineboy-ess.atlas-478223494d3f2b04e28425190ec8bec0.spatlas"
+
+[deps]
+
+source_file="res://assets/images/placeholder/spine/spineboy_ess/spineboy-ess.atlas"
+dest_files=["res://.godot/imported/spineboy-ess.atlas-478223494d3f2b04e28425190ec8bec0.spatlas"]
+
+[params]
+
+normal_map_prefix="n"
+specular_map_prefix="s"
