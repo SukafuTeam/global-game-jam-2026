@@ -6,17 +6,17 @@ const HOLD_BUFFER_TIME: float = 0.5
 
 const MOVE_SPEED: float = 800.0
 const SPEED_MULTIPLIER: float = 1.5
-const ACCEL: float = 5000.0
+const ACCEL: float = 6000.0
 
-const JUMP_FORCE: float = 800.0
-const FALL_GRAVITY_MULTIPLIER: float = 2.0
+const JUMP_FORCE: float = 900.0
+const FALL_GRAVITY_MULTIPLIER: float = 3.0
 
 const MAX_WALL_JUMP_FALL_SPEED: float = 100.0
 const WALL_JUMP_SPEED: float = 500.0
 const WALL_JUMP_MOVE_TIME: float = 0.1
 
-const DASH_TIME: float = 0.2
-const DASH_SPEED: Vector2 = Vector2(2500.0, 1800.0)
+const DASH_TIME: float = 0.3
+const DASH_SPEED: Vector2 = Vector2(3000.0, 500.0)
 
 const SCALE_DELTA: float = 1.0
 const JUMP_SCALE: Vector2 = Vector2(0.8, 1.2)
@@ -134,11 +134,15 @@ func _physics_process(delta: float) -> void:
 		if is_on_wall_only() and Global.wall_jump_enabled:
 			if left_wall_check and Input.is_action_pressed("left"):
 				current_left_wall_slide_time = INPUT_BUFFER_TIME
+				looking_right = true
 			if right_wall_check and Input.is_action_pressed("right"):
 				current_right_wall_slide_time = INPUT_BUFFER_TIME
+				looking_right = false
 
-	# Can't turn around while dashing
-	if state != State.DASH and current_auto_move_time < 0.0:
+	# Can't turn around while dashing or wallsliding
+	if state != State.DASH and\
+		current_auto_move_time < 0.0 and\
+		!wall_sliding:
 		var input_axis = Input.get_axis("left", "right")
 		if abs(input_axis) > 0.1:
 			looking_right = input_axis > 0.0
@@ -320,6 +324,8 @@ func on_jump():
 	current_right_wall_slide_time = 0.0
 	
 	velocity.y = -JUMP_FORCE
+	if Global.high_jump_enabled:
+		velocity.y = -JUMP_FORCE * 1.25
 	body_container.scale = JUMP_SCALE
 
 func on_land(_hit_velocity: float):
@@ -365,8 +371,8 @@ func  update_animation():
 		sprite.get_animation_state().set_empty_animation(2, 0.2)
 	
 	var skel_scale = 1.0 if looking_right else -1.0
-	if wall_sliding:
-		skel_scale *= -1.0
+	#if wall_sliding:
+		#skel_scale *= -1.0
 		
 	sprite.get_skeleton().set_scale_x(skel_scale)
 	#TODO: implement better animations
@@ -380,11 +386,16 @@ func  update_animation():
 			else:
 				change_animation("idle")
 		State.AIR:
+			if wall_sliding:
+				change_animation("walljump")
+				return
+			
 			if velocity.y <= 0.0:
 				change_animation("jump")
 			else:
 				change_animation("fall")
-			#change_animation("idle")
+		State.DASH:
+			change_animation("dash")
 
 func change_animation(new_anim: String, track_id: int = 0, mix_time: float = 0.1):
 	var current = sprite.get_animation_state().get_current(0)

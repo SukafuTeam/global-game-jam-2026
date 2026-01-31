@@ -64,7 +64,7 @@ func _physics_process(delta: float) -> void:
 				velocity.x *= bounce
 				
 				var force_percent = inverse_lerp(0.0, MAX_IMPACT_FORCE, last_velocity.length())
-				FmodServer.play_one_shot_with_params("event:/Pickables/wood", {"force": force_percent})
+				FmodServer.play_one_shot_attached_with_params("event:/Pickables/wood", self, {"force": force_percent})
 			else:
 				velocity = Vector2.ZERO
 		else:
@@ -76,7 +76,7 @@ func _physics_process(delta: float) -> void:
 	if is_on_wall_only():
 		if last_velocity.length() > BOUNCE_THRESHOLD:
 			var force_percent = inverse_lerp(0.0, MAX_IMPACT_FORCE, last_velocity.length())
-			FmodServer.play_one_shot_with_params("event:/Pickables/wood", {"force": force_percent})
+			FmodServer.play_one_shot_attached_with_params("event:/Pickables/wood", self, {"force": force_percent})
 			velocity.x = -last_velocity.x * bounce
 	
 

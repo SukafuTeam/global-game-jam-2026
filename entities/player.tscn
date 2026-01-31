@@ -4,7 +4,7 @@
 [ext_resource type="SpineSkeletonDataResource" uid="uid://y3p12tawfxam" path="res://assets/images/sprites/player/kah-ra-data-res.tres" id="2_b0kkn"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_b0kkn"]
-radius = 39.0
+radius = 26.0
 height = 120.0
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_b0kkn"]
@@ -14,10 +14,6 @@ size = Vector2(103, 107)
 collision_layer = 4
 collision_mask = 3
 script = ExtResource("1_b0kkn")
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1457256562]
-position = Vector2(0, -61)
-shape = SubResource("CapsuleShape2D_b0kkn")
 
 [node name="RightHoldingCollision" type="CollisionPolygon2D" parent="." unique_id=1484492528]
 polygon = PackedVector2Array(0, -112, 0, 0, 80, -112)
@@ -30,7 +26,7 @@ polygon = PackedVector2Array(0, -112, 0, 0, -80, -112)
 [node name="SpineSprite" type="SpineSprite" parent="BodyContainer" unique_id=39657710]
 skeleton_data_res = ExtResource("2_b0kkn")
 preview_skin = "default"
-preview_animation = "fall"
+preview_animation = "idle"
 preview_frame = false
 preview_time = 0.0
 position = Vector2(0, -39)
@@ -39,9 +35,9 @@ scale = Vector2(0.12918882, 0.12918882)
 [node name="SpineSlotNode" type="SpineSlotNode" parent="BodyContainer/SpineSprite" unique_id=1415002499]
 slot_name = "hold_anchor"
 show_behind_parent = true
-position = Vector2(252.02763, -586.04004)
-rotation = -2.7206361
-scale = Vector2(0.99999994, 1.0000001)
+position = Vector2(-304.1132, 103.102615)
+rotation = 0.46364844
+scale = Vector2(0.99999994, 0.99999994)
 
 [node name="RightPickAnchor" type="Marker2D" parent="BodyContainer/SpineSprite/SpineSlotNode" unique_id=512607645]
 position = Vector2(173.37077, 104.2581)
@@ -49,25 +45,29 @@ position = Vector2(173.37077, 104.2581)
 [node name="LeftPickAnchor" type="Marker2D" parent="BodyContainer/SpineSprite/SpineSlotNode" unique_id=1770098062]
 position = Vector2(147.74232, -134.45377)
 
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1457256562]
+position = Vector2(0, -61)
+shape = SubResource("CapsuleShape2D_b0kkn")
+
 [node name="Checks" type="Node2D" parent="." unique_id=955137587]
 
 [node name="LeftWallCheck1" type="RayCast2D" parent="Checks" unique_id=789905043]
-position = Vector2(-38, -98)
+position = Vector2(-25, -98)
 target_position = Vector2(-30, 0)
 collision_mask = 3
 
 [node name="LeftWallCheck2" type="RayCast2D" parent="Checks" unique_id=170965147]
-position = Vector2(-38, -36)
+position = Vector2(-25, -36)
 target_position = Vector2(-30, 0)
 collision_mask = 3
 
 [node name="RightWallCheck1" type="RayCast2D" parent="Checks" unique_id=2093936588]
-position = Vector2(38, -98)
+position = Vector2(25, -98)
 target_position = Vector2(30, 0)
 collision_mask = 3
 
 [node name="RightWallCheck2" type="RayCast2D" parent="Checks" unique_id=1043389078]
-position = Vector2(38, -36)
+position = Vector2(25, -36)
 target_position = Vector2(30, 0)
 collision_mask = 3
 
@@ -94,3 +94,5 @@ collision_mask = 8
 [node name="CollisionShape2D" type="CollisionShape2D" parent="PickChecks/RightPickCheck" unique_id=1838101302]
 shape = SubResource("RectangleShape2D_b0kkn")
 debug_color = Color(1, 1, 0, 0.41960785)
+
+[node name="FmodListener2D" type="FmodListener2D" parent="." unique_id=1446594163]
