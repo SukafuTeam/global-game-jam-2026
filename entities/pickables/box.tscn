@@ -1,0 +1,20 @@
+[gd_scene format=3 uid="uid://dr6qi0plb1myn"]
+
+[ext_resource type="Script" uid="uid://cc7vmuv4al3gt" path="res://src/controllers/pickables/pickable.gd" id="1_440lv"]
+[ext_resource type="Texture2D" uid="uid://b1qtfari8bql2" path="res://assets/images/sprites/pickables/caixa.png" id="2_440lv"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_440lv"]
+size = Vector2(68, 68)
+
+[node name="Box" type="CharacterBody2D" unique_id=378684654]
+collision_layer = 8
+script = ExtResource("1_440lv")
+metadata/_custom_type_script = "uid://cc7vmuv4al3gt"
+
+[node name="Sprite" type="Sprite2D" parent="." unique_id=1042648674]
+position = Vector2(-3, -4)
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("2_440lv")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=858150159]
+shape = SubResource("RectangleShape2D_440lv")

@@ -1,0 +1,4 @@
+[gd_scene format=3 uid="uid://lrjjbsy10m2o"]
+
+[node name="FmodBankLoader" type="FmodBankLoader" unique_id=1847820669]
+bank_paths = ["res://assets/sounds/banks/Master.strings.bank", "res://assets/sounds/banks/Master.bank", "res://assets/sounds/banks/BGM.bank", "res://assets/sounds/banks/SFX.bank"]

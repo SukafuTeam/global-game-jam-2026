@@ -1,0 +1,16 @@
+[remap]
+
+importer="spine.atlas"
+type="SpineAtlasResource"
+uid="uid://d18uw4xjq60cn"
+path="res://.godot/imported/kah-ra.atlas-ceb3f05b9a3ea7d545b037e79349152c.spatlas"
+
+[deps]
+
+source_file="res://assets/images/sprites/player/kah-ra.atlas"
+dest_files=["res://.godot/imported/kah-ra.atlas-ceb3f05b9a3ea7d545b037e79349152c.spatlas"]
+
+[params]
+
+normal_map_prefix="n"
+specular_map_prefix="s"

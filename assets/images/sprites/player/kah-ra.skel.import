@@ -1,0 +1,14 @@
+[remap]
+
+importer="spine.skel"
+type="SpineSkeletonFileResource"
+uid="uid://bg1kx25cgp464"
+path="res://.godot/imported/kah-ra.skel-eb43443e1538a3305da3ea00184966cc.spskel"
+
+[deps]
+
+source_file="res://assets/images/sprites/player/kah-ra.skel"
+dest_files=["res://.godot/imported/kah-ra.skel-eb43443e1538a3305da3ea00184966cc.spskel"]
+
+[params]
+

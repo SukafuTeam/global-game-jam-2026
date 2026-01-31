@@ -1,0 +1,398 @@
+class_name PlayerController
+extends CharacterBody2D
+
+const INPUT_BUFFER_TIME: float = 0.1
+const HOLD_BUFFER_TIME: float = 0.5
+
+const MOVE_SPEED: float = 800.0
+const SPEED_MULTIPLIER: float = 1.5
+const ACCEL: float = 5000.0
+
+const JUMP_FORCE: float = 800.0
+const FALL_GRAVITY_MULTIPLIER: float = 2.0
+
+const MAX_WALL_JUMP_FALL_SPEED: float = 100.0
+const WALL_JUMP_SPEED: float = 500.0
+const WALL_JUMP_MOVE_TIME: float = 0.1
+
+const DASH_TIME: float = 0.2
+const DASH_SPEED: Vector2 = Vector2(2500.0, 1800.0)
+
+const SCALE_DELTA: float = 1.0
+const JUMP_SCALE: Vector2 = Vector2(0.8, 1.2)
+const LAND_SCALE: Vector2 = Vector2(1.2, 0.8)
+
+enum State {
+	GROUND,
+	AIR,
+	DASH,
+	DAMAGE,
+	VICTORY
+}
+
+
+var state: State:
+	set(value):
+		if value != state:
+			exit_state(state)
+			enter_state(value)
+		state = value
+	get:
+		return state
+var current_state_time: float = 0.0
+var looking_right: bool
+var last_velocity: Vector2
+var was_on_floor: bool
+var can_double_jump: bool
+var can_dash: bool
+
+var current_auto_move_time: float = 0.0
+var auto_move_speed: float = 0.0
+var current_coyote_time: float = 0.0
+var current_jump_buffer_time: float = -1.0
+var current_hold_buffer_time: float = -1.0
+var current_dash_buffer_time: float = -1.0
+var current_up_buffer_time: float = -1.0
+var current_kick_time: float = -1.0
+
+var current_left_wall_slide_time: float = 0.0
+var current_right_wall_slide_time: float = 0.0
+var wall_sliding: bool:
+	get:
+		return current_left_wall_slide_time > 0.0 or \
+			current_right_wall_slide_time > 0.0
+var left_wall_check: bool:
+	get:
+		return left_wall_check_1.is_colliding() and left_wall_check_2.is_colliding()
+var right_wall_check: bool:
+	get:
+		return right_wall_check_1.is_colliding() and right_wall_check_2.is_colliding()
+
+var holding_item: Pickable
+
+@onready var body_container: Node2D = $BodyContainer
+@onready var sprite: SpineSprite = $BodyContainer/SpineSprite
+
+@onready var ground_check: RayCast2D = $Checks/GroundCheck
+@onready var left_wall_check_1: RayCast2D = $Checks/LeftWallCheck1
+@onready var left_wall_check_2: RayCast2D = $Checks/LeftWallCheck2
+@onready var right_wall_check_1: RayCast2D = $Checks/RightWallCheck1
+@onready var right_wall_check_2: RayCast2D = $Checks/RightWallCheck2
+
+@onready var left_pick_check: Area2D = $PickChecks/LeftPickCheck
+@onready var right_pick_check: Area2D = $PickChecks/RightPickCheck
+@onready var left_anchor: Marker2D = $BodyContainer/SpineSprite/SpineSlotNode/LeftPickAnchor
+@onready var right_anchor: Marker2D = $BodyContainer/SpineSprite/SpineSlotNode/RightPickAnchor
+@onready var left_holding_collision: CollisionPolygon2D = $LeftHoldingCollision
+@onready var right_holding_collision: CollisionPolygon2D = $RightHoldingCollision
+
+func _ready() -> void:
+	state = State.GROUND
+	can_dash = Global.dash_enabled
+	can_double_jump = Global.double_jump_enabled
+	change_animation("idle")
+	
+	var skin_name = "masked" if Global.masked else "unmasked"
+	var skin: SpineSkin = sprite.get_skeleton().get_data().find_skin(skin_name)
+	sprite.get_skeleton().set_skin(skin)
+
+func _process(delta: float) -> void:
+	update_body_scale(delta)
+	update_animation()
+	
+	current_auto_move_time -= delta
+	current_coyote_time -= delta
+	current_jump_buffer_time -= delta
+	current_dash_buffer_time -= delta
+	current_hold_buffer_time -= delta
+	current_up_buffer_time -= delta
+	current_kick_time -= delta
+	
+	current_left_wall_slide_time -= delta
+	current_right_wall_slide_time -= delta
+	
+	if Input.is_action_just_pressed("jump"):
+		current_jump_buffer_time = INPUT_BUFFER_TIME
+	if Input.is_action_just_pressed("hold"):
+		current_hold_buffer_time = HOLD_BUFFER_TIME
+	if Input.is_action_just_pressed("dash"):
+		current_dash_buffer_time = INPUT_BUFFER_TIME
+	if Input.is_action_pressed("up"):
+		current_up_buffer_time = INPUT_BUFFER_TIME
+
+func _physics_process(delta: float) -> void:
+	if is_on_floor():
+		current_coyote_time = INPUT_BUFFER_TIME
+	else:
+		# Adds gravity
+		var grav = Constants.GRAVITY
+		if velocity.y > 0.0:
+			grav *= FALL_GRAVITY_MULTIPLIER
+		
+		velocity.y += grav * delta
+		
+		if is_on_wall_only() and Global.wall_jump_enabled:
+			if left_wall_check and Input.is_action_pressed("left"):
+				current_left_wall_slide_time = INPUT_BUFFER_TIME
+			if right_wall_check and Input.is_action_pressed("right"):
+				current_right_wall_slide_time = INPUT_BUFFER_TIME
+
+	# Can't turn around while dashing
+	if state != State.DASH and current_auto_move_time < 0.0:
+		var input_axis = Input.get_axis("left", "right")
+		if abs(input_axis) > 0.1:
+			looking_right = input_axis > 0.0
+	
+	process_hold()
+	
+	match state:
+		State.GROUND:
+			state = process_ground(delta)
+		State.AIR:
+			state = process_air(delta)
+		State.DASH:
+			state = process_dash(delta)
+	
+	was_on_floor = is_on_floor()
+	last_velocity = velocity
+	
+	move_and_slide()
+	
+	if is_on_floor() and !was_on_floor:
+		on_land(last_velocity.y)
+
+#region State methods
+func process_ground(delta: float) -> State:
+	input_move(delta)
+	
+	if current_dash_buffer_time >= 0.0 and can_dash and Global.dash_enabled:
+		return State.DASH
+	
+	if current_jump_buffer_time >= 0.0 and current_coyote_time:
+		on_jump()
+		return State.AIR
+	
+	return State.GROUND
+
+func process_air(delta: float) -> State:
+	input_move(delta)
+	
+	if current_dash_buffer_time >= 0.0 and can_dash and Global.dash_enabled:
+		if wall_sliding:
+			looking_right = !looking_right
+		can_dash = false
+		return State.DASH
+	
+	if wall_sliding:
+		can_double_jump = true
+		can_dash = true
+		
+		velocity.y = min(velocity.y, MAX_WALL_JUMP_FALL_SPEED)
+		
+		if current_jump_buffer_time > 0.0:
+			if current_left_wall_slide_time >= 0.0:
+				on_jump()
+				current_auto_move_time = WALL_JUMP_MOVE_TIME
+				auto_move_speed = WALL_JUMP_SPEED
+				return State.AIR
+			elif current_right_wall_slide_time >= 0.0:
+				on_jump()
+				current_auto_move_time = WALL_JUMP_MOVE_TIME
+				auto_move_speed = -WALL_JUMP_SPEED
+				return State.AIR
+	
+	if can_double_jump and Global.double_jump_enabled:
+		if current_jump_buffer_time >= 0.0:
+			on_jump()
+			can_double_jump = false
+		
+	
+	if is_on_floor():
+		return State.GROUND
+	
+	return State.AIR
+
+func process_dash(delta) -> State:
+	velocity.y = 0.0
+	current_state_time -= delta
+	
+	if is_on_wall() and current_state_time < DASH_TIME * 0.9:
+		current_state_time = -1.0
+	
+	if current_state_time < 0.0:
+		velocity.x /= 2
+		if current_coyote_time >= 0.0:
+			return State.GROUND
+		else:
+			return State.AIR
+	
+	if current_coyote_time >= 0.0 and current_jump_buffer_time >= 0.0:
+		on_jump()
+		return State.AIR
+	
+	var dash_percent = inverse_lerp(0.0, DASH_TIME, current_state_time)
+	var current_dash_speed = lerp(DASH_SPEED.x, DASH_SPEED.y, dash_percent)
+	if !looking_right:
+		current_dash_speed *= -1
+	
+	velocity.x = current_dash_speed
+	return State.DASH
+
+#endregion
+
+#region Hold methods
+func process_hold():
+	left_holding_collision.disabled = true
+	right_holding_collision.disabled = true
+	
+	if holding_item != null:
+		if looking_right:
+			right_holding_collision.disabled = false
+		else:
+			left_holding_collision.disabled = false
+		
+		if Input.is_action_pressed("hold"):
+			var target = right_anchor if looking_right else left_anchor
+			holding_item.target = target
+		else:
+			var drop_vel = Vector2(0.0, -0.1)
+			var input_axis = Input.get_axis("left", "right")
+			var speed_percent = inverse_lerp(0.0, MOVE_SPEED,abs(velocity.x))
+			speed_percent = clamp(speed_percent, 0.0, 1.0)
+			if current_up_buffer_time >= 0.0:
+				current_up_buffer_time = 0.0
+				drop_vel = Vector2(speed_percent * 0.5 * sign(velocity.x), -1.0)
+			elif abs(input_axis) > 0.1:
+				drop_vel = Vector2(input_axis, -0.3)
+			
+			velocity.y = 0.0
+			holding_item.drop(drop_vel)
+			holding_item = null
+			current_kick_time = INPUT_BUFFER_TIME
+			body_container.scale = LAND_SCALE
+		return
+	
+	if current_hold_buffer_time < 0.0:
+		return
+	
+	var pick_check = right_pick_check if looking_right else left_pick_check
+	if pick_check.get_overlapping_bodies().is_empty():
+		return
+	
+	for body in pick_check.get_overlapping_bodies():
+		if !(body is Pickable):
+			continue
+		
+		var p = body as Pickable
+		if !p.interactible:
+			continue
+		
+		var target = right_anchor if looking_right else left_anchor
+		p.pickup(target)
+		holding_item = p
+		current_hold_buffer_time = 0.0
+		return
+	
+#region Movement methods
+func input_move(delta: float):
+	var input_axis = Input.get_axis("left", "right")
+	var move_target = input_axis * MOVE_SPEED
+	var accel = ACCEL
+	
+	if Global.speed_enabled:
+		move_target *= SPEED_MULTIPLIER
+		accel *= SPEED_MULTIPLIER
+	
+	
+	velocity.x = move_toward(velocity.x, move_target, accel * delta)
+	
+	if current_auto_move_time > 0.0:
+		var speed = auto_move_speed
+		if Global.speed_enabled:
+			speed *= SPEED_MULTIPLIER
+		velocity.x = speed
+	
+
+func on_jump():
+	current_coyote_time = 0.0
+	current_jump_buffer_time = 0.0
+	current_left_wall_slide_time = 0.0
+	current_right_wall_slide_time = 0.0
+	
+	velocity.y = -JUMP_FORCE
+	body_container.scale = JUMP_SCALE
+
+func on_land(_hit_velocity: float):
+	body_container.scale = LAND_SCALE
+	can_double_jump = true
+	can_dash = true
+
+#endregion
+
+#region State methods
+
+func enter_state(new_state: State):
+	match new_state:
+		State.DASH:
+			current_state_time = DASH_TIME
+
+func exit_state(old_state: State):
+	match old_state:
+		State.DASH:
+			pass
+
+#endregion
+
+#region Animation methods
+func update_body_scale(delta):
+	body_container.scale = body_container.scale.move_toward(
+			Vector2.ONE,
+			SCALE_DELTA * delta
+		)
+
+func  update_animation():
+	#if holding_item and Input.is_action_pressed("hold"):
+	if Input.is_action_pressed("hold"):
+		var track_entry: SpineTrackEntry = sprite.get_animation_state().set_animation("hold", true, 1)
+		track_entry.set_alpha(5.0)
+	else:
+		sprite.get_animation_state().set_empty_animation(1, 0.2)
+		
+	if current_kick_time >= 0.0:
+		var track_entry: SpineTrackEntry = sprite.get_animation_state().set_animation("kick", true, 2)
+		track_entry.set_alpha(5.0)
+	else:
+		sprite.get_animation_state().set_empty_animation(2, 0.2)
+	
+	var skel_scale = 1.0 if looking_right else -1.0
+	if wall_sliding:
+		skel_scale *= -1.0
+		
+	sprite.get_skeleton().set_scale_x(skel_scale)
+	#TODO: implement better animations
+	match state:
+		State.GROUND:
+			if abs(velocity.x) > 0.1:
+				if Global.speed_enabled:
+					change_animation("run_fast")
+				else:
+					change_animation("run")
+			else:
+				change_animation("idle")
+		State.AIR:
+			if velocity.y <= 0.0:
+				change_animation("jump")
+			else:
+				change_animation("fall")
+			#change_animation("idle")
+
+func change_animation(new_anim: String, track_id: int = 0, mix_time: float = 0.1):
+	var current = sprite.get_animation_state().get_current(0)
+	if current != null:
+		if sprite.get_animation_state().get_current(track_id).get_animation().get_name() == new_anim:
+			return
+	
+	var track_entry: SpineTrackEntry = sprite.get_animation_state().set_animation(new_anim, true, track_id)
+	track_entry.set_mix_time(mix_time)
+
+#endregion

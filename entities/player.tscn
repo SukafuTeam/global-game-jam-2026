@@ -1,0 +1,96 @@
+[gd_scene format=3 uid="uid://d0yfwj3cpk6c"]
+
+[ext_resource type="Script" uid="uid://blfyf6x5sntg4" path="res://src/controllers/player/player_controller.gd" id="1_b0kkn"]
+[ext_resource type="SpineSkeletonDataResource" uid="uid://y3p12tawfxam" path="res://assets/images/sprites/player/kah-ra-data-res.tres" id="2_b0kkn"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_b0kkn"]
+radius = 39.0
+height = 120.0
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_b0kkn"]
+size = Vector2(103, 107)
+
+[node name="Player" type="CharacterBody2D" unique_id=603172765]
+collision_layer = 4
+collision_mask = 3
+script = ExtResource("1_b0kkn")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1457256562]
+position = Vector2(0, -61)
+shape = SubResource("CapsuleShape2D_b0kkn")
+
+[node name="RightHoldingCollision" type="CollisionPolygon2D" parent="." unique_id=1484492528]
+polygon = PackedVector2Array(0, -112, 0, 0, 80, -112)
+
+[node name="LeftHoldingCollision" type="CollisionPolygon2D" parent="." unique_id=1700405106]
+polygon = PackedVector2Array(0, -112, 0, 0, -80, -112)
+
+[node name="BodyContainer" type="Node2D" parent="." unique_id=743022585]
+
+[node name="SpineSprite" type="SpineSprite" parent="BodyContainer" unique_id=39657710]
+skeleton_data_res = ExtResource("2_b0kkn")
+preview_skin = "default"
+preview_animation = "fall"
+preview_frame = false
+preview_time = 0.0
+position = Vector2(0, -39)
+scale = Vector2(0.12918882, 0.12918882)
+
+[node name="SpineSlotNode" type="SpineSlotNode" parent="BodyContainer/SpineSprite" unique_id=1415002499]
+slot_name = "hold_anchor"
+show_behind_parent = true
+position = Vector2(252.02763, -586.04004)
+rotation = -2.7206361
+scale = Vector2(0.99999994, 1.0000001)
+
+[node name="RightPickAnchor" type="Marker2D" parent="BodyContainer/SpineSprite/SpineSlotNode" unique_id=512607645]
+position = Vector2(173.37077, 104.2581)
+
+[node name="LeftPickAnchor" type="Marker2D" parent="BodyContainer/SpineSprite/SpineSlotNode" unique_id=1770098062]
+position = Vector2(147.74232, -134.45377)
+
+[node name="Checks" type="Node2D" parent="." unique_id=955137587]
+
+[node name="LeftWallCheck1" type="RayCast2D" parent="Checks" unique_id=789905043]
+position = Vector2(-38, -98)
+target_position = Vector2(-30, 0)
+collision_mask = 3
+
+[node name="LeftWallCheck2" type="RayCast2D" parent="Checks" unique_id=170965147]
+position = Vector2(-38, -36)
+target_position = Vector2(-30, 0)
+collision_mask = 3
+
+[node name="RightWallCheck1" type="RayCast2D" parent="Checks" unique_id=2093936588]
+position = Vector2(38, -98)
+target_position = Vector2(30, 0)
+collision_mask = 3
+
+[node name="RightWallCheck2" type="RayCast2D" parent="Checks" unique_id=1043389078]
+position = Vector2(38, -36)
+target_position = Vector2(30, 0)
+collision_mask = 3
+
+[node name="GroundCheck" type="RayCast2D" parent="Checks" unique_id=1672289126]
+target_position = Vector2(0, 60)
+
+[node name="PickChecks" type="Node2D" parent="." unique_id=284969669]
+visible = false
+
+[node name="LeftPickCheck" type="Area2D" parent="PickChecks" unique_id=1243060885]
+position = Vector2(-25, -60)
+collision_layer = 0
+collision_mask = 8
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="PickChecks/LeftPickCheck" unique_id=1275298245]
+shape = SubResource("RectangleShape2D_b0kkn")
+debug_color = Color(1, 1, 0, 0.41960785)
+
+[node name="RightPickCheck" type="Area2D" parent="PickChecks" unique_id=1466690659]
+position = Vector2(25, -60)
+collision_layer = 0
+collision_mask = 8
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="PickChecks/RightPickCheck" unique_id=1838101302]
+shape = SubResource("RectangleShape2D_b0kkn")
+debug_color = Color(1, 1, 0, 0.41960785)
