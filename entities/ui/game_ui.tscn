@@ -1,0 +1,25 @@
+[gd_scene format=3 uid="uid://bokvsw4lfnisx"]
+
+[ext_resource type="PackedScene" uid="uid://l242l6374yu1" path="res://entities/ui/health_container.tscn" id="1_uvj7p"]
+
+[node name="GameUI" type="Control" unique_id=177702809]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="HealthContainer" type="HBoxContainer" parent="." unique_id=402485226]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="HealthContainer" parent="HealthContainer" unique_id=218018474 instance=ExtResource("1_uvj7p")]
+layout_mode = 2
+
+[node name="HealthContainer2" parent="HealthContainer" unique_id=88672197 instance=ExtResource("1_uvj7p")]
+layout_mode = 2
+
+[node name="HealthContainer3" parent="HealthContainer" unique_id=989904131 instance=ExtResource("1_uvj7p")]
+layout_mode = 2

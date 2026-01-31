@@ -21,6 +21,7 @@ var target: Node2D
 var snapping: bool
 var snap_from: Vector2
 var snap_to: Vector2
+var snap_time: float = 0.0
 var current_snap_time: float = 0.0
 
 var was_on_floor: bool
@@ -78,7 +79,13 @@ func _physics_process(delta: float) -> void:
 			var force_percent = inverse_lerp(0.0, MAX_IMPACT_FORCE, last_velocity.length())
 			FmodServer.play_one_shot_attached_with_params("event:/Pickables/wood", self, {"force": force_percent})
 			velocity.x = -last_velocity.x * bounce
-	
+
+func snap(to: Vector2, time: float = -1.0):
+	snap_from = global_position
+	snap_to = to
+	current_snap_time = 0.0
+	snapping = true
+	snap_time = time if time > 0.0 else SNAP_TIME
 
 func update_snap(delta):
 	if !should_rotate:
@@ -86,13 +93,13 @@ func update_snap(delta):
 	
 	current_snap_time += delta
 	
-	if current_snap_time >= SNAP_TIME:
+	if current_snap_time >= snap_time:
 		global_position = snap_to
 		snapping = false
 		velocity = Vector2.ZERO
 		return
 	
-	var t = current_snap_time / SNAP_TIME
+	var t = current_snap_time / snap_time
 	var pos = snap_from.lerp(snap_to, t)
 	pos.y += SNAP_HEIGHT * (1 - (2 * t - 1) * (2 * t - 1))
 	global_position = pos
@@ -102,10 +109,9 @@ func pickup(new_target: Node2D):
 		return
 	
 	target = new_target
-	snap_from = global_position
-	current_snap_time = 0.0
 	collision.disabled = true
-	snapping = true
+	snap(target.global_position)
+	
 
 func drop(new_vel: Vector2 = Vector2.ZERO):
 	target = null

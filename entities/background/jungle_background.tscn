@@ -1,0 +1,213 @@
+[gd_scene format=3 uid="uid://h2wucwbiou3"]
+
+[ext_resource type="Texture2D" uid="uid://bxuetmp6f16qj" path="res://assets/images/sprites/backgrounds/jungle/jungle_09.png" id="1_hpnwp"]
+[ext_resource type="Texture2D" uid="uid://bkpckk8nc7ihe" path="res://assets/images/sprites/backgrounds/jungle/jungle_08.png" id="2_mbbao"]
+[ext_resource type="Texture2D" uid="uid://cwy3o86iv15yx" path="res://assets/images/sprites/backgrounds/jungle/jungle_07.png" id="3_qwm1p"]
+[ext_resource type="Texture2D" uid="uid://ddtmq0mg8ekvx" path="res://assets/images/sprites/backgrounds/jungle/jungle_06.png" id="4_mj68q"]
+[ext_resource type="Texture2D" uid="uid://dk6gffbdmu1vn" path="res://assets/images/sprites/backgrounds/jungle/jungle_05.png" id="5_vekp8"]
+[ext_resource type="Texture2D" uid="uid://dh2gynyhkpuo6" path="res://assets/images/sprites/backgrounds/jungle/jungle_04.png" id="6_actnu"]
+[ext_resource type="Texture2D" uid="uid://bgtny42gy30cb" path="res://assets/images/sprites/backgrounds/jungle/jungle_03.png" id="7_8fyq0"]
+[ext_resource type="Shader" uid="uid://dceudoqmb3dwp" path="res://src/shaders/godrays.gdshader" id="8_747gm"]
+[ext_resource type="Texture2D" uid="uid://cayosvl0v1ymi" path="res://assets/images/sprites/backgrounds/jungle/jungle_02.png" id="9_uoj4l"]
+[ext_resource type="Texture2D" uid="uid://bmlc07gvsxyso" path="res://assets/images/sprites/backgrounds/jungle/jungle_01.png" id="10_rl32e"]
+[ext_resource type="Texture2D" uid="uid://c00urj1i1t126" path="res://assets/images/sprites/particles/circle_05_a.png" id="11_g1jos"]
+
+[sub_resource type="Gradient" id="Gradient_7ddre"]
+colors = PackedColorArray(0.9254902, 0.98039216, 1, 1, 0.5411765, 0.7921569, 0.98039216, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_qjeyg"]
+gradient = SubResource("Gradient_7ddre")
+width = 512
+height = 512
+fill_from = Vector2(0.4978261, 1)
+fill_to = Vector2(0.5043478, 0)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_pln1h"]
+shader = ExtResource("8_747gm")
+shader_parameter/angle = 0.38
+shader_parameter/position = 0.2
+shader_parameter/spread = 0.642000030495
+shader_parameter/cutoff = -0.009999952975
+shader_parameter/falloff = 0.0
+shader_parameter/edge_fade = 0.2310000109725
+shader_parameter/speed = 3.52
+shader_parameter/ray1_density = 8.0
+shader_parameter/ray2_density = 30.0
+shader_parameter/ray2_intensity = 0.3
+shader_parameter/color = Color(0.64705884, 0.5058824, 0, 1)
+shader_parameter/hdr = false
+shader_parameter/seed = 5.0
+
+[sub_resource type="Gradient" id="Gradient_pln1h"]
+offsets = PackedFloat32Array(0, 0.2345679, 0.4351852, 0.6203704, 1)
+colors = PackedColorArray(1, 1, 1, 0, 1, 1, 1, 0.78014183, 1, 1, 1, 1, 1, 1, 1, 0.8142077, 1, 1, 1, 0)
+
+[node name="JungleBackground" type="Parallax2D" unique_id=970253655]
+z_index = -100
+metadata/_edit_lock_ = true
+
+[node name="Sky" type="Parallax2D" parent="." unique_id=249169536]
+scroll_scale = Vector2(0, 0)
+
+[node name="SkyColor" type="TextureRect" parent="Sky" unique_id=1841216094]
+offset_right = 1920.0
+offset_bottom = 1080.0
+texture = SubResource("GradientTexture2D_qjeyg")
+
+[node name="Mountains" type="Parallax2D" parent="." unique_id=2057624433]
+scroll_scale = Vector2(0.1, 0.1)
+repeat_size = Vector2(3114, 0)
+
+[node name="Jungle09" type="Sprite2D" parent="Mountains" unique_id=179706905]
+position = Vector2(0, -300)
+texture = ExtResource("1_hpnwp")
+centered = false
+
+[node name="Jungle10" type="Sprite2D" parent="Mountains" unique_id=1543308357]
+position = Vector2(1557, -300)
+texture = ExtResource("1_hpnwp")
+centered = false
+
+[node name="Pyramid" type="Parallax2D" parent="." unique_id=1719786189]
+scroll_scale = Vector2(0.14, 0.14)
+repeat_size = Vector2(1946, 0)
+
+[node name="Jungle08" type="Sprite2D" parent="Pyramid" unique_id=1772518226]
+position = Vector2(0, -474)
+texture = ExtResource("2_mbbao")
+centered = false
+
+[node name="ColorRect" type="ColorRect" parent="Pyramid" unique_id=1618277497]
+offset_top = 253.0
+offset_right = 1946.0
+offset_bottom = 1253.0
+color = Color(0.20784314, 0.4745098, 0.4745098, 1)
+
+[node name="Bridge" type="Parallax2D" parent="." unique_id=785155619]
+scroll_scale = Vector2(0.18, 0.18)
+repeat_size = Vector2(4898, 0)
+
+[node name="Jungle07" type="Sprite2D" parent="Bridge" unique_id=1881888542]
+position = Vector2(0, -268)
+texture = ExtResource("3_qwm1p")
+centered = false
+
+[node name="Temple" type="Parallax2D" parent="." unique_id=119933977]
+scroll_scale = Vector2(0.22, 0.22)
+scroll_offset = Vector2(528, 104)
+repeat_size = Vector2(3151, 0)
+
+[node name="Jungle06" type="Sprite2D" parent="Temple" unique_id=407369030]
+position = Vector2(0, -390)
+texture = ExtResource("4_mj68q")
+centered = false
+
+[node name="BackForest" type="Parallax2D" parent="." unique_id=1684133403]
+scroll_scale = Vector2(0.3, 0.3)
+scroll_offset = Vector2(0, -499)
+repeat_size = Vector2(2732, 0)
+
+[node name="Jungle05" type="Sprite2D" parent="BackForest" unique_id=691531197]
+position = Vector2(0, -341)
+texture = ExtResource("5_vekp8")
+centered = false
+
+[node name="BackTrees" type="Parallax2D" parent="." unique_id=708872191]
+scroll_scale = Vector2(0.4, 0.4)
+scroll_offset = Vector2(-1406, -286)
+repeat_size = Vector2(3374, 0)
+
+[node name="Jungle04" type="Sprite2D" parent="BackTrees" unique_id=1257524924]
+position = Vector2(0, -267)
+texture = ExtResource("6_actnu")
+centered = false
+
+[node name="MidTrees" type="Parallax2D" parent="." unique_id=370105865]
+scroll_scale = Vector2(0.5, 0.5)
+repeat_size = Vector2(3547, 0)
+
+[node name="Jungle03" type="Sprite2D" parent="MidTrees" unique_id=164962761]
+position = Vector2(0, -879)
+texture = ExtResource("7_8fyq0")
+centered = false
+
+[node name="GodRays" type="ColorRect" parent="MidTrees" unique_id=888301535]
+material = SubResource("ShaderMaterial_pln1h")
+offset_right = 3547.0
+offset_bottom = 1080.0
+
+[node name="FrontTrees" type="Parallax2D" parent="." unique_id=616103993]
+scroll_scale = Vector2(0.6, 0.6)
+scroll_offset = Vector2(-2398, 0)
+repeat_size = Vector2(4775, 0)
+
+[node name="Jungle02" type="Sprite2D" parent="FrontTrees" unique_id=2094381045]
+position = Vector2(0, -988)
+texture = ExtResource("9_uoj4l")
+centered = false
+
+[node name="Trees" type="Parallax2D" parent="." unique_id=764986638]
+scroll_scale = Vector2(0.7, 0.7)
+scroll_offset = Vector2(-114, 0)
+repeat_size = Vector2(7303, 0)
+
+[node name="Jungle01" type="Sprite2D" parent="Trees" unique_id=807194330]
+position = Vector2(0, -1037)
+texture = ExtResource("10_rl32e")
+centered = false
+
+[node name="Particles1" type="Parallax2D" parent="." unique_id=1889387001]
+z_index = 100
+z_as_relative = false
+scroll_scale = Vector2(1.1, 1.1)
+repeat_size = Vector2(1920, 0)
+
+[node name="Fireflies" type="CPUParticles2D" parent="Particles1" unique_id=1475213561]
+position = Vector2(960, 58)
+amount = 50
+texture = ExtResource("11_g1jos")
+lifetime = 30.0
+preprocess = 10.0
+lifetime_randomness = 0.58
+local_coords = true
+emission_shape = 3
+emission_rect_extents = Vector2(960, 1600)
+direction = Vector2(0, -1)
+spread = 90.0
+gravity = Vector2(0, -3)
+initial_velocity_min = 3.0
+initial_velocity_max = 5.0
+tangential_accel_min = -3.0
+tangential_accel_max = 3.0
+scale_amount_min = 0.05
+scale_amount_max = 0.08
+color = Color(1, 0.99215686, 0.78039217, 1)
+color_ramp = SubResource("Gradient_pln1h")
+
+[node name="Particles2" type="Parallax2D" parent="." unique_id=1332714717]
+z_index = 100
+z_as_relative = false
+scroll_scale = Vector2(1.2, 1.2)
+repeat_size = Vector2(1920, 0)
+
+[node name="Fireflies" type="CPUParticles2D" parent="Particles2" unique_id=1077190374]
+position = Vector2(960, 58)
+amount = 50
+texture = ExtResource("11_g1jos")
+lifetime = 30.0
+preprocess = 10.0
+lifetime_randomness = 0.58
+local_coords = true
+emission_shape = 3
+emission_rect_extents = Vector2(960, 1600)
+direction = Vector2(0, -1)
+spread = 90.0
+gravity = Vector2(0, -3)
+initial_velocity_min = 3.0
+initial_velocity_max = 5.0
+tangential_accel_min = -3.0
+tangential_accel_max = 3.0
+scale_amount_min = 0.05
+scale_amount_max = 0.08
+color = Color(1, 0.99266666, 0.78, 1)
+color_ramp = SubResource("Gradient_pln1h")

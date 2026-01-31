@@ -18,9 +18,13 @@ const WALL_JUMP_MOVE_TIME: float = 0.1
 const DASH_TIME: float = 0.3
 const DASH_SPEED: Vector2 = Vector2(3000.0, 500.0)
 
+const DAMAGE_TIME: float = 1.0
+const IFRAME_TIME: float = 3.0
+
 const SCALE_DELTA: float = 1.0
 const JUMP_SCALE: Vector2 = Vector2(0.8, 1.2)
 const LAND_SCALE: Vector2 = Vector2(1.2, 0.8)
+
 
 enum State {
 	GROUND,
@@ -45,6 +49,9 @@ var last_velocity: Vector2
 var was_on_floor: bool
 var can_double_jump: bool
 var can_dash: bool
+
+var health: int
+var current_iframe_time: float = -1.0
 
 var current_auto_move_time: float = 0.0
 var auto_move_speed: float = 0.0
@@ -78,6 +85,7 @@ var holding_item: Pickable
 @onready var left_wall_check_2: RayCast2D = $Checks/LeftWallCheck2
 @onready var right_wall_check_1: RayCast2D = $Checks/RightWallCheck1
 @onready var right_wall_check_2: RayCast2D = $Checks/RightWallCheck2
+@onready var hitbox:Area2D = $Hitbox
 
 @onready var left_pick_check: Area2D = $PickChecks/LeftPickCheck
 @onready var right_pick_check: Area2D = $PickChecks/RightPickCheck
@@ -95,10 +103,25 @@ func _ready() -> void:
 	var skin_name = "masked" if Global.masked else "unmasked"
 	var skin: SpineSkin = sprite.get_skeleton().get_data().find_skin(skin_name)
 	sprite.get_skeleton().set_skin(skin)
+	
+	var music_event = FmodServer.create_event_instance("event:/BGM/intro")
+	music_event.set_parameter_by_name("loop", 1.0)
+	music_event.start()
+	
+	health = Constants.INITIAL_HEALTH
+	if Global.extra_health_enabled:
+		health += 1
+	
+	Global.safe_item_position = global_position
 
 func _process(delta: float) -> void:
 	update_body_scale(delta)
 	update_animation()
+	
+	if current_iframe_time >= 0.0 and state != State.DAMAGE:
+		sprite.modulate.a = 0.5
+	else:
+		sprite.modulate.a = 1.0
 	
 	current_auto_move_time -= delta
 	current_coyote_time -= delta
@@ -107,6 +130,8 @@ func _process(delta: float) -> void:
 	current_hold_buffer_time -= delta
 	current_up_buffer_time -= delta
 	current_kick_time -= delta
+	
+	current_iframe_time -= delta
 	
 	current_left_wall_slide_time -= delta
 	current_right_wall_slide_time -= delta
@@ -149,6 +174,8 @@ func _physics_process(delta: float) -> void:
 	
 	process_hold()
 	
+	check_damage()
+	
 	match state:
 		State.GROUND:
 			state = process_ground(delta)
@@ -156,6 +183,8 @@ func _physics_process(delta: float) -> void:
 			state = process_air(delta)
 		State.DASH:
 			state = process_dash(delta)
+		State.DAMAGE:
+			state = process_damage(delta)
 	
 	was_on_floor = is_on_floor()
 	last_velocity = velocity
@@ -166,6 +195,27 @@ func _physics_process(delta: float) -> void:
 		on_land(last_velocity.y)
 
 #region State methods
+func check_damage():
+	if current_iframe_time >= 0.0:
+		return
+	
+	if hitbox.get_overlapping_areas().is_empty():
+		return
+	
+	health -= 1
+	#TODO: gameover logic
+	
+	if holding_item:
+		holding_item.drop(Vector2(randf_range(--0.5, 0.5), -0.2))
+		holding_item = null
+	
+	Global.set_camera_stress(Vector2.ONE)
+	#velocity = Vector2.ZERO
+	state = State.DAMAGE
+	current_state_time = DAMAGE_TIME
+	current_iframe_time = IFRAME_TIME
+	velocity = Vector2(0.0, -300)
+	
 func process_ground(delta: float) -> State:
 	input_move(delta)
 	
@@ -241,6 +291,16 @@ func process_dash(delta) -> State:
 	
 	velocity.x = current_dash_speed
 	return State.DASH
+
+func process_damage(delta: float) -> State:
+	current_state_time -= delta
+	
+	if current_state_time <= 0.0:
+		return State.GROUND
+		
+	Global.set_camera_stress(Vector2.ONE * 0.4)
+	
+	return State.DAMAGE
 
 #endregion
 
@@ -357,8 +417,11 @@ func update_body_scale(delta):
 		)
 
 func  update_animation():
-	#if holding_item and Input.is_action_pressed("hold"):
-	if Input.is_action_pressed("hold"):
+	if state == State.DAMAGE:
+		change_animation("dizzy", 0, 0.0)
+		return
+	
+	if holding_item and Input.is_action_pressed("hold"):
 		var track_entry: SpineTrackEntry = sprite.get_animation_state().set_animation("hold", true, 1)
 		track_entry.set_alpha(5.0)
 	else:

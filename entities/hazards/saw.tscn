@@ -1,0 +1,21 @@
+[gd_scene format=3 uid="uid://bsoe4u37xgxab"]
+
+[ext_resource type="Texture2D" uid="uid://dvc8ie5plikqv" path="res://assets/images/sprites/hazards/saw.png" id="1_q1geq"]
+[ext_resource type="Script" uid="uid://d25xa2c7lnmca" path="res://src/objects/rotate_node_2d.gd" id="2_te7gq"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_te7gq"]
+radius = 57.21888
+
+[node name="Saw" type="Area2D" unique_id=1213006597]
+collision_layer = 16
+collision_mask = 2
+
+[node name="Sprite" type="Sprite2D" parent="." unique_id=150473237]
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("1_q1geq")
+script = ExtResource("2_te7gq")
+rot = -500.0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=2141139999]
+shape = SubResource("CircleShape2D_te7gq")
+debug_color = Color(1, 0, 0, 0.41960785)

@@ -1,0 +1,8 @@
+[gd_scene format=3 uid="uid://dv4hk82383cq0"]
+
+[ext_resource type="Script" uid="uid://devphbp76qxwm" path="res://src/objects/protect_item_area.gd" id="1_y0sa8"]
+
+[node name="ProtectItemArea" type="Area2D" unique_id=1615684253]
+collision_layer = 0
+collision_mask = 8
+script = ExtResource("1_y0sa8")

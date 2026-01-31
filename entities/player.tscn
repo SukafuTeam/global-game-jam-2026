@@ -10,6 +10,9 @@ height = 120.0
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_b0kkn"]
 size = Vector2(103, 107)
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_e4p34"]
+size = Vector2(60, 110)
+
 [node name="Player" type="CharacterBody2D" unique_id=603172765]
 collision_layer = 4
 collision_mask = 3
@@ -21,12 +24,16 @@ polygon = PackedVector2Array(0, -112, 0, 0, 80, -112)
 [node name="LeftHoldingCollision" type="CollisionPolygon2D" parent="." unique_id=1700405106]
 polygon = PackedVector2Array(0, -112, 0, 0, -80, -112)
 
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1457256562]
+position = Vector2(0, -61)
+shape = SubResource("CapsuleShape2D_b0kkn")
+
 [node name="BodyContainer" type="Node2D" parent="." unique_id=743022585]
 
 [node name="SpineSprite" type="SpineSprite" parent="BodyContainer" unique_id=39657710]
 skeleton_data_res = ExtResource("2_b0kkn")
-preview_skin = "default"
-preview_animation = "idle"
+preview_skin = "masked"
+preview_animation = "-- Empty --"
 preview_frame = false
 preview_time = 0.0
 position = Vector2(0, -39)
@@ -44,10 +51,6 @@ position = Vector2(173.37077, 104.2581)
 
 [node name="LeftPickAnchor" type="Marker2D" parent="BodyContainer/SpineSprite/SpineSlotNode" unique_id=1770098062]
 position = Vector2(147.74232, -134.45377)
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1457256562]
-position = Vector2(0, -61)
-shape = SubResource("CapsuleShape2D_b0kkn")
 
 [node name="Checks" type="Node2D" parent="." unique_id=955137587]
 
@@ -96,3 +99,12 @@ shape = SubResource("RectangleShape2D_b0kkn")
 debug_color = Color(1, 1, 0, 0.41960785)
 
 [node name="FmodListener2D" type="FmodListener2D" parent="." unique_id=1446594163]
+
+[node name="Hitbox" type="Area2D" parent="." unique_id=753370996]
+collision_layer = 4
+collision_mask = 16
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Hitbox" unique_id=730289118]
+position = Vector2(0, -56)
+shape = SubResource("RectangleShape2D_e4p34")
+debug_color = Color(1, 0, 0, 0.41960785)

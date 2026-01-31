@@ -1,0 +1,8 @@
+[gd_scene format=3 uid="uid://bd0j2okphu77d"]
+
+[ext_resource type="Script" uid="uid://3wtyq7f81gbf" path="res://src/objects/safe_item_setter.gd" id="1_q6kw2"]
+
+[node name="SafeItemSetter" type="Area2D" unique_id=261211327]
+collision_layer = 0
+collision_mask = 4
+script = ExtResource("1_q6kw2")

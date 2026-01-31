@@ -37,7 +37,6 @@ InputDetector="*uid://b5lu81kc72fsl"
 window/size/viewport_width=1920
 window/size/viewport_height=1080
 window/stretch/mode="canvas_items"
-window/stretch/aspect="keep_height"
 
 [editor_plugins]
 
