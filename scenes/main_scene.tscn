@@ -27,6 +27,7 @@
 [ext_resource type="PackedScene" uid="uid://cbdoi78gk3g0v" path="res://entities/missions/mission_2.tscn" id="21_xdqt8"]
 [ext_resource type="PackedScene" uid="uid://coxtcrdidtpue" path="res://entities/ui/item_tracker.tscn" id="23_58gk3"]
 [ext_resource type="PackedScene" uid="uid://c3ack3fygq3yt" path="res://entities/missions/mission_3.tscn" id="26_6p3nn"]
+[ext_resource type="Texture2D" uid="uid://c2wa5s6kkc6d8" path="res://assets/totem_sukafu_modelo.png" id="29_02d50"]
 [ext_resource type="PackedScene" uid="uid://dp8rpoj2i2fs0" path="res://entities/ui/camera_limiter.tscn" id="29_4bgka"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_k6f3i"]
@@ -87,8 +88,8 @@ size = Vector2(896, 105.5)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_6u1mn"]
 size = Vector2(430, 86)
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_02d50"]
-size = Vector2(9488, 523)
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_k3g67"]
+size = Vector2(806, 523)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_4bgka"]
 size = Vector2(2462, 2360)
@@ -200,6 +201,11 @@ item_tracker = ExtResource("23_58gk3")
 altar_tracker = ExtResource("9_to7gp")
 mission_scenes = Array[PackedScene]([ExtResource("10_u0fll"), ExtResource("21_xdqt8"), ExtResource("26_6p3nn"), ExtResource("13_k3g67"), ExtResource("14_4bgka")])
 targets = [NodePath("../Objects/Maze/Altar"), NodePath("../Objects/Volta/Altar"), NodePath("../Objects/Race/Altar"), NodePath("../Objects/DK/Altar"), NodePath("../Objects/elevator/Altar")]
+
+[node name="TotemSukafuModelo" type="Sprite2D" parent="." unique_id=1287703402]
+position = Vector2(2338, -734)
+scale = Vector2(0.2033629, 0.2033629)
+texture = ExtResource("29_02d50")
 
 [node name="Objects" type="Node2D" parent="." unique_id=456670684]
 
@@ -495,16 +501,16 @@ script = ExtResource("10_e1cbu")
 [node name="CameraLimiter" parent="CameraLimiters" unique_id=1962202259 instance=ExtResource("29_4bgka")]
 position = Vector2(983, 279)
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="CameraLimiters/CameraLimiter" unique_id=1666281159]
-position = Vector2(3620, 246.5)
-shape = SubResource("RectangleShape2D_02d50")
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="CameraLimiters/CameraLimiter" unique_id=423776062]
+position = Vector2(1824, -327)
+shape = SubResource("RectangleShape2D_k3g67")
 debug_color = Color(0.55717087, 0.5402703, 0, 0.41960785)
 
 [node name="Min" type="Marker2D" parent="CameraLimiters/CameraLimiter" unique_id=236150177]
-position = Vector2(-1211, 606)
+position = Vector2(698, -412)
 
 [node name="Max" type="Marker2D" parent="CameraLimiters/CameraLimiter" unique_id=2022988144]
-position = Vector2(8720, -484)
+position = Vector2(2872, -2034)
 
 [node name="CameraLimiter2" parent="CameraLimiters" unique_id=37666698 instance=ExtResource("29_4bgka")]
 position = Vector2(7070, -524)
@@ -765,6 +771,6 @@ position = Vector2(-604, 1356)
 position = Vector2(2264, 211)
 
 [node name="GoldKey" parent="." unique_id=878132375 instance=ExtResource("12_01n6w")]
-position = Vector2(16568, 5870)
+position = Vector2(2447, 535)
 color = Color(1, 0.84313726, 0, 1)
 lock_id = 5
