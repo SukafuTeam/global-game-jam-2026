@@ -18,6 +18,8 @@ func change(jungle: bool):
 	var current = cave_background if jungle else jungle_backgorund
 	var new = jungle_backgorund if jungle else cave_background
 	
+	Global.ground_surface = 0 if jungle else 1
+	
 	if tween:
 		tween.kill()
 		

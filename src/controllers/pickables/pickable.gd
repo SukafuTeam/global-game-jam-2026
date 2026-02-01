@@ -31,14 +31,13 @@ var current_snap_time: float = 0.0
 var was_on_floor: bool
 var last_velocity: Vector2
 
-@onready var sprite: Node2D = $Sprite
+@onready var sprite: Sprite2D = $Sprite
 @onready var collision: CollisionShape2D = $CollisionShape2D
 
 func _ready() -> void:
 	spawn_point = global_position
 	original_parent = get_parent()
 	interactible = true
-	top_level = true
 
 func _physics_process(delta: float) -> void:
 	time_alive += delta
@@ -49,7 +48,7 @@ func _physics_process(delta: float) -> void:
 		return
 	
 	if target !=null:
-		position = target.global_position
+		global_position = target.global_position
 		return
 	
 	if !is_on_floor():
@@ -120,11 +119,15 @@ func pickup(new_target: Node2D):
 	collision.disabled = true
 	snap(target.global_position)
 	
+	Global.item_picked.emit(self)
+	
 
 func drop(new_vel: Vector2 = Vector2.ZERO):
 	target = null
 	snapping = false
 	interactible = false
+	
+	Global.item_dropped.emit(self)
 	
 	velocity = new_vel * DROP_FORCE_MULTIPLIER * DROP_FORCE
 	collision.set_deferred("disabled", false)

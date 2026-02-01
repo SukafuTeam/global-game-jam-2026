@@ -20,8 +20,6 @@ const VALID_POS: float = -20
 
 var valid: bool:
 	set(value):
-		if value:
-			FmodServer.play_one_shot("event:/Interactables/buttom")
 		top_sprite.texture = valid_texture if value else idle_texture
 		top_sprite.position.y = VALID_POS if value else IDLE_POS
 		valid = value
@@ -30,6 +28,7 @@ var valid: bool:
 
 var current_valid_time: float = -1.0
 var stale: bool
+var was_valid: bool
 
 @onready var top_sprite: Sprite2D = $Top
 
@@ -42,7 +41,9 @@ func _physics_process(delta: float) -> void:
 		if current_valid_time <= 0.0:
 			valid = false
 			invalid.emit()
-		
+	
+	was_valid = valid
+	
 	if type == Type.HOLD:
 		valid = false
 	
@@ -55,8 +56,11 @@ func _physics_process(delta: float) -> void:
 			valid = true
 			stale = true
 			pressed.emit()
+			FmodServer.play_one_shot("event:/Interactables/buttom")
 		Type.HOLD:
 			valid = true
+			if valid and !was_valid:
+				FmodServer.play_one_shot("event:/Interactables/buttom")
 		Type.TIMER:
 			current_valid_time = time
 			valid = true

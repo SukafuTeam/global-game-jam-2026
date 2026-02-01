@@ -1,0 +1,32 @@
+[gd_scene format=3 uid="uid://coxtcrdidtpue"]
+
+[ext_resource type="Texture2D" uid="uid://dhjwgvaqnlfp4" path="res://assets/images/sprites/particles/circle_01_a.png" id="1_5pd6v"]
+[ext_resource type="Script" uid="uid://c3yuuawfkatyv" path="res://src/ui/item_tracker.gd" id="2_g0722"]
+[ext_resource type="Texture2D" uid="uid://b1qtfari8bql2" path="res://assets/images/sprites/pickables/caixa.png" id="3_8pn51"]
+
+[sub_resource type="Curve" id="Curve_k3g67"]
+_data = [Vector2(0, 1), 0.0, -0.89348996, 0, 0, Vector2(1, 0), -0.8181082, 0.0, 0, 0]
+point_count = 2
+
+[node name="ItemTracker" type="Node2D" unique_id=1276947894]
+z_index = 500
+z_as_relative = false
+script = ExtResource("2_g0722")
+
+[node name="Bubble" type="Sprite2D" parent="." unique_id=1012939667]
+scale = Vector2(0.37759194, 0.37759194)
+texture = ExtResource("1_5pd6v")
+
+[node name="Item" type="Sprite2D" parent="." unique_id=1729934417]
+scale = Vector2(0.5211848, 0.5211848)
+texture = ExtResource("3_8pn51")
+
+[node name="Pivot" type="Node2D" parent="." unique_id=1396643921]
+
+[node name="Pointer" type="Line2D" parent="Pivot" unique_id=832057009]
+self_modulate = Color(1, 1, 1, 0.5882353)
+show_behind_parent = true
+position = Vector2(58, 2)
+points = PackedVector2Array(2.5, -1.5, 64, 1)
+width = 60.0
+width_curve = SubResource("Curve_k3g67")

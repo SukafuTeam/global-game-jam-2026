@@ -1,10 +1,128 @@
 [gd_scene format=3 uid="uid://dkdt73uplwiww"]
 
+[ext_resource type="Script" uid="uid://h0ubwv88u72p" path="res://src/controllers/altar_controller.gd" id="1_fs0oh"]
+[ext_resource type="Texture2D" uid="uid://dq82seu56y1mj" path="res://assets/images/placeholder/tilesets/white_tile.png" id="1_mgv1q"]
 [ext_resource type="Texture2D" uid="uid://ctm2wl7is4ufw" path="res://assets/images/sprites/objects/altar.png" id="1_rglm7"]
+[ext_resource type="Texture2D" uid="uid://b1qtfari8bql2" path="res://assets/images/sprites/pickables/caixa.png" id="4_cq4p3"]
 
-[node name="Altar" type="Node2D" unique_id=1520962168]
+[sub_resource type="Curve" id="Curve_fs0oh"]
+_data = [Vector2(0, 0.96783626), 0.0, -0.8649886, 0, 0, Vector2(1, 0.18713444), 0.16496466, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="Gradient" id="Gradient_cq4p3"]
+offsets = PackedFloat32Array(0, 0.6574074, 1)
+colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 0.9166667, 1, 1, 1, 0)
+
+[sub_resource type="Gradient" id="Gradient_b0kvl"]
+colors = PackedColorArray(1, 0.3, 0, 1, 1, 0.6333333, 0, 1)
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_mgv1q"]
+radius = 147.0
+height = 336.0
+
+[sub_resource type="Curve" id="Curve_b0kvl"]
+_data = [Vector2(0, 0), 0.0, 11.012513, 0, 0, Vector2(0.25392672, 1), 0.0, -0.8649886, 0, 0, Vector2(1, 0.18713444), 0.16496466, 0.0, 0, 0]
+point_count = 3
+
+[node name="Altar" type="Node2D" unique_id=1520962168 node_paths=PackedStringArray("fires")]
+script = ExtResource("1_fs0oh")
+fires = [NodePath("FireParticle"), NodePath("FireParticle2"), NodePath("FireParticle3")]
+
+[node name="FireParticle" type="CPUParticles2D" parent="." unique_id=1126605415]
+position = Vector2(-177, -200)
+amount = 20
+texture = ExtResource("1_mgv1q")
+emission_shape = 3
+emission_rect_extents = Vector2(15, 15)
+direction = Vector2(0, -1)
+spread = 20.0
+gravity = Vector2(0, -50)
+initial_velocity_min = 40.0
+initial_velocity_max = 80.0
+angular_velocity_min = -500.0
+angular_velocity_max = 500.0
+angle_max = 360.0
+scale_amount_min = 0.2
+scale_amount_max = 0.3
+scale_amount_curve = SubResource("Curve_fs0oh")
+color_ramp = SubResource("Gradient_cq4p3")
+color_initial_ramp = SubResource("Gradient_b0kvl")
+
+[node name="FireParticle2" type="CPUParticles2D" parent="." unique_id=714456197]
+position = Vector2(177, -203)
+amount = 20
+texture = ExtResource("1_mgv1q")
+emission_shape = 3
+emission_rect_extents = Vector2(15, 15)
+direction = Vector2(0, -1)
+spread = 20.0
+gravity = Vector2(0, -50)
+initial_velocity_min = 40.0
+initial_velocity_max = 80.0
+angular_velocity_min = -500.0
+angular_velocity_max = 500.0
+angle_max = 360.0
+scale_amount_min = 0.2
+scale_amount_max = 0.3
+scale_amount_curve = SubResource("Curve_fs0oh")
+color_ramp = SubResource("Gradient_cq4p3")
+color_initial_ramp = SubResource("Gradient_b0kvl")
+
+[node name="FireParticle3" type="CPUParticles2D" parent="." unique_id=191036881]
+position = Vector2(-1, -328)
+amount = 20
+texture = ExtResource("1_mgv1q")
+emission_shape = 3
+emission_rect_extents = Vector2(15, 15)
+direction = Vector2(0, -1)
+spread = 20.0
+gravity = Vector2(0, -100)
+initial_velocity_min = 60.0
+initial_velocity_max = 100.0
+angular_velocity_min = -500.0
+angular_velocity_max = 500.0
+angle_max = 360.0
+scale_amount_min = 0.4
+scale_amount_max = 0.6
+scale_amount_curve = SubResource("Curve_fs0oh")
+color_ramp = SubResource("Gradient_cq4p3")
+color_initial_ramp = SubResource("Gradient_b0kvl")
 
 [node name="Altar" type="Sprite2D" parent="." unique_id=1399827967]
 position = Vector2(0, -170)
 scale = Vector2(0.2, 0.2)
 texture = ExtResource("1_rglm7")
+
+[node name="Area" type="Area2D" parent="." unique_id=597413082]
+collision_layer = 0
+collision_mask = 12
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area" unique_id=606684387]
+position = Vector2(0, -170)
+shape = SubResource("CapsuleShape2D_mgv1q")
+
+[node name="DeliveredContainer" type="Node2D" parent="." unique_id=462980653]
+position = Vector2(0, -136)
+
+[node name="DeliveredItem" type="Sprite2D" parent="DeliveredContainer" unique_id=1418703429]
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("4_cq4p3")
+
+[node name="FireParticle" type="CPUParticles2D" parent="DeliveredContainer/DeliveredItem" unique_id=518614495]
+show_behind_parent = true
+amount = 100
+texture = ExtResource("1_mgv1q")
+emission_shape = 1
+emission_sphere_radius = 101.38
+direction = Vector2(0, -1)
+spread = 0.0
+gravity = Vector2(0, -30)
+initial_velocity_min = 100.0
+initial_velocity_max = 200.0
+angular_velocity_min = -500.0
+angular_velocity_max = 500.0
+angle_max = 360.0
+scale_amount_min = 0.1
+scale_amount_max = 0.2
+scale_amount_curve = SubResource("Curve_b0kvl")
+color_ramp = SubResource("Gradient_cq4p3")

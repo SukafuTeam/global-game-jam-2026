@@ -1,0 +1,61 @@
+[gd_scene format=3 uid="uid://cbdoi78gk3g0v"]
+
+[ext_resource type="Script" uid="uid://rwtjl1y28b0" path="res://src/controllers/missions/mission_2.gd" id="1_fcih8"]
+[ext_resource type="TileSet" uid="uid://75bqeuagrrro" path="res://data/tilesets/jungle.tres" id="2_fcih8"]
+[ext_resource type="PackedScene" uid="uid://dr6qi0plb1myn" path="res://entities/pickables/box.tscn" id="3_gqvfv"]
+[ext_resource type="PackedScene" uid="uid://uie2nr7oiwbg" path="res://entities/objects/button.tscn" id="4_ebj3r"]
+[ext_resource type="PackedScene" uid="uid://cc8jtxpnv6qre" path="res://entities/pickables/coconut.tscn" id="5_fcih8"]
+
+[node name="Mission2" type="Node2D" unique_id=42407897 node_paths=PackedStringArray("wall", "buttons", "item")]
+script = ExtResource("1_fcih8")
+wall = NodePath("Wall")
+buttons = [NodePath("Button"), NodePath("Button2"), NodePath("Button3"), NodePath("Button4")]
+spawn_point = Vector2(8256, -1984)
+item = NodePath("Box")
+
+[node name="Wall" type="TileMapLayer" parent="." unique_id=455430498]
+tile_map_data = PackedByteArray(0, 0, 255, 255, 251, 255, 1, 0, 1, 0, 3, 0, 0, 0, 0, 0, 251, 255, 1, 0, 2, 0, 3, 0, 0, 0, 1, 0, 251, 255, 1, 0, 3, 0, 3, 0, 0, 0)
+tile_set = ExtResource("2_fcih8")
+
+[node name="Box" parent="." unique_id=378684654 instance=ExtResource("3_gqvfv")]
+position = Vector2(40, -382)
+
+[node name="Button" parent="." unique_id=1307563553 instance=ExtResource("4_ebj3r")]
+position = Vector2(-321, -126)
+type = 1
+
+[node name="Button2" parent="." unique_id=1029826675 instance=ExtResource("4_ebj3r")]
+position = Vector2(-320, 257)
+type = 1
+
+[node name="Button3" parent="." unique_id=887576803 instance=ExtResource("4_ebj3r")]
+position = Vector2(385, 257)
+type = 1
+
+[node name="Button4" parent="." unique_id=1159348458 instance=ExtResource("4_ebj3r")]
+position = Vector2(385, -127)
+type = 1
+
+[node name="Coconut" parent="." unique_id=1108538937 instance=ExtResource("5_fcih8")]
+position = Vector2(-673, 227)
+
+[node name="Coconut2" parent="." unique_id=534916864 instance=ExtResource("5_fcih8")]
+position = Vector2(-543, 268)
+
+[node name="Coconut3" parent="." unique_id=1194514562 instance=ExtResource("5_fcih8")]
+position = Vector2(-35, 264)
+
+[node name="Coconut4" parent="." unique_id=588869565 instance=ExtResource("5_fcih8")]
+position = Vector2(-133, 278)
+
+[node name="Coconut5" parent="." unique_id=1525142343 instance=ExtResource("5_fcih8")]
+position = Vector2(131, 188)
+
+[node name="Coconut6" parent="." unique_id=688091328 instance=ExtResource("5_fcih8")]
+position = Vector2(43, 314)
+
+[node name="Coconut7" parent="." unique_id=847568123 instance=ExtResource("5_fcih8")]
+position = Vector2(652, 298)
+
+[node name="Coconut8" parent="." unique_id=1099074652 instance=ExtResource("5_fcih8")]
+position = Vector2(575, 222)

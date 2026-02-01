@@ -467,6 +467,8 @@ func on_land(_hit_velocity: float):
 	
 	right_jump_particle.restart()
 	left_jump_particle.restart()
+	
+	FmodServer.play_one_shot_with_params("event:/Character/footsteps", {"Surface": Global.ground_surface})
 
 #endregion
 
@@ -572,7 +574,7 @@ func on_animation_event(_sprite: SpineSprite, _state: SpineAnimationState, _trac
 	if event.get_data().get_event_name() != "footstep":
 		return
 	
-	FmodServer.play_one_shot_with_params("event:/Character/footsteps", {"Surface": 1})
+	FmodServer.play_one_shot_with_params("event:/Character/footsteps", {"Surface": Global.ground_surface})
 
 
 #endregion

@@ -1,0 +1,9 @@
+[gd_scene format=3 uid="uid://dp8rpoj2i2fs0"]
+
+[ext_resource type="Script" uid="uid://ciu3i5c71p67q" path="res://src/controllers/camera_limiter.gd" id="1_nsrp2"]
+
+[node name="CameraLimiter" type="Area2D" unique_id=1962202259]
+collision_layer = 0
+collision_mask = 4
+script = ExtResource("1_nsrp2")
+metadata/_custom_type_script = "uid://ciu3i5c71p67q"
