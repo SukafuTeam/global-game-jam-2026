@@ -1,5 +1,8 @@
 extends Control
 
+func _ready() -> void:
+	var event = FmodServer.create_event_instance("event:/BGM/jungle")
+	event.start()
 
 func _process(_delta: float) -> void:
 	if Input.is_action_just_pressed("jump") or Input.is_action_just_pressed("ui_accept"):

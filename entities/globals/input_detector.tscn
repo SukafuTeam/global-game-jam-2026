@@ -6,9 +6,13 @@
 [ext_resource type="Texture2D" uid="uid://cnkm7agobby3p" path="res://assets/images/ui/input/keyboard_z.png" id="4_mum6d"]
 [ext_resource type="Texture2D" uid="uid://diwe5s7jjf6f5" path="res://assets/images/ui/input/keyboard_enter.png" id="5_1bvrp"]
 [ext_resource type="Texture2D" uid="uid://bg1mtagovftix" path="res://assets/images/ui/input/switch_button_b.png" id="6_ltutf"]
+[ext_resource type="Texture2D" uid="uid://dtaa3eakhp6te" path="res://assets/images/ui/input/steamdeck_button_x.png" id="7_ilq2h"]
 [ext_resource type="Texture2D" uid="uid://cn7mjhx8mwr4c" path="res://assets/images/ui/input/steamdeck_button_b.png" id="7_luf3f"]
 [ext_resource type="Texture2D" uid="uid://2l2k4hxdf20t" path="res://assets/images/ui/input/playstation_button_circle.png" id="8_a75vs"]
+[ext_resource type="Texture2D" uid="uid://b7bjgh72ido5e" path="res://assets/images/ui/input/playstation_button_square.png" id="8_kocid"]
 [ext_resource type="Texture2D" uid="uid://m8j04psl4puq" path="res://assets/images/ui/input/keyboard_x.png" id="9_bcyo4"]
+[ext_resource type="Texture2D" uid="uid://b1km77ialqkxx" path="res://assets/images/ui/input/keyboard_c.png" id="9_kocid"]
+[ext_resource type="Texture2D" uid="uid://cuna4ffjjc52j" path="res://assets/images/ui/input/switch_button_y.png" id="9_y6b8n"]
 [ext_resource type="Texture2D" uid="uid://d2vu32t3p2w76" path="res://assets/images/ui/input/keyboard_escape.png" id="10_ilq2h"]
 [ext_resource type="Texture2D" uid="uid://c0rnuadbgx40j" path="res://assets/images/ui/input/switch_button_a.png" id="11_kocid"]
 [ext_resource type="Texture2D" uid="uid://hxftoggeobei" path="res://assets/images/ui/input/steamdeck_dpad.png" id="12_y6b8n"]
@@ -23,6 +27,10 @@ jump_texture_playstation = ExtResource("3_qq5rs")
 jump_texture_keyboard = ExtResource("4_mum6d")
 enter_texture_keyboard = ExtResource("5_1bvrp")
 jump_texture_nintendo = ExtResource("6_ltutf")
+hold_texture_xbox = ExtResource("7_ilq2h")
+hold_texture_playstation = ExtResource("8_kocid")
+hold_texture_keyboard = ExtResource("9_kocid")
+hold_texture_nintendo = ExtResource("9_y6b8n")
 dash_texture_xbox = ExtResource("7_luf3f")
 dash_texture_playstation = ExtResource("8_a75vs")
 dash_texture_keyboard = ExtResource("9_bcyo4")

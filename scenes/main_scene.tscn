@@ -89,7 +89,10 @@ size = Vector2(896, 105.5)
 size = Vector2(430, 86)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_k3g67"]
-size = Vector2(806, 523)
+size = Vector2(9371, 621.5)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_02d50"]
+size = Vector2(1473, 621.5)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_4bgka"]
 size = Vector2(2462, 2360)
@@ -502,15 +505,29 @@ script = ExtResource("10_e1cbu")
 position = Vector2(983, 279)
 
 [node name="CollisionShape2D2" type="CollisionShape2D" parent="CameraLimiters/CameraLimiter" unique_id=423776062]
-position = Vector2(1824, -327)
+position = Vector2(3511.5, 154.75)
 shape = SubResource("RectangleShape2D_k3g67")
 debug_color = Color(0.55717087, 0.5402703, 0, 0.41960785)
 
 [node name="Min" type="Marker2D" parent="CameraLimiters/CameraLimiter" unique_id=236150177]
-position = Vector2(698, -412)
+position = Vector2(-1242, 643)
 
 [node name="Max" type="Marker2D" parent="CameraLimiters/CameraLimiter" unique_id=2022988144]
-position = Vector2(2872, -2034)
+position = Vector2(8542, -435)
+
+[node name="CameraLimiter19" parent="CameraLimiters" unique_id=95263405 instance=ExtResource("29_4bgka")]
+position = Vector2(766, -1010)
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="CameraLimiters/CameraLimiter19" unique_id=1929057419]
+position = Vector2(2011, 751)
+shape = SubResource("RectangleShape2D_02d50")
+debug_color = Color(0.55717087, 0.5402703, 0, 0.41960785)
+
+[node name="Min" type="Marker2D" parent="CameraLimiters/CameraLimiter19" unique_id=1580825819]
+position = Vector2(871, 937)
+
+[node name="Max" type="Marker2D" parent="CameraLimiters/CameraLimiter19" unique_id=1885720001]
+position = Vector2(3100, -636)
 
 [node name="CameraLimiter2" parent="CameraLimiters" unique_id=37666698 instance=ExtResource("29_4bgka")]
 position = Vector2(7070, -524)
@@ -771,6 +788,6 @@ position = Vector2(-604, 1356)
 position = Vector2(2264, 211)
 
 [node name="GoldKey" parent="." unique_id=878132375 instance=ExtResource("12_01n6w")]
-position = Vector2(2447, 535)
+position = Vector2(16612, 5871)
 color = Color(1, 0.84313726, 0, 1)
 lock_id = 5
