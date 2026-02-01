@@ -56,11 +56,11 @@ func _physics_process(delta: float) -> void:
 			valid = true
 			stale = true
 			pressed.emit()
-			FmodServer.play_one_shot("event:/Interactables/buttom")
+			FmodServer.play_one_shot("event:/Interactables/button")
 		Type.HOLD:
 			valid = true
 			if valid and !was_valid:
-				FmodServer.play_one_shot("event:/Interactables/buttom")
+				FmodServer.play_one_shot("event:/Interactables/button")
 		Type.TIMER:
 			current_valid_time = time
 			valid = true
