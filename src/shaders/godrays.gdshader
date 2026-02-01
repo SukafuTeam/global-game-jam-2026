@@ -2,7 +2,7 @@
 Shader from Godot Shaders - the free shader library.
 godotshaders.com/shader/god-rays
 
-Feel free to use, improve and change this shader according to your needs
+Feel free to use, improvqe and change this shader according to your needs
 and consider sharing the modified result on godotshaders.com.
 */
 

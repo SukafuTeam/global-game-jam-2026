@@ -2,9 +2,13 @@
 
 [ext_resource type="Script" uid="uid://rwtjl1y28b0" path="res://src/controllers/missions/mission_2.gd" id="1_fcih8"]
 [ext_resource type="TileSet" uid="uid://75bqeuagrrro" path="res://data/tilesets/jungle.tres" id="2_fcih8"]
-[ext_resource type="PackedScene" uid="uid://dr6qi0plb1myn" path="res://entities/pickables/box.tscn" id="3_gqvfv"]
+[ext_resource type="Script" uid="uid://cc7vmuv4al3gt" path="res://src/controllers/pickables/pickable.gd" id="3_kc13u"]
 [ext_resource type="PackedScene" uid="uid://uie2nr7oiwbg" path="res://entities/objects/button.tscn" id="4_ebj3r"]
+[ext_resource type="Texture2D" uid="uid://dorq5moj2wack" path="res://assets/images/sprites/pickables/BANANA.png" id="4_lmayb"]
 [ext_resource type="PackedScene" uid="uid://cc8jtxpnv6qre" path="res://entities/pickables/coconut.tscn" id="5_fcih8"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_440lv"]
+size = Vector2(68, 68)
 
 [node name="Mission2" type="Node2D" unique_id=42407897 node_paths=PackedStringArray("wall", "buttons", "item")]
 script = ExtResource("1_fcih8")
@@ -17,8 +21,19 @@ item = NodePath("Box")
 tile_map_data = PackedByteArray(0, 0, 255, 255, 251, 255, 1, 0, 1, 0, 3, 0, 0, 0, 0, 0, 251, 255, 1, 0, 2, 0, 3, 0, 0, 0, 1, 0, 251, 255, 1, 0, 3, 0, 3, 0, 0, 0)
 tile_set = ExtResource("2_fcih8")
 
-[node name="Box" parent="." unique_id=378684654 instance=ExtResource("3_gqvfv")]
+[node name="Box" type="CharacterBody2D" parent="." unique_id=378684654]
 position = Vector2(40, -382)
+collision_layer = 8
+script = ExtResource("3_kc13u")
+metadata/_custom_type_script = "uid://cc7vmuv4al3gt"
+
+[node name="Sprite" type="Sprite2D" parent="Box" unique_id=1042648674]
+position = Vector2(-3, -4)
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("4_lmayb")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Box" unique_id=858150159]
+shape = SubResource("RectangleShape2D_440lv")
 
 [node name="Button" parent="." unique_id=1307563553 instance=ExtResource("4_ebj3r")]
 position = Vector2(-321, -126)

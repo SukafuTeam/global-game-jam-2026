@@ -1,12 +1,27 @@
 [gd_scene format=3 uid="uid://cyva02r42orh7"]
 
 [ext_resource type="Script" uid="uid://bfqpb3l0ca7bx" path="res://src/controllers/missions/mission_controller.gd" id="1_455o8"]
-[ext_resource type="PackedScene" uid="uid://dr6qi0plb1myn" path="res://entities/pickables/box.tscn" id="2_7udew"]
+[ext_resource type="Script" uid="uid://cc7vmuv4al3gt" path="res://src/controllers/pickables/pickable.gd" id="2_7udew"]
+[ext_resource type="Texture2D" uid="uid://dotvrkccc54bc" path="res://assets/images/sprites/pickables/Vector-1.png" id="3_77kmq"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_440lv"]
+size = Vector2(68, 68)
 
 [node name="Mission5" type="Node2D" unique_id=323381407 node_paths=PackedStringArray("item")]
 script = ExtResource("1_455o8")
 spawn_point = Vector2(19506, -854)
 item = NodePath("Box")
 
-[node name="Box" parent="." unique_id=378684654 instance=ExtResource("2_7udew")]
+[node name="Box" type="CharacterBody2D" parent="." unique_id=378684654]
 position = Vector2(-109, 4016)
+collision_layer = 8
+script = ExtResource("2_7udew")
+metadata/_custom_type_script = "uid://cc7vmuv4al3gt"
+
+[node name="Sprite" type="Sprite2D" parent="Box" unique_id=1042648674]
+position = Vector2(-2.3841858e-07, 5.999999)
+scale = Vector2(0.7, 0.7)
+texture = ExtResource("3_77kmq")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Box" unique_id=858150159]
+shape = SubResource("RectangleShape2D_440lv")
