@@ -127,6 +127,8 @@ func _ready() -> void:
 	Global.safe_item_position = global_position
 	
 	
+	var music_event = FmodServer.create_event_instance("event:/BGM/jungle")
+	music_event.start()
 
 func _process(delta: float) -> void:
 	update_body_scale(delta)
