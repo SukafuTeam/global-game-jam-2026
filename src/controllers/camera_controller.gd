@@ -25,7 +25,7 @@ func _process(delta):
 		stress = Vector2.ZERO
 
 func get_shake() -> float:
-	return sin(elapsed_time * 300.0)
+	return sin(elapsed_time * 50.0)
 
 func add_stress(amount: Vector2):
 	stress += amount

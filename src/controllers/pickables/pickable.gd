@@ -121,6 +121,6 @@ func drop(new_vel: Vector2 = Vector2.ZERO):
 	velocity = new_vel * DROP_FORCE_MULTIPLIER * DROP_FORCE
 	collision.disabled = false
 	
-	await get_tree().create_timer(0.5).timeout
+	await get_tree().create_timer(0.25).timeout
 	
 	interactible = true
