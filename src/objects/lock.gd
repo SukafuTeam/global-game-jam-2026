@@ -56,6 +56,8 @@ func on_body_entered(other: Node2D):
 func open(k: Key):
 	opened = true
 	Global.opened_locks.append(lock_id)
+	FmodServer.play_one_shot("event:/Interactables/unlock")
+	FmodServer.play_one_shot("event:/UI/yes")
 	k.queue_free()
 	particle.restart()
 	await particle.finished

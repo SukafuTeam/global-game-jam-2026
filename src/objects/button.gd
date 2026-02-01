@@ -20,6 +20,8 @@ const VALID_POS: float = -20
 
 var valid: bool:
 	set(value):
+		if value:
+			FmodServer.play_one_shot("event:/Interactables/buttom")
 		top_sprite.texture = valid_texture if value else idle_texture
 		top_sprite.position.y = VALID_POS if value else IDLE_POS
 		valid = value

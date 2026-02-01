@@ -15,9 +15,11 @@ func on_body_entered(other: Node2D):
 	
 	c.velocity = global_transform.basis_xform(Vector2.UP) * impulse_force
 	
+	FmodServer.play_one_shot("event:/Interactables/bounce")
+	
 	if tween:
 		tween.kill()
-		
+	
 	tween = create_tween()
 	tween.tween_property(
 		body_container,

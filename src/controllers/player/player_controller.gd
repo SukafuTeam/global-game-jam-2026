@@ -385,7 +385,7 @@ func process_hold():
 			holding_item.drop(drop_vel)
 			holding_item = null
 			current_kick_time = INPUT_BUFFER_TIME
-			FmodServer.play_one_shot_with_params("event:/Character/footsteps", {"Surface": 0})
+			FmodServer.play_one_shot("event:/Character/grunt")
 			body_container.scale = LAND_SCALE
 		return
 	
@@ -572,7 +572,7 @@ func on_animation_event(_sprite: SpineSprite, _state: SpineAnimationState, _trac
 	if event.get_data().get_event_name() != "footstep":
 		return
 	
-	FmodServer.play_one_shot_with_params("event:/Character/footsteps", {"Surface": 0})
+	FmodServer.play_one_shot_with_params("event:/Character/footsteps", {"Surface": 1})
 
 
 #endregion
