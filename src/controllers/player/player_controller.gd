@@ -7,13 +7,14 @@ const HOLD_BUFFER_TIME: float = 0.5
 const MOVE_SPEED: float = 800.0
 const SPEED_MULTIPLIER: float = 1.5
 const ACCEL: float = 6000.0
+const MAX_FALL_SPEED: float = 2000.0
 
 const JUMP_FORCE: float = 930.0
 const FALL_GRAVITY_MULTIPLIER: float = 3.0
 
 const MAX_WALL_JUMP_FALL_SPEED: float = 400.0
 const WALL_JUMP_SPEED: float = 500.0
-const WALL_JUMP_MOVE_TIME: float = 0.1
+const WALL_JUMP_MOVE_TIME: float = 0.15
 
 const DASH_TIME: float = 0.3
 const DASH_SPEED: Vector2 = Vector2(2500.0, 1700.0)
@@ -179,6 +180,8 @@ func _physics_process(delta: float) -> void:
 		
 		velocity.y += grav * delta
 		
+		velocity.y = min(velocity.y, MAX_FALL_SPEED)
+		
 		if (is_on_wall_only() or left_wall_check or right_wall_check) and Global.wall_jump_enabled:
 			if left_wall_check and Input.is_action_pressed("left"):
 				current_left_wall_slide_time = INPUT_BUFFER_TIME
@@ -237,7 +240,6 @@ func check_damage():
 		holding_item = null
 	
 	Global.set_camera_stress(Vector2.ONE)
-	#velocity = Vector2.ZERO
 	state = State.DAMAGE
 	current_state_time = DAMAGE_TIME
 	current_iframe_time = IFRAME_TIME
@@ -549,6 +551,7 @@ func change_animation(new_anim: String, track_id: int = 0, mix_time: float = 0.0
 	
 	var track_entry: SpineTrackEntry = sprite.get_animation_state().set_animation(new_anim, true, track_id)
 	track_entry.set_mix_time(mix_time)
+	track_entry.set_mix_blend(SpineConstant.MixBlend_Replace)
 	
 	return track_entry
 
@@ -557,8 +560,8 @@ func update_partiles():
 	speed_footstep_particle.emitting = state == State.GROUND and abs(velocity.x) >= MOVE_SPEED * 0.9 and Global.speed_enabled
 	dash_particle.emitting = state == State.DASH
 	
-	left_wall_slide_particle.emitting = left_wall_check and Input.is_action_pressed("left") and Global.wall_jump_enabled
-	right_wall_slide_particle.emitting = right_wall_check and Input.is_action_pressed("right") and Global.wall_jump_enabled
+	left_wall_slide_particle.emitting = left_wall_check and Input.is_action_pressed("left") and Global.wall_jump_enabled and state == State.AIR
+	right_wall_slide_particle.emitting = right_wall_check and Input.is_action_pressed("right") and Global.wall_jump_enabled and state == State.AIR
 	
 	if Global.speed_enabled == true and abs(velocity.x) > MOVE_SPEED:
 		Global.set_camera_stress(Vector2.ONE * 0.25)

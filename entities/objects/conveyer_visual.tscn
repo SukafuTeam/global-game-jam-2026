@@ -1,0 +1,15 @@
+[gd_scene format=3 uid="uid://c5qdwbndnehap"]
+
+[ext_resource type="Texture2D" uid="uid://bri8cqs0sfq8r" path="res://assets/images/sprites/objects/esteira.png" id="1_a1m2f"]
+[ext_resource type="Shader" uid="uid://q3pdvwpbl10e" path="res://src/shaders/offset_uc.gdshader" id="1_lbwlf"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_a1m2f"]
+shader = ExtResource("1_lbwlf")
+
+[node name="ConveyerVisual" type="Line2D" unique_id=530432220]
+texture_repeat = 2
+material = SubResource("ShaderMaterial_a1m2f")
+points = PackedVector2Array(92, 81, 608, 269)
+width = 32.0
+texture = ExtResource("1_a1m2f")
+texture_mode = 1

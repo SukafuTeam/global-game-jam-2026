@@ -1,0 +1,40 @@
+[gd_scene format=3 uid="uid://uie2nr7oiwbg"]
+
+[ext_resource type="Script" uid="uid://w66bleu36n34" path="res://src/objects/button.gd" id="1_yiwfo"]
+[ext_resource type="Texture2D" uid="uid://df4h5baeuufvx" path="res://assets/images/sprites/objects/botao_vermelho.png" id="2_yiwfo"]
+[ext_resource type="Texture2D" uid="uid://bocyw4ltpfrda" path="res://assets/images/sprites/objects/botao_verde.png" id="3_8b0ie"]
+[ext_resource type="Texture2D" uid="uid://cmvbq50wabmc5" path="res://assets/images/sprites/objects/base_botao.png" id="3_bdlfs"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_oewsa"]
+size = Vector2(86, 22)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_yiwfo"]
+size = Vector2(110, 24)
+
+[node name="Button" type="Area2D" unique_id=1307563553]
+collision_layer = 8
+collision_mask = 12
+script = ExtResource("1_yiwfo")
+idle_texture = ExtResource("2_yiwfo")
+valid_texture = ExtResource("3_8b0ie")
+
+[node name="Top" type="Sprite2D" parent="." unique_id=1564661110]
+position = Vector2(0, -30)
+scale = Vector2(0.2, 0.2)
+texture = ExtResource("2_yiwfo")
+
+[node name="Base" type="Sprite2D" parent="." unique_id=1541895092]
+position = Vector2(0, -12.199996)
+scale = Vector2(0.2, 0.2)
+texture = ExtResource("3_bdlfs")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=2085393090]
+position = Vector2(0, -29.199997)
+shape = SubResource("RectangleShape2D_oewsa")
+
+[node name="StaticBody2D" type="StaticBody2D" parent="." unique_id=1582607077]
+position = Vector2(0, -12.199997)
+collision_mask = 13
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D" unique_id=170724335]
+shape = SubResource("RectangleShape2D_yiwfo")

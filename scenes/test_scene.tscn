@@ -37,7 +37,7 @@ tile_map_data = PackedByteArray("AAAAAAAAAQALAAIAAAAAAAEAAQALAAIAAAAAAAIAAQALAAI
 tile_set = ExtResource("1_nd71p")
 
 [node name="Player" parent="." unique_id=603172765 instance=ExtResource("2_j8ivh")]
-position = Vector2(329, 936)
+position = Vector2(4098, -5821)
 
 [node name="Camera2D" type="Camera2D" parent="Player" unique_id=539694744]
 limit_left = 0

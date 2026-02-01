@@ -1,0 +1,20 @@
+[gd_scene format=3 uid="uid://cyi2remjkdhsy"]
+
+[ext_resource type="Script" uid="uid://bh4t7kjvcjnfp" path="res://src/objects/key.gd" id="1_phtp7"]
+[ext_resource type="Texture2D" uid="uid://d3cohhg58b0mx" path="res://assets/images/sprites/objects/chave.png" id="2_nl5kq"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_lghao"]
+size = Vector2(49, 74)
+
+[node name="Key" type="CharacterBody2D" unique_id=990837263]
+collision_layer = 8
+script = ExtResource("1_phtp7")
+color = Color(0, 0, 1, 1)
+
+[node name="Sprite" type="Sprite2D" parent="." unique_id=1584155758]
+scale = Vector2(0.6, 0.6)
+texture = ExtResource("2_nl5kq")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1319747178]
+position = Vector2(-0.5, 0)
+shape = SubResource("RectangleShape2D_lghao")

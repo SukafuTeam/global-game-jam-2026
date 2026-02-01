@@ -1,0 +1,79 @@
+[gd_scene format=3 uid="uid://b5bhisoi8hwn6"]
+
+[ext_resource type="Script" uid="uid://cgqgwasfhubl5" path="res://src/objects/lock.gd" id="1_5mq1v"]
+[ext_resource type="Texture2D" uid="uid://tcr0fp1lba50" path="res://assets/images/sprites/objects/cadeado_fechado.png" id="1_bsrqb"]
+[ext_resource type="Texture2D" uid="uid://dhjwgvaqnlfp4" path="res://assets/images/sprites/particles/circle_01_a.png" id="2_scgxo"]
+[ext_resource type="Texture2D" uid="uid://dq82seu56y1mj" path="res://assets/images/placeholder/tilesets/white_tile.png" id="3_5mq1v"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_scgxo"]
+size = Vector2(64, 64)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_bsrqb"]
+radius = 63.007935
+
+[sub_resource type="Curve" id="Curve_scgxo"]
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.53174603, 0.3479532), 0.0, 0.0, 0, 0, Vector2(1, 0.25438595), 0.0, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="Curve" id="Curve_bwt87"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(0.9973544, 0), -1.0819074, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="Gradient" id="Gradient_lk8xg"]
+offsets = PackedFloat32Array(0, 0.6234568, 1)
+colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 0.8796296, 1, 1, 1, 0)
+
+[node name="Lock" type="StaticBody2D" unique_id=1568173271]
+collision_mask = 12
+script = ExtResource("1_5mq1v")
+
+[node name="Sprite" type="Sprite2D" parent="." unique_id=1403507958]
+scale = Vector2(0.6543382, 0.6543382)
+texture = ExtResource("1_bsrqb")
+
+[node name="BubbleContainer" type="Node2D" parent="Sprite" unique_id=381359232]
+modulate = Color(1, 1, 1, 0.39215687)
+self_modulate = Color(1, 1, 1, 0.39215687)
+scale = Vector2(1.9483424, 1.9483424)
+
+[node name="Bubble" type="Sprite2D" parent="Sprite/BubbleContainer" unique_id=1815920790]
+scale = Vector2(0.3, 0.3)
+texture = ExtResource("2_scgxo")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=795992376]
+visible = false
+shape = SubResource("RectangleShape2D_scgxo")
+
+[node name="SearchBox" type="Area2D" parent="." unique_id=620593122]
+visible = false
+collision_layer = 0
+collision_mask = 12
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="SearchBox" unique_id=1134467391]
+shape = SubResource("CircleShape2D_bsrqb")
+
+[node name="OpenParticle" type="CPUParticles2D" parent="." unique_id=484433613]
+emitting = false
+amount = 50
+texture = ExtResource("3_5mq1v")
+lifetime = 0.5
+one_shot = true
+explosiveness = 0.82
+lifetime_randomness = 0.51
+emission_shape = 3
+emission_rect_extents = Vector2(1, 10)
+direction = Vector2(-1, 0)
+spread = 180.0
+gravity = Vector2(0, 0)
+initial_velocity_min = 500.0
+initial_velocity_max = 600.0
+angular_velocity_min = -1200.0
+angular_velocity_max = 1200.0
+damping_min = 10000.0
+damping_max = 10000.0
+damping_curve = SubResource("Curve_scgxo")
+angle_max = 360.0
+scale_amount_min = 0.2
+scale_amount_max = 0.3
+scale_amount_curve = SubResource("Curve_bwt87")
+color_ramp = SubResource("Gradient_lk8xg")

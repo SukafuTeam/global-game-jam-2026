@@ -14,10 +14,13 @@ const SNAP_HEIGHT: float = -20.0
 @export var bounce: float = 0.2
 @export var should_rotate: bool = false
 
+var spawn_point: Vector2
+
 var interactible: bool
 var additional_velocity: Vector2
 var original_parent: Node2D
 var target: Node2D
+var time_alive: float = 0.0
 
 var snapping: bool
 var snap_from: Vector2
@@ -32,11 +35,13 @@ var last_velocity: Vector2
 @onready var collision: CollisionShape2D = $CollisionShape2D
 
 func _ready() -> void:
+	spawn_point = global_position
 	original_parent = get_parent()
 	interactible = true
 	top_level = true
 
 func _physics_process(delta: float) -> void:
+	time_alive += delta
 	if snapping:
 		if target != null:
 			snap_to = target.global_position
@@ -50,16 +55,13 @@ func _physics_process(delta: float) -> void:
 	if !is_on_floor():
 		velocity.y += Constants.GRAVITY * delta * 2.0
 	
-	
 	was_on_floor = is_on_floor()
-	velocity += additional_velocity
 	last_velocity = velocity
 	
 	if should_rotate:
 		global_rotation_degrees += velocity.x * ROTATE_AMOUNT * delta
 	
 	move_and_slide()
-	additional_velocity = Vector2.ZERO
 	
 	if is_on_floor():
 		
@@ -68,8 +70,9 @@ func _physics_process(delta: float) -> void:
 				velocity.y = -last_velocity.y * bounce
 				velocity.x *= bounce
 				
-				var force_percent = inverse_lerp(0.0, MAX_IMPACT_FORCE, last_velocity.length())
-				FmodServer.play_one_shot_attached_with_params("event:/Pickables/wood", self, {"force": force_percent})
+				if time_alive > 3.0:
+					var force_percent = inverse_lerp(0.0, MAX_IMPACT_FORCE, last_velocity.length())
+					FmodServer.play_one_shot_attached_with_params("event:/Pickables/wood", self, {"force": force_percent})
 			else:
 				velocity = Vector2.ZERO
 		else:
@@ -80,8 +83,9 @@ func _physics_process(delta: float) -> void:
 	
 	if is_on_wall_only():
 		if abs(last_velocity.x) > BOUNCE_THRESHOLD:
-			var force_percent = inverse_lerp(0.0, MAX_IMPACT_FORCE, last_velocity.length())
-			FmodServer.play_one_shot_attached_with_params("event:/Pickables/wood", self, {"force": force_percent})
+			if time_alive > 3.0:
+				var force_percent = inverse_lerp(0.0, MAX_IMPACT_FORCE, last_velocity.length())
+				FmodServer.play_one_shot_attached_with_params("event:/Pickables/wood", self, {"force": force_percent})
 			velocity.x = -last_velocity.x * bounce
 
 func snap(to: Vector2, time: float = -1.0):
@@ -123,7 +127,7 @@ func drop(new_vel: Vector2 = Vector2.ZERO):
 	interactible = false
 	
 	velocity = new_vel * DROP_FORCE_MULTIPLIER * DROP_FORCE
-	collision.disabled = false
+	collision.set_deferred("disabled", false)
 	
 	await get_tree().create_timer(0.25).timeout
 	

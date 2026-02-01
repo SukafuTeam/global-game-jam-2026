@@ -12,12 +12,21 @@ var extra_health_enabled: bool = false
 
 var safe_item_position: Vector2
 
+var opened_locks: Array[int] = []
+
 func _ready():
 	process_mode = PROCESS_MODE_ALWAYS
-	reset()
+	#reset()
 
 func reset():
-	pass
+	opened_locks = []
+	masked = false
+	double_jump_enabled = false
+	wall_jump_enabled = false
+	dash_enabled = false
+	speed_enabled = false
+	high_jump_enabled = false
+	extra_health_enabled = false
 
 func add_camera_stress(stress: Vector2):
 	if camera == null:

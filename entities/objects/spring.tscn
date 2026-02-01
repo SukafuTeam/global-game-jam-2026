@@ -1,0 +1,24 @@
+[gd_scene format=3 uid="uid://bdnmuffauim2"]
+
+[ext_resource type="Script" uid="uid://25tu4qea64vs" path="res://src/objects/spring.gd" id="1_dbeb2"]
+[ext_resource type="Texture2D" uid="uid://ccochrr6j8h11" path="res://assets/images/sprites/objects/mola.png" id="2_yyh28"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_dedw0"]
+size = Vector2(128, 87)
+
+[node name="Spring" type="Area2D" unique_id=1899399502]
+collision_layer = 32
+collision_mask = 12
+script = ExtResource("1_dbeb2")
+
+[node name="BodyContainer" type="Node2D" parent="." unique_id=276654095]
+position = Vector2(32, 32)
+
+[node name="Sprite" type="Sprite2D" parent="BodyContainer" unique_id=1967573067]
+position = Vector2(0, -43)
+scale = Vector2(0.2, 0.2)
+texture = ExtResource("2_yyh28")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1356985254]
+position = Vector2(32, -11.5)
+shape = SubResource("RectangleShape2D_dedw0")
