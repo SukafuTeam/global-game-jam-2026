@@ -1,0 +1,107 @@
+[gd_scene format=3 uid="uid://cqtulki2u6gt0"]
+
+[ext_resource type="Script" uid="uid://ysu2p1etpmvs" path="res://src/menu_scene.gd" id="1_6od1f"]
+[ext_resource type="PackedScene" uid="uid://h2wucwbiou3" path="res://entities/background/jungle_background.tscn" id="1_vrre2"]
+[ext_resource type="Texture2D" uid="uid://csd140oeyam5v" path="res://assets/images/ui/logo.png" id="2_o71fo"]
+[ext_resource type="Script" uid="uid://m4lhlbgvsg28" path="res://src/ui/input_button_container.gd" id="3_6wmco"]
+[ext_resource type="Texture2D" uid="uid://b606q1sv1oqxr" path="res://assets/images/ui/game/cancel-button.png" id="4_482oc"]
+[ext_resource type="Texture2D" uid="uid://1soxlqhyr5bu" path="res://assets/images/ui/game/confirm-button.png" id="4_yfxa8"]
+[ext_resource type="PackedScene" uid="uid://dkdt73uplwiww" path="res://entities/objects/altar.tscn" id="5_u4hxd"]
+
+[node name="Menu" type="Control" unique_id=83057012]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_6od1f")
+
+[node name="JungleBackground" parent="." unique_id=970253655 instance=ExtResource("1_vrre2")]
+
+[node name="Logo" type="Sprite2D" parent="." unique_id=1785432582]
+position = Vector2(960, 342)
+scale = Vector2(0.6812513, 0.6812513)
+texture = ExtResource("2_o71fo")
+
+[node name="TextureRect" type="TextureRect" parent="." unique_id=81604312]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -85.0
+offset_top = 184.0
+offset_right = 85.0
+offset_bottom = 354.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("4_yfxa8")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="InputIcon" type="TextureRect" parent="TextureRect" unique_id=1869242207]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -35.0
+offset_top = -35.0
+offset_right = 35.0
+offset_bottom = 35.0
+grow_horizontal = 2
+grow_vertical = 2
+expand_mode = 1
+stretch_mode = 5
+script = ExtResource("3_6wmco")
+type = 5
+color = Color(0.72156864, 0.007843138, 0.003921569, 1)
+
+[node name="Altar" parent="TextureRect" unique_id=1520962168 instance=ExtResource("5_u4hxd")]
+position = Vector2(-634, 415)
+scale = Vector2(1.576139, 1.576139)
+decoration = true
+
+[node name="Altar2" parent="TextureRect" unique_id=964409717 instance=ExtResource("5_u4hxd")]
+position = Vector2(826, 384)
+scale = Vector2(1.576139, 1.576139)
+decoration = true
+
+[node name="TextureRect2" type="TextureRect" parent="." unique_id=1880207631]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -933.0
+offset_top = -511.0
+offset_right = -825.0
+offset_bottom = -403.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("4_482oc")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="InputIcon" type="TextureRect" parent="TextureRect2" unique_id=1781995789]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -21.0
+offset_top = -21.0
+offset_right = 21.0
+offset_bottom = 21.0
+grow_horizontal = 2
+grow_vertical = 2
+expand_mode = 1
+stretch_mode = 5
+script = ExtResource("3_6wmco")
+type = 6
+color = Color(1, 0.92941177, 0.87058824, 1)

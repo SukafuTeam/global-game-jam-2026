@@ -5,11 +5,11 @@ extends Area2D
 @onready var limit_max: Marker2D = $Max
 
 func _ready() -> void:
-	body_entered.connect(on_body_entered)
+	area_entered.connect(on_body_entered)
 	
 
-func on_body_entered(other: Node2D):
-	if !(other is PlayerController):
+func on_body_entered(other: Area2D):
+	if !(other.owner is PlayerController):
 		return
 		
 	Global.camera.limit_bottom = limit_min.global_position.y

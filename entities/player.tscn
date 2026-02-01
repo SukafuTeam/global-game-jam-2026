@@ -65,6 +65,9 @@ point_count = 1
 _data = [Vector2(0, 1), 0.0, 0.0, 0, 0]
 point_count = 1
 
+[sub_resource type="CircleShape2D" id="CircleShape2D_e4p34"]
+radius = 6.0
+
 [node name="Player" type="CharacterBody2D" unique_id=603172765]
 collision_layer = 4
 collision_mask = 3
@@ -396,3 +399,12 @@ scale_amount_min = 0.2
 scale_amount_max = 0.3
 scale_amount_curve = SubResource("Curve_rfe5m")
 color_ramp = SubResource("Gradient_qly61")
+
+[node name="CameraArea" type="Area2D" parent="." unique_id=1210532132]
+collision_layer = 64
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CameraArea" unique_id=1416473229]
+position = Vector2(0, -56)
+shape = SubResource("CircleShape2D_e4p34")
+debug_color = Color(0.96862745, 1, 0, 0.41960785)

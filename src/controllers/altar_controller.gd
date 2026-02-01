@@ -12,9 +12,12 @@ var completed: bool
 @onready var delivered_container: Node2D = $DeliveredContainer
 @onready var delivered_sprite: Sprite2D = $DeliveredContainer/DeliveredItem
 
+@export var decoration: bool
+
 func _ready() -> void:
-	for fire in fires:
-		fire.emitting = false
+	if !decoration:
+		for fire in fires:
+			fire.emitting = false
 	delivered_container.visible = false
 	area.body_entered.connect(on_body_entered)
 
