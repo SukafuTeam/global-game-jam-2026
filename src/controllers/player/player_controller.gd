@@ -230,7 +230,7 @@ func check_damage():
 	health -= 1
 	#TODO: gameover logic
 	
-	FmodServer.play_one_shot_with_params("event:/Character/footsteps", {"Surface": 1})
+	FmodServer.play_one_shot("event:/Character/damage")
 	
 	if holding_item:
 		holding_item.drop(Vector2(randf_range(--0.5, 0.5), -0.2))
@@ -432,7 +432,8 @@ func on_jump(wall_jump: bool = false):
 	current_left_wall_slide_time = 0.0
 	current_right_wall_slide_time = 0.0
 	
-	FmodServer.play_one_shot_with_params("event:/Character/footsteps", {"Surface": 0})
+	FmodServer.play_one_shot("event:/Character/jump")
+	FmodServer.play_one_shot("event:/Character/grunt")
 	
 	velocity.y = -JUMP_FORCE
 	if Global.high_jump_enabled:
@@ -476,7 +477,8 @@ func enter_state(new_state: State):
 			current_state_time = DASH_TIME
 			dash_explostion_particle.direction = Vector2.LEFT if looking_right else Vector2.RIGHT
 			dash_explostion_particle.restart()
-			FmodServer.play_one_shot_with_params("event:/Character/footsteps", {"Surface": 0})
+			FmodServer.play_one_shot("event:/Character/dash")
+			FmodServer.play_one_shot("event:/Character/grunt")
 
 func exit_state(old_state: State):
 	match old_state:
