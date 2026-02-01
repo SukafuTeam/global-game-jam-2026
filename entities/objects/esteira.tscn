@@ -1,0 +1,9 @@
+[gd_scene format=3 uid="uid://cgj63mron1p"]
+
+[ext_resource type="Script" uid="uid://b0ahkjuucjvwm" path="res://src/objects/esteira.gd" id="1_0f0dg"]
+
+[node name="Esteira" type="StaticBody2D" unique_id=476504328]
+collision_layer = 3
+collision_mask = 12
+constant_linear_velocity = Vector2(-100, 0)
+script = ExtResource("1_0f0dg")

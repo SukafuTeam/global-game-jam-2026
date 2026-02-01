@@ -1,0 +1,20 @@
+[gd_scene format=3 uid="uid://dayvh5e3w4myf"]
+
+[ext_resource type="Script" uid="uid://cocxcgjbgjiw2" path="res://src/objects/moving_platform.gd" id="1_ew8pb"]
+[ext_resource type="Texture2D" uid="uid://cmvbq50wabmc5" path="res://assets/images/sprites/objects/base_botao.png" id="1_wgbiq"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_o3jx8"]
+size = Vector2(180, 36)
+
+[node name="MovingPlatform" type="AnimatableBody2D" unique_id=175817208]
+collision_layer = 2
+script = ExtResource("1_ew8pb")
+
+[node name="Sprite" type="Sprite2D" parent="." unique_id=1492704987]
+scale = Vector2(0.3, 0.3)
+texture = ExtResource("1_wgbiq")
+flip_v = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=374583135]
+shape = SubResource("RectangleShape2D_o3jx8")
+one_way_collision = true

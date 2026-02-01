@@ -1,0 +1,197 @@
+[gd_scene format=3 uid="uid://c52p36ornij3c"]
+
+[ext_resource type="Texture2D" uid="uid://cqrphsll4pin8" path="res://assets/images/sprites/backgrounds/cave/cave_06.png" id="1_w71md"]
+[ext_resource type="Texture2D" uid="uid://botaswp8r25sv" path="res://assets/images/sprites/backgrounds/cave/cave_05.png" id="2_pe6pm"]
+[ext_resource type="Texture2D" uid="uid://cxuhfpot0byer" path="res://assets/images/sprites/backgrounds/cave/cave_04.png" id="3_q3n7n"]
+[ext_resource type="Texture2D" uid="uid://o5u1o0wc3w3n" path="res://assets/images/sprites/backgrounds/cave/cave_03.png" id="4_r1oqa"]
+[ext_resource type="Texture2D" uid="uid://c00urj1i1t126" path="res://assets/images/sprites/particles/circle_05_a.png" id="5_yeuhg"]
+[ext_resource type="Texture2D" uid="uid://ryajueq80cxo" path="res://assets/images/sprites/backgrounds/cave/cave_02.png" id="6_g6wq0"]
+[ext_resource type="Texture2D" uid="uid://dpda2gn28np1l" path="res://assets/images/sprites/backgrounds/cave/cave_01.png" id="7_cadk4"]
+[ext_resource type="Texture2D" uid="uid://dq82seu56y1mj" path="res://assets/images/placeholder/tilesets/white_tile.png" id="8_ohnhi"]
+
+[sub_resource type="Gradient" id="Gradient_u0xbq"]
+colors = PackedColorArray(0.8745098, 0.48235294, 0.26666668, 1, 0.8745098, 0.48235294, 0.26666668, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_pln1h"]
+gradient = SubResource("Gradient_u0xbq")
+width = 512
+height = 512
+fill_from = Vector2(0.4978261, 1)
+fill_to = Vector2(0.50869566, 0.010869565)
+
+[sub_resource type="Curve" id="Curve_8gixj"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), -1.1678245, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="Curve" id="Curve_pln1h"]
+_data = [Vector2(0, 0.43567246), 0.0, 0.0, 0, 0]
+point_count = 1
+
+[sub_resource type="Gradient" id="Gradient_pln1h"]
+offsets = PackedFloat32Array(0, 0.2037037, 0.75, 1)
+colors = PackedColorArray(1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0)
+
+[sub_resource type="Curve" id="Curve_hf2sn"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0]
+point_count = 1
+
+[node name="CaveBackground" type="Parallax2D" unique_id=586940425]
+
+[node name="Sky" type="Parallax2D" parent="." unique_id=2027658907]
+scroll_scale = Vector2(0, 0)
+
+[node name="ColorRect" type="ColorRect" parent="Sky" unique_id=1045863310]
+offset_right = 1920.0
+offset_bottom = 1080.0
+color = Color(0.5176471, 0.40784314, 0.3882353, 1)
+
+[node name="FarWall" type="Parallax2D" parent="." unique_id=852397808]
+scroll_scale = Vector2(0.1, 0.1)
+repeat_size = Vector2(2783, 0)
+
+[node name="Cave06" type="Sprite2D" parent="FarWall" unique_id=1656696484]
+position = Vector2(0, -3309)
+scale = Vector2(0.8, 0.8)
+texture = ExtResource("1_w71md")
+centered = false
+
+[node name="MedWall" type="Parallax2D" parent="." unique_id=1690640023]
+scroll_scale = Vector2(0.2, 0.2)
+repeat_size = Vector2(2783, 0)
+
+[node name="Cave05" type="Sprite2D" parent="MedWall" unique_id=1090241891]
+position = Vector2(0, -3363)
+scale = Vector2(0.8, 0.8)
+texture = ExtResource("2_pe6pm")
+centered = false
+
+[node name="CloseWall" type="Parallax2D" parent="." unique_id=1958737619]
+scroll_scale = Vector2(0.3, 0.3)
+repeat_size = Vector2(2783, 0)
+
+[node name="Cave04" type="Sprite2D" parent="CloseWall" unique_id=1090610691]
+position = Vector2(0, -3114.0002)
+scale = Vector2(0.8, 0.8)
+texture = ExtResource("3_q3n7n")
+centered = false
+
+[node name="Glow" type="TextureRect" parent="CloseWall" unique_id=1928822853]
+offset_right = 2783.0
+offset_bottom = 1080.0
+texture = SubResource("GradientTexture2D_pln1h")
+
+[node name="Lava" type="Parallax2D" parent="." unique_id=1781032970]
+scroll_scale = Vector2(0.4, 0.4)
+repeat_size = Vector2(2783, 0)
+autoscroll = Vector2(300, 0)
+
+[node name="Cave03" type="Sprite2D" parent="Lava" unique_id=1378870784]
+position = Vector2(0, 808)
+scale = Vector2(0.8, 0.8)
+texture = ExtResource("4_r1oqa")
+centered = false
+
+[node name="FarRocks" type="Parallax2D" parent="." unique_id=1150106624]
+scroll_scale = Vector2(0.5, 0.5)
+repeat_size = Vector2(2783, 0)
+
+[node name="LavaParticles" type="CPUParticles2D" parent="FarRocks" unique_id=751458437]
+position = Vector2(1392, 953)
+amount = 100
+texture = ExtResource("5_yeuhg")
+lifetime = 4.0
+preprocess = 50.0
+lifetime_randomness = 0.55
+local_coords = true
+emission_shape = 3
+emission_rect_extents = Vector2(1391.5, 20)
+particle_flag_align_y = true
+direction = Vector2(0, -1)
+spread = 180.0
+gravity = Vector2(50, -100)
+initial_velocity_min = 10.0
+initial_velocity_max = 30.0
+tangential_accel_min = -50.0
+tangential_accel_max = 50.0
+scale_amount_min = 0.05
+scale_amount_max = 0.3
+scale_amount_curve = SubResource("Curve_8gixj")
+split_scale = true
+scale_curve_x = SubResource("Curve_pln1h")
+scale_curve_y = null
+color = Color(0.99607843, 0.5372549, 0.17254902, 1)
+color_ramp = SubResource("Gradient_pln1h")
+
+[node name="Cave02" type="Sprite2D" parent="FarRocks" unique_id=1623786421]
+position = Vector2(0, -3350)
+scale = Vector2(0.8, 0.8)
+texture = ExtResource("6_g6wq0")
+centered = false
+
+[node name="CloseRocks" type="Parallax2D" parent="." unique_id=1279599592]
+scroll_scale = Vector2(0.8, 0.8)
+repeat_size = Vector2(2784.8, 0)
+
+[node name="Cave01" type="Sprite2D" parent="CloseRocks" unique_id=1572188486]
+position = Vector2(0, 782.99994)
+scale = Vector2(0.8, 0.8)
+texture = ExtResource("7_cadk4")
+centered = false
+
+[node name="CloseParticles" type="Parallax2D" parent="." unique_id=792912303]
+z_index = 100
+z_as_relative = false
+scroll_scale = Vector2(1.2, 1.2)
+repeat_size = Vector2(1920, 0)
+
+[node name="LavaParticles" type="CPUParticles2D" parent="CloseParticles" unique_id=25905449]
+visible = false
+position = Vector2(960, 1238)
+amount = 40
+texture = ExtResource("5_yeuhg")
+lifetime = 4.0
+preprocess = 50.0
+lifetime_randomness = 0.55
+local_coords = true
+emission_shape = 3
+emission_rect_extents = Vector2(960, 20)
+particle_flag_align_y = true
+direction = Vector2(0, -1)
+spread = 180.0
+gravity = Vector2(50, -100)
+initial_velocity_min = 10.0
+initial_velocity_max = 30.0
+tangential_accel_min = -50.0
+tangential_accel_max = 50.0
+scale_amount_min = 0.2
+scale_amount_max = 0.5
+scale_amount_curve = SubResource("Curve_8gixj")
+split_scale = true
+scale_curve_x = SubResource("Curve_pln1h")
+scale_curve_y = SubResource("Curve_hf2sn")
+color = Color(0.99607843, 0.5372549, 0.17254902, 1)
+color_ramp = SubResource("Gradient_pln1h")
+
+[node name="LavaParticles2" type="CPUParticles2D" parent="CloseParticles" unique_id=2114063407]
+position = Vector2(960, 736)
+amount = 100
+texture = ExtResource("8_ohnhi")
+lifetime = 30.0
+preprocess = 50.0
+lifetime_randomness = 0.55
+local_coords = true
+emission_shape = 3
+emission_rect_extents = Vector2(960, 540)
+direction = Vector2(1, -1)
+spread = 60.0
+gravity = Vector2(20, -10)
+initial_velocity_min = 5.0
+initial_velocity_max = 10.0
+angular_velocity_min = -200.0
+angular_velocity_max = 200.0
+angle_max = 360.0
+scale_amount_min = 0.08
+scale_amount_max = 0.12
+scale_amount_curve = SubResource("Curve_8gixj")
+color = Color(0.16862746, 0.13333334, 0.16470589, 1)
+color_ramp = SubResource("Gradient_pln1h")

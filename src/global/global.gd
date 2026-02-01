@@ -7,8 +7,8 @@ var double_jump_enabled: bool = true
 var wall_jump_enabled: bool = true
 var dash_enabled: bool = true
 var speed_enabled: bool = false
-var high_jump_enabled: bool = true
-var extra_health_enabled: bool = true
+var high_jump_enabled: bool = false
+var extra_health_enabled: bool = false
 
 var safe_item_position: Vector2
 

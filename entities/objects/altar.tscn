@@ -1,0 +1,10 @@
+[gd_scene format=3 uid="uid://dkdt73uplwiww"]
+
+[ext_resource type="Texture2D" uid="uid://ctm2wl7is4ufw" path="res://assets/images/sprites/objects/altar.png" id="1_rglm7"]
+
+[node name="Altar" type="Node2D" unique_id=1520962168]
+
+[node name="Altar" type="Sprite2D" parent="." unique_id=1399827967]
+position = Vector2(0, -170)
+scale = Vector2(0.2, 0.2)
+texture = ExtResource("1_rglm7")

@@ -15,6 +15,7 @@ const SNAP_HEIGHT: float = -20.0
 @export var should_rotate: bool = false
 
 var interactible: bool
+var additional_velocity: Vector2
 var original_parent: Node2D
 var target: Node2D
 
@@ -46,21 +47,24 @@ func _physics_process(delta: float) -> void:
 		position = target.global_position
 		return
 	
-	was_on_floor = is_on_floor()
-	last_velocity = velocity
-	
 	if !is_on_floor():
 		velocity.y += Constants.GRAVITY * delta * 2.0
+	
+	
+	was_on_floor = is_on_floor()
+	velocity += additional_velocity
+	last_velocity = velocity
 	
 	if should_rotate:
 		global_rotation_degrees += velocity.x * ROTATE_AMOUNT * delta
 	
 	move_and_slide()
+	additional_velocity = Vector2.ZERO
 	
 	if is_on_floor():
 		
 		if !was_on_floor:
-			if last_velocity.length() > BOUNCE_THRESHOLD:
+			if abs(last_velocity.y) > BOUNCE_THRESHOLD:
 				velocity.y = -last_velocity.y * bounce
 				velocity.x *= bounce
 				
@@ -75,7 +79,7 @@ func _physics_process(delta: float) -> void:
 				velocity.x = 0.0
 	
 	if is_on_wall_only():
-		if last_velocity.length() > BOUNCE_THRESHOLD:
+		if abs(last_velocity.x) > BOUNCE_THRESHOLD:
 			var force_percent = inverse_lerp(0.0, MAX_IMPACT_FORCE, last_velocity.length())
 			FmodServer.play_one_shot_attached_with_params("event:/Pickables/wood", self, {"force": force_percent})
 			velocity.x = -last_velocity.x * bounce

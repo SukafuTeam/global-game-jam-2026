@@ -8,7 +8,7 @@ const MOVE_SPEED: float = 800.0
 const SPEED_MULTIPLIER: float = 1.5
 const ACCEL: float = 6000.0
 
-const JUMP_FORCE: float = 900.0
+const JUMP_FORCE: float = 930.0
 const FALL_GRAVITY_MULTIPLIER: float = 3.0
 
 const MAX_WALL_JUMP_FALL_SPEED: float = 400.0
@@ -46,6 +46,7 @@ var state: State:
 var current_state_time: float = 0.0
 var looking_right: bool
 var last_velocity: Vector2
+var additional_velocity: Vector2
 var was_on_floor: bool
 var can_double_jump: bool
 var can_dash: bool
@@ -209,9 +210,11 @@ func _physics_process(delta: float) -> void:
 			state = process_damage(delta)
 	
 	was_on_floor = is_on_floor()
+	velocity += additional_velocity
 	last_velocity = velocity
 	
 	move_and_slide()
+	additional_velocity = Vector2.ZERO
 	
 	if is_on_floor() and !was_on_floor:
 		on_land(last_velocity.y)
@@ -226,6 +229,8 @@ func check_damage():
 	
 	health -= 1
 	#TODO: gameover logic
+	
+	FmodServer.play_one_shot_with_params("event:/Character/footsteps", {"Surface": 1})
 	
 	if holding_item:
 		holding_item.drop(Vector2(randf_range(--0.5, 0.5), -0.2))
@@ -378,6 +383,7 @@ func process_hold():
 			holding_item.drop(drop_vel)
 			holding_item = null
 			current_kick_time = INPUT_BUFFER_TIME
+			FmodServer.play_one_shot_with_params("event:/Character/footsteps", {"Surface": 0})
 			body_container.scale = LAND_SCALE
 		return
 	
@@ -426,6 +432,8 @@ func on_jump(wall_jump: bool = false):
 	current_left_wall_slide_time = 0.0
 	current_right_wall_slide_time = 0.0
 	
+	FmodServer.play_one_shot_with_params("event:/Character/footsteps", {"Surface": 0})
+	
 	velocity.y = -JUMP_FORCE
 	if Global.high_jump_enabled:
 		velocity.y = -JUMP_FORCE * 1.25
@@ -468,6 +476,7 @@ func enter_state(new_state: State):
 			current_state_time = DASH_TIME
 			dash_explostion_particle.direction = Vector2.LEFT if looking_right else Vector2.RIGHT
 			dash_explostion_particle.restart()
+			FmodServer.play_one_shot_with_params("event:/Character/footsteps", {"Surface": 0})
 
 func exit_state(old_state: State):
 	match old_state:
@@ -548,8 +557,8 @@ func update_partiles():
 	speed_footstep_particle.emitting = state == State.GROUND and abs(velocity.x) >= MOVE_SPEED * 0.9 and Global.speed_enabled
 	dash_particle.emitting = state == State.DASH
 	
-	left_wall_slide_particle.emitting = left_wall_check and Input.is_action_pressed("left")
-	right_wall_slide_particle.emitting = right_wall_check and Input.is_action_pressed("right")
+	left_wall_slide_particle.emitting = left_wall_check and Input.is_action_pressed("left") and Global.wall_jump_enabled
+	right_wall_slide_particle.emitting = right_wall_check and Input.is_action_pressed("right") and Global.wall_jump_enabled
 	
 	if Global.speed_enabled == true and abs(velocity.x) > MOVE_SPEED:
 		Global.set_camera_stress(Vector2.ONE * 0.25)

@@ -68,6 +68,7 @@ point_count = 1
 [node name="Player" type="CharacterBody2D" unique_id=603172765]
 collision_layer = 4
 collision_mask = 3
+platform_on_leave = 2
 script = ExtResource("1_b0kkn")
 
 [node name="RightHoldingCollision" type="CollisionPolygon2D" parent="." unique_id=1484492528]
@@ -87,7 +88,7 @@ shape = SubResource("CapsuleShape2D_b0kkn")
 
 [node name="SpineSprite" type="SpineSprite" parent="BodyContainer" unique_id=39657710]
 skeleton_data_res = ExtResource("2_b0kkn")
-preview_skin = "masked"
+preview_skin = "default"
 preview_animation = "-- Empty --"
 preview_frame = false
 preview_time = 0.0
@@ -333,7 +334,7 @@ position = Vector2(0, -62)
 emitting = false
 amount = 100
 texture = ExtResource("5_qly61")
-lifetime = 0.09999999999999999
+lifetime = 0.1
 one_shot = true
 local_coords = true
 emission_shape = 3
