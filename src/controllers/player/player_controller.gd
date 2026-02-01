@@ -558,7 +558,7 @@ func on_animation_event(_sprite: SpineSprite, _state: SpineAnimationState, _trac
 	if event.get_data().get_event_name() != "footstep":
 		return
 	
-	#footstep_particle.restart()
+	FmodServer.play_one_shot_with_params("event:/Character/footsteps", {"Surface": 0})
 
 
 #endregion
