@@ -11,12 +11,12 @@ const ACCEL: float = 6000.0
 const JUMP_FORCE: float = 900.0
 const FALL_GRAVITY_MULTIPLIER: float = 3.0
 
-const MAX_WALL_JUMP_FALL_SPEED: float = 100.0
+const MAX_WALL_JUMP_FALL_SPEED: float = 400.0
 const WALL_JUMP_SPEED: float = 500.0
 const WALL_JUMP_MOVE_TIME: float = 0.1
 
 const DASH_TIME: float = 0.3
-const DASH_SPEED: Vector2 = Vector2(3000.0, 500.0)
+const DASH_SPEED: Vector2 = Vector2(2500.0, 1700.0)
 
 const DAMAGE_TIME: float = 1.0
 const IFRAME_TIME: float = 3.0
@@ -49,6 +49,7 @@ var last_velocity: Vector2
 var was_on_floor: bool
 var can_double_jump: bool
 var can_dash: bool
+var dash_cooldown: float = -1.0
 
 var health: int
 var current_iframe_time: float = -1.0
@@ -62,8 +63,8 @@ var current_dash_buffer_time: float = -1.0
 var current_up_buffer_time: float = -1.0
 var current_kick_time: float = -1.0
 
-var current_left_wall_slide_time: float = 0.0
-var current_right_wall_slide_time: float = 0.0
+var current_left_wall_slide_time: float = -1.0
+var current_right_wall_slide_time: float = -1.0
 var wall_sliding: bool:
 	get:
 		return current_left_wall_slide_time > 0.0 or \
@@ -94,7 +95,19 @@ var holding_item: Pickable
 @onready var left_holding_collision: CollisionPolygon2D = $LeftHoldingCollision
 @onready var right_holding_collision: CollisionPolygon2D = $RightHoldingCollision
 
+@onready var footstep_particle: CPUParticles2D = $Particles/FootStepParticle
+@onready var speed_footstep_particle: CPUParticles2D = $Particles/SpeedFootStepParticle
+@onready var dash_explostion_particle: CPUParticles2D = $Particles/DashExplosion
+@onready var dash_particle: CPUParticles2D = $Particles/DashParticle
+@onready var right_jump_particle: CPUParticles2D = $Particles/RightJumpParticle
+@onready var left_jump_particle: CPUParticles2D = $Particles/LeftJumpParticle
+@onready var double_jump_particle: CPUParticles2D = $Particles/DoubleJumpParticle
+@onready var high_jump_particle: CPUParticles2D = $Particles/HighJumpParticle
+@onready var left_wall_slide_particle: CPUParticles2D = $Particles/LeftWallSlideParticle
+@onready var right_wall_slide_particle: CPUParticles2D = $Particles/RightWallSlideParticle
+
 func _ready() -> void:
+	looking_right = true
 	state = State.GROUND
 	can_dash = Global.dash_enabled
 	can_double_jump = Global.double_jump_enabled
@@ -103,23 +116,28 @@ func _ready() -> void:
 	var skin_name = "masked" if Global.masked else "unmasked"
 	var skin: SpineSkin = sprite.get_skeleton().get_data().find_skin(skin_name)
 	sprite.get_skeleton().set_skin(skin)
-	
-	var music_event = FmodServer.create_event_instance("event:/BGM/intro")
-	music_event.set_parameter_by_name("loop", 1.0)
-	music_event.start()
+	sprite.animation_event.connect(on_animation_event)
 	
 	health = Constants.INITIAL_HEALTH
 	if Global.extra_health_enabled:
 		health += 1
 	
 	Global.safe_item_position = global_position
+	
+	
 
 func _process(delta: float) -> void:
 	update_body_scale(delta)
 	update_animation()
+	update_partiles()
+	
+	if state == State.DAMAGE:
+		sprite.modulate = Color(1.0, 0.5, 0.5)
+	else:
+		sprite.modulate = Color.WHITE
 	
 	if current_iframe_time >= 0.0 and state != State.DAMAGE:
-		sprite.modulate.a = 0.5
+		sprite.modulate.a = 0.4
 	else:
 		sprite.modulate.a = 1.0
 	
@@ -132,6 +150,7 @@ func _process(delta: float) -> void:
 	current_kick_time -= delta
 	
 	current_iframe_time -= delta
+	dash_cooldown -= delta
 	
 	current_left_wall_slide_time -= delta
 	current_right_wall_slide_time -= delta
@@ -153,10 +172,13 @@ func _physics_process(delta: float) -> void:
 		var grav = Constants.GRAVITY
 		if velocity.y > 0.0:
 			grav *= FALL_GRAVITY_MULTIPLIER
+			
+			if Global.high_jump_enabled:
+				grav *= 1.5
 		
 		velocity.y += grav * delta
 		
-		if is_on_wall_only() and Global.wall_jump_enabled:
+		if (is_on_wall_only() or left_wall_check or right_wall_check) and Global.wall_jump_enabled:
 			if left_wall_check and Input.is_action_pressed("left"):
 				current_left_wall_slide_time = INPUT_BUFFER_TIME
 				looking_right = true
@@ -219,11 +241,22 @@ func check_damage():
 func process_ground(delta: float) -> State:
 	input_move(delta)
 	
-	if current_dash_buffer_time >= 0.0 and can_dash and Global.dash_enabled:
-		return State.DASH
+	if current_dash_buffer_time >= 0.0 and can_dash and Global.dash_enabled and dash_cooldown <= 0.0:
+		var should_dash = true
+		if looking_right and right_wall_check:
+			should_dash = false
+		if !looking_right and left_wall_check:
+			should_dash = false
+		if should_dash:
+			return State.DASH
+		else:
+			current_dash_buffer_time = 0.0
 	
 	if current_jump_buffer_time >= 0.0 and current_coyote_time:
 		on_jump()
+		return State.AIR
+		
+	if current_coyote_time <= 0.0:
 		return State.AIR
 	
 	return State.GROUND
@@ -231,34 +264,37 @@ func process_ground(delta: float) -> State:
 func process_air(delta: float) -> State:
 	input_move(delta)
 	
-	if current_dash_buffer_time >= 0.0 and can_dash and Global.dash_enabled:
+	if current_dash_buffer_time >= 0.0 and can_dash and Global.dash_enabled and dash_cooldown <= 0.0 and !left_wall_check and !right_wall_check:
 		if wall_sliding:
 			looking_right = !looking_right
 		can_dash = false
+		current_dash_buffer_time = 0.0
 		return State.DASH
 	
 	if wall_sliding:
 		can_double_jump = true
-		can_dash = true
+		if dash_cooldown <= 0.0:
+			can_dash = true
 		
 		velocity.y = min(velocity.y, MAX_WALL_JUMP_FALL_SPEED)
 		
 		if current_jump_buffer_time > 0.0:
-			if current_left_wall_slide_time >= 0.0:
-				on_jump()
+			if current_left_wall_slide_time > 0.0:
+				on_jump(true)
 				current_auto_move_time = WALL_JUMP_MOVE_TIME
 				auto_move_speed = WALL_JUMP_SPEED
 				return State.AIR
-			elif current_right_wall_slide_time >= 0.0:
-				on_jump()
+			elif current_right_wall_slide_time > 0.0:
+				on_jump(true)
 				current_auto_move_time = WALL_JUMP_MOVE_TIME
 				auto_move_speed = -WALL_JUMP_SPEED
 				return State.AIR
 	
 	if can_double_jump and Global.double_jump_enabled:
 		if current_jump_buffer_time >= 0.0:
-			on_jump()
 			can_double_jump = false
+			on_jump()
+			return State.AIR
 		
 	
 	if is_on_floor():
@@ -270,7 +306,7 @@ func process_dash(delta) -> State:
 	velocity.y = 0.0
 	current_state_time -= delta
 	
-	if is_on_wall() and current_state_time < DASH_TIME * 0.9:
+	if is_on_wall() or left_wall_check or right_wall_check:
 		current_state_time = -1.0
 	
 	if current_state_time < 0.0:
@@ -298,7 +334,7 @@ func process_damage(delta: float) -> State:
 	if current_state_time <= 0.0:
 		return State.GROUND
 		
-	Global.set_camera_stress(Vector2.ONE * 0.4)
+	Global.set_camera_stress(Vector2.ONE * 0.3)
 	
 	return State.DAMAGE
 
@@ -306,6 +342,9 @@ func process_damage(delta: float) -> State:
 
 #region Hold methods
 func process_hold():
+	if state == State.DAMAGE:
+		return
+	
 	left_holding_collision.disabled = true
 	right_holding_collision.disabled = true
 	
@@ -318,6 +357,12 @@ func process_hold():
 		if Input.is_action_pressed("hold"):
 			var target = right_anchor if looking_right else left_anchor
 			holding_item.target = target
+			
+			if (left_wall_check_1.is_colliding() or left_wall_check_2.is_colliding()) and\
+				(right_wall_check_1.is_colliding() or right_wall_check_2.is_colliding()):
+					holding_item.drop()
+					holding_item = null
+					velocity.y = 0.0
 		else:
 			var drop_vel = Vector2(0.0, -0.1)
 			var input_axis = Input.get_axis("left", "right")
@@ -367,7 +412,6 @@ func input_move(delta: float):
 		move_target *= SPEED_MULTIPLIER
 		accel *= SPEED_MULTIPLIER
 	
-	
 	velocity.x = move_toward(velocity.x, move_target, accel * delta)
 	
 	if current_auto_move_time > 0.0:
@@ -377,8 +421,7 @@ func input_move(delta: float):
 		velocity.x = speed
 	
 
-func on_jump():
-	current_coyote_time = 0.0
+func on_jump(wall_jump: bool = false):
 	current_jump_buffer_time = 0.0
 	current_left_wall_slide_time = 0.0
 	current_right_wall_slide_time = 0.0
@@ -387,11 +430,32 @@ func on_jump():
 	if Global.high_jump_enabled:
 		velocity.y = -JUMP_FORCE * 1.25
 	body_container.scale = JUMP_SCALE
+	
+	if current_coyote_time >= 0.0:
+		right_jump_particle.restart()
+		left_jump_particle.restart()
+	else:
+		double_jump_particle.restart()
+	current_coyote_time = 0.0
+
+	
+	if wall_jump:
+		current_left_wall_slide_time = -1.0
+		current_right_wall_slide_time = -1.0	
+		return
+			
+	if Global.high_jump_enabled:
+		var dir = Input.get_axis("left", "right")
+		high_jump_particle.direction.x = -dir
+		high_jump_particle.restart()
 
 func on_land(_hit_velocity: float):
 	body_container.scale = LAND_SCALE
 	can_double_jump = true
 	can_dash = true
+	
+	right_jump_particle.restart()
+	left_jump_particle.restart()
 
 #endregion
 
@@ -400,12 +464,15 @@ func on_land(_hit_velocity: float):
 func enter_state(new_state: State):
 	match new_state:
 		State.DASH:
+			current_dash_buffer_time = -1.0
 			current_state_time = DASH_TIME
+			dash_explostion_particle.direction = Vector2.LEFT if looking_right else Vector2.RIGHT
+			dash_explostion_particle.restart()
 
 func exit_state(old_state: State):
 	match old_state:
 		State.DASH:
-			pass
+			dash_cooldown = DASH_TIME
 
 #endregion
 
@@ -418,7 +485,9 @@ func update_body_scale(delta):
 
 func  update_animation():
 	if state == State.DAMAGE:
-		change_animation("dizzy", 0, 0.0)
+		var entry = change_animation("dizzy", 0, 0.0)
+		if entry != null:
+			entry.set_time_scale(4.0)
 		return
 	
 	if holding_item and Input.is_action_pressed("hold"):
@@ -454,19 +523,42 @@ func  update_animation():
 				return
 			
 			if velocity.y <= 0.0:
-				change_animation("jump")
+				if Global.double_jump_enabled and can_double_jump:
+					change_animation("jump")
+				else:
+					change_animation("double_jump")
 			else:
 				change_animation("fall")
 		State.DASH:
-			change_animation("dash")
+			change_animation("dash", 0, 0.0)
 
-func change_animation(new_anim: String, track_id: int = 0, mix_time: float = 0.1):
+func change_animation(new_anim: String, track_id: int = 0, mix_time: float = 0.01) -> SpineTrackEntry:
 	var current = sprite.get_animation_state().get_current(0)
 	if current != null:
 		if sprite.get_animation_state().get_current(track_id).get_animation().get_name() == new_anim:
-			return
+			return null
 	
 	var track_entry: SpineTrackEntry = sprite.get_animation_state().set_animation(new_anim, true, track_id)
 	track_entry.set_mix_time(mix_time)
+	
+	return track_entry
+
+func update_partiles():
+	footstep_particle.emitting = state == State.GROUND and abs(velocity.x) >= MOVE_SPEED * 0.9 and !Global.speed_enabled
+	speed_footstep_particle.emitting = state == State.GROUND and abs(velocity.x) >= MOVE_SPEED * 0.9 and Global.speed_enabled
+	dash_particle.emitting = state == State.DASH
+	
+	left_wall_slide_particle.emitting = left_wall_check and Input.is_action_pressed("left")
+	right_wall_slide_particle.emitting = right_wall_check and Input.is_action_pressed("right")
+	
+	if Global.speed_enabled == true and abs(velocity.x) > MOVE_SPEED:
+		Global.set_camera_stress(Vector2.ONE * 0.25)
+
+func on_animation_event(_sprite: SpineSprite, _state: SpineAnimationState, _track: SpineTrackEntry, event: SpineEvent):
+	if event.get_data().get_event_name() != "footstep":
+		return
+	
+	#footstep_particle.restart()
+
 
 #endregion
