@@ -466,9 +466,6 @@ position = Vector2(0, 259)
 [node name="Altar" parent="Objects/Volta" unique_id=1558612048 instance=ExtResource("6_rt2n2")]
 position = Vector2(283, 1243)
 
-[node name="Button" parent="Objects/Volta" unique_id=381206986 instance=ExtResource("12_mngbo")]
-position = Vector2(815, 1436)
-
 [node name="elevator" type="Node2D" parent="Objects" unique_id=963156152]
 position = Vector2(19512, -1330)
 
@@ -500,6 +497,7 @@ position_smoothing_speed = 4.0
 script = ExtResource("10_e1cbu")
 
 [node name="CameraLimiters" type="Node2D" parent="." unique_id=481614770]
+visible = false
 
 [node name="CameraLimiter" parent="CameraLimiters" unique_id=1962202259 instance=ExtResource("29_4bgka")]
 position = Vector2(983, 279)

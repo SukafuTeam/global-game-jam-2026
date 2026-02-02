@@ -15,10 +15,10 @@ General/banks_path="res://assets/sounds/banks"
 [application]
 
 config/name="Kah-Ra"
-run/main_scene="uid://cqtulki2u6gt0"
+run/main_scene="uid://cfr0hoj33vwfx"
 config/features=PackedStringArray("4.6", "GL Compatibility")
 run/max_fps=60
-boot_splash/bg_color=Color(0.06666667, 0.1882353, 0.20392157, 1)
+boot_splash/bg_color=Color(0, 0, 0, 1)
 boot_splash/show_image=false
 config/icon="uid://5tqpq6wfxd4x"
 

@@ -22,6 +22,8 @@
 [ext_resource type="Texture2D" uid="uid://d4h0ka713qxt1" path="res://assets/images/ui/cutscenes - inicio/cena 07/apaixonada.png" id="18_flcbd"]
 [ext_resource type="Texture2D" uid="uid://qpvvgxso4po4" path="res://assets/images/ui/cutscenes - inicio/cena 08/beleza.png" id="19_ujkvu"]
 [ext_resource type="Texture2D" uid="uid://b2531xyufusnj" path="res://assets/images/ui/cutscenes - inicio/cena 09/belezinha.png" id="20_k5ksj"]
+[ext_resource type="Texture2D" uid="uid://1soxlqhyr5bu" path="res://assets/images/ui/game/confirm-button.png" id="23_ujkvu"]
+[ext_resource type="Script" uid="uid://m4lhlbgvsg28" path="res://src/ui/input_button_container.gd" id="24_8onrj"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_fxsd4"]
 shader = ExtResource("9_pbanw")
@@ -220,3 +222,39 @@ texture = ExtResource("9_bprnf")
 [node name="Personagem" type="Sprite2D" parent="Slide9" unique_id=779036833]
 position = Vector2(313, 691)
 texture = ExtResource("20_k5ksj")
+
+[node name="Skip" type="TextureRect" parent="." unique_id=395676059]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 1748.0
+offset_top = 915.00006
+offset_right = 1918.0
+offset_bottom = 1085.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(0.7854639, 0.7854639)
+texture = ExtResource("23_ujkvu")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="InputIcon" type="TextureRect" parent="Skip" unique_id=1335548306]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -35.0
+offset_top = -35.0
+offset_right = 35.0
+offset_bottom = 35.0
+grow_horizontal = 2
+grow_vertical = 2
+expand_mode = 1
+stretch_mode = 5
+script = ExtResource("24_8onrj")
+type = 5
+color = Color(0.72156864, 0.007843138, 0.003921569, 1)

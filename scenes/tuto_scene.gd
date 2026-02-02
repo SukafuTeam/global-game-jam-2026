@@ -11,10 +11,10 @@ var finished
 func _ready() -> void:
 	mask.body_entered.connect(func(other):
 		if other is PlayerController:
-			get_tree().change_scene_to_file("res://scenes/intro_cutscene.tscn")
+			finish_tutorial()
 	)
 
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	if finished:
 		return
 		
@@ -24,3 +24,7 @@ func _process(delta: float) -> void:
 	
 	destroy.queue_free()
 	finished = true
+
+func finish_tutorial():
+	await get_tree().process_frame
+	get_tree().change_scene_to_file("res://scenes/intro_cutscene.tscn")

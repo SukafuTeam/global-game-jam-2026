@@ -9,6 +9,8 @@
 [ext_resource type="Texture2D" uid="uid://b5ik7xv5ylhcw" path="res://assets/images/ui/cutscene_vitoria/Casal.png" id="9_aeqvq"]
 [ext_resource type="Shader" uid="uid://dceudoqmb3dwp" path="res://src/shaders/godrays.gdshader" id="10_ehqec"]
 [ext_resource type="Texture2D" uid="uid://bsbddyqyr75l7" path="res://assets/images/ui/cutscene_vitoria/coração.png" id="10_rlw0o"]
+[ext_resource type="Texture2D" uid="uid://1soxlqhyr5bu" path="res://assets/images/ui/game/confirm-button.png" id="11_m35g4"]
+[ext_resource type="Script" uid="uid://m4lhlbgvsg28" path="res://src/ui/input_button_container.gd" id="12_wdhy8"]
 [ext_resource type="Texture2D" uid="uid://b2531xyufusnj" path="res://assets/images/ui/cutscenes - inicio/cena 09/belezinha.png" id="21_y5t2y"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_rlw0o"]
@@ -78,3 +80,39 @@ texture = ExtResource("9_aeqvq")
 [node name="Coração" type="Sprite2D" parent="Slide3" unique_id=1888352347]
 position = Vector2(974, 323)
 texture = ExtResource("10_rlw0o")
+
+[node name="Skip" type="TextureRect" parent="." unique_id=796979142]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 1748.0
+offset_top = 915.00006
+offset_right = 1918.0
+offset_bottom = 1085.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(0.7854639, 0.7854639)
+texture = ExtResource("11_m35g4")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="InputIcon" type="TextureRect" parent="Skip" unique_id=1475855427]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -35.0
+offset_top = -35.0
+offset_right = 35.0
+offset_bottom = 35.0
+grow_horizontal = 2
+grow_vertical = 2
+expand_mode = 1
+stretch_mode = 5
+script = ExtResource("12_wdhy8")
+type = 5
+color = Color(0.72156864, 0.007843138, 0.003921569, 1)

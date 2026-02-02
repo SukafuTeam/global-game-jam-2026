@@ -1,6 +1,5 @@
 [gd_resource type="TileSet" format=3 uid="uid://75bqeuagrrro"]
 
-[ext_resource type="Texture2D" uid="uid://dq82seu56y1mj" path="res://assets/images/placeholder/tilesets/white_tile.png" id="1_kjljh"]
 [ext_resource type="Texture2D" uid="uid://cd6mv716qgwpr" path="res://assets/images/tileset/tileset_selva.png" id="2_k3dto"]
 [ext_resource type="PackedScene" uid="uid://c4t0g25sah4da" path="res://entities/hazards/spike.tscn" id="3_bh1bd"]
 [ext_resource type="Texture2D" uid="uid://b6yx82jpoo6in" path="res://assets/images/tileset/tileset_selva_foreground.png" id="3_oxn85"]
@@ -9,18 +8,6 @@
 [ext_resource type="PackedScene" uid="uid://bdnmuffauim2" path="res://entities/objects/spring.tscn" id="5_ae8d8"]
 [ext_resource type="Texture2D" uid="uid://lrypsdm7eljf" path="res://assets/images/tileset/right_corner.png" id="5_tuwo3"]
 [ext_resource type="Texture2D" uid="uid://cqjiewsiby7hg" path="res://assets/images/tileset/left_corner.png" id="9_ruaoo"]
-
-[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_j8ivh"]
-texture = ExtResource("1_kjljh")
-texture_region_size = Vector2i(137, 64)
-0:0/0 = 0
-0:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-32, -32, 32, -32, 32, 32, -32, 32)
-1:0/0 = 0
-1:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-32, -32, 32, -32, 32, 32, -32, 32)
-0:1/0 = 0
-0:1/0/physics_layer_0/polygon_0/points = PackedVector2Array(-32, -32, 32, -32, 32, 32, -32, 32)
-1:1/0 = 0
-1:1/0/physics_layer_0/polygon_0/points = PackedVector2Array(-32, -32, 32, -32, 32, 32, -32, 32)
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_bh1bd"]
 texture = ExtResource("2_k3dto")
@@ -1263,10 +1250,6 @@ texture_region_size = Vector2i(64, 64)
 12:3/0/terrains_peering_bit/top_side = 2
 12:3/0/terrains_peering_bit/top_right_corner = 2
 
-[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_ruaoo"]
-texture = ExtResource("4_ptil1")
-texture_region_size = Vector2i(64, 64)
-
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_dv3wy"]
 texture = ExtResource("5_tuwo3")
 texture_region_size = Vector2i(64, 64)
@@ -1295,11 +1278,9 @@ terrain_set_0/terrain_1/name = "FrontGround 1"
 terrain_set_0/terrain_1/color = Color(0.5, 0.4375, 0.25, 1)
 terrain_set_0/terrain_2/name = "Cave"
 terrain_set_0/terrain_2/color = Color(1, 0, 0, 1)
-sources/0 = SubResource("TileSetAtlasSource_j8ivh")
 sources/1 = SubResource("TileSetAtlasSource_bh1bd")
 sources/6 = SubResource("TileSetScenesCollectionSource_g82ff")
 sources/2 = SubResource("TileSetAtlasSource_ae8d8")
 sources/3 = SubResource("TileSetAtlasSource_tuwo3")
-sources/4 = SubResource("TileSetAtlasSource_ruaoo")
 sources/5 = SubResource("TileSetAtlasSource_dv3wy")
 sources/7 = SubResource("TileSetAtlasSource_8dakh")

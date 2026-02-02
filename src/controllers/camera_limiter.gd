@@ -12,7 +12,7 @@ func on_body_entered(other: Area2D):
 	if !(other.owner is PlayerController):
 		return
 		
-	Global.camera.limit_bottom = limit_min.global_position.y
-	Global.camera.limit_left = limit_min.global_position.x
-	Global.camera.limit_right = limit_max.global_position.x
-	Global.camera.limit_top = limit_max.global_position.y
+	Global.camera.limit_bottom = floor(limit_min.global_position.y)
+	Global.camera.limit_left = floor(limit_min.global_position.x)
+	Global.camera.limit_right = floor(limit_max.global_position.x)
+	Global.camera.limit_top = floor(limit_max.global_position.y)

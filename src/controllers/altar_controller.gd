@@ -40,7 +40,7 @@ func on_body_entered(other: Node2D):
 		var p = other as PlayerController
 		if p.holding_item == null:
 			return
-		if !(p.holding_item is Key):
+		if !(p.holding_item is Pickable):
 			return
 		item_delivered.emit(p.holding_item as Pickable)
 		return

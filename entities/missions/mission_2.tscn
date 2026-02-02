@@ -1,4 +1,4 @@
-[gd_scene format=3 uid="uid://cbdoi78gk3g0v"]
+[gd_scene format=4 uid="uid://cbdoi78gk3g0v"]
 
 [ext_resource type="Script" uid="uid://rwtjl1y28b0" path="res://src/controllers/missions/mission_2.gd" id="1_fcih8"]
 [ext_resource type="TileSet" uid="uid://75bqeuagrrro" path="res://data/tilesets/jungle.tres" id="2_fcih8"]
@@ -10,67 +10,86 @@
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_440lv"]
 size = Vector2(68, 68)
 
-[node name="Mission2" type="Node2D" unique_id=42407897 node_paths=PackedStringArray("wall", "buttons", "item")]
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_8dxha"]
+size = Vector2(128, 325)
+
+[node name="Mission2" type="Node2D" unique_id=708195007 node_paths=PackedStringArray("wall", "buttons", "wall_button", "wall_2", "item")]
 script = ExtResource("1_fcih8")
 wall = NodePath("Wall")
 buttons = [NodePath("Button"), NodePath("Button2"), NodePath("Button3"), NodePath("Button4")]
+wall_button = NodePath("Button5")
+wall_2 = NodePath("StaticBody2D")
 spawn_point = Vector2(8256, -1984)
 item = NodePath("Box")
 
-[node name="Wall" type="TileMapLayer" parent="." unique_id=455430498]
-tile_map_data = PackedByteArray(0, 0, 255, 255, 251, 255, 1, 0, 1, 0, 3, 0, 0, 0, 0, 0, 251, 255, 1, 0, 2, 0, 3, 0, 0, 0, 1, 0, 251, 255, 1, 0, 3, 0, 3, 0, 0, 0)
+[node name="Wall" type="TileMapLayer" parent="." unique_id=256684047]
+tile_map_data = PackedByteArray("AAD///v/AQABAAMAAAAAAPv/AQACAAMAAAABAPv/AQADAAMAAAA=")
 tile_set = ExtResource("2_fcih8")
 
-[node name="Box" type="CharacterBody2D" parent="." unique_id=378684654]
+[node name="Box" type="CharacterBody2D" parent="." unique_id=1656067819]
 position = Vector2(40, -382)
 collision_layer = 8
 script = ExtResource("3_kc13u")
 metadata/_custom_type_script = "uid://cc7vmuv4al3gt"
 
-[node name="Sprite" type="Sprite2D" parent="Box" unique_id=1042648674]
+[node name="Sprite" type="Sprite2D" parent="Box" unique_id=911157053]
 position = Vector2(-3, -4)
 scale = Vector2(0.5, 0.5)
 texture = ExtResource("4_lmayb")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Box" unique_id=858150159]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Box" unique_id=433517984]
 shape = SubResource("RectangleShape2D_440lv")
 
 [node name="Button" parent="." unique_id=1307563553 instance=ExtResource("4_ebj3r")]
 position = Vector2(-321, -126)
 type = 1
 
-[node name="Button2" parent="." unique_id=1029826675 instance=ExtResource("4_ebj3r")]
+[node name="Button2" parent="." unique_id=1561272298 instance=ExtResource("4_ebj3r")]
 position = Vector2(-320, 257)
 type = 1
 
-[node name="Button3" parent="." unique_id=887576803 instance=ExtResource("4_ebj3r")]
+[node name="Button3" parent="." unique_id=156581417 instance=ExtResource("4_ebj3r")]
 position = Vector2(385, 257)
 type = 1
 
-[node name="Button4" parent="." unique_id=1159348458 instance=ExtResource("4_ebj3r")]
+[node name="Button4" parent="." unique_id=225406953 instance=ExtResource("4_ebj3r")]
 position = Vector2(385, -127)
 type = 1
 
 [node name="Coconut" parent="." unique_id=1108538937 instance=ExtResource("5_fcih8")]
 position = Vector2(-673, 227)
 
-[node name="Coconut2" parent="." unique_id=534916864 instance=ExtResource("5_fcih8")]
+[node name="Coconut2" parent="." unique_id=808180959 instance=ExtResource("5_fcih8")]
 position = Vector2(-543, 268)
 
-[node name="Coconut3" parent="." unique_id=1194514562 instance=ExtResource("5_fcih8")]
+[node name="Coconut3" parent="." unique_id=32780554 instance=ExtResource("5_fcih8")]
 position = Vector2(-35, 264)
 
-[node name="Coconut4" parent="." unique_id=588869565 instance=ExtResource("5_fcih8")]
+[node name="Coconut4" parent="." unique_id=2087960450 instance=ExtResource("5_fcih8")]
 position = Vector2(-133, 278)
 
-[node name="Coconut5" parent="." unique_id=1525142343 instance=ExtResource("5_fcih8")]
+[node name="Coconut5" parent="." unique_id=1591720220 instance=ExtResource("5_fcih8")]
 position = Vector2(131, 188)
 
-[node name="Coconut6" parent="." unique_id=688091328 instance=ExtResource("5_fcih8")]
+[node name="Coconut6" parent="." unique_id=35299465 instance=ExtResource("5_fcih8")]
 position = Vector2(43, 314)
 
-[node name="Coconut7" parent="." unique_id=847568123 instance=ExtResource("5_fcih8")]
+[node name="Coconut7" parent="." unique_id=952463216 instance=ExtResource("5_fcih8")]
 position = Vector2(652, 298)
 
-[node name="Coconut8" parent="." unique_id=1099074652 instance=ExtResource("5_fcih8")]
+[node name="Coconut8" parent="." unique_id=1000855419 instance=ExtResource("5_fcih8")]
 position = Vector2(575, 222)
+
+[node name="StaticBody2D" type="StaticBody2D" parent="." unique_id=197189200]
+position = Vector2(1590, -1705)
+
+[node name="TileMapLayer" type="TileMapLayer" parent="StaticBody2D" unique_id=92522844]
+tile_map_data = PackedByteArray("AAABAAQAAQALAAMAAAABAAMAAQALAAIAAAABAAIAAQALAAIAAAABAAEAAQALAAIAAAABAAAAAQALAAAAAAAAAAQAAQAIAAMAAAAAAAMAAQAIAAEAAAAAAAIAAQAIAAEAAAAAAAEAAQAIAAEAAAAAAAAAAQAIAAAAAAA=")
+tile_set = ExtResource("2_fcih8")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D" unique_id=1118940977]
+position = Vector2(64, 161.5)
+shape = SubResource("RectangleShape2D_8dxha")
+
+[node name="Button5" parent="." unique_id=1433010663 instance=ExtResource("4_ebj3r")]
+position = Vector2(2082, -1599)

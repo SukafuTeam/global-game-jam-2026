@@ -2,12 +2,17 @@ extends Node2D
 
 const INITIAL_X: float = 1920
 const FINAL_X: float = -2000
+const SKIP_THRESHOLD: float = 2.0
 
 @export var slides: Array[Node2D] = []
 
 @export var slide_time: float = 2.5
 
 @export var intro: bool
+
+var skip_buffer: float = 0.0
+
+@onready var skip: TextureRect = $Skip
 
 func _ready() -> void:
 	Global.masked = true
@@ -29,8 +34,15 @@ func _ready() -> void:
 	)
 		
 func _process(delta: float) -> void:
+	skip_buffer -= delta
+	
+	skip.visible = skip_buffer >= 0.0
+	
 	if Input.is_action_just_pressed("jump") or Input.is_action_just_pressed("ui_accept"):
-		if intro:
-			get_tree().change_scene_to_file("res://scenes/main_scene.tscn")
+		if skip_buffer < 0:
+			skip_buffer = SKIP_THRESHOLD
 		else:
-			get_tree().change_scene_to_file("res://scenes/menu_scene.tscn")
+			if intro:
+				get_tree().change_scene_to_file("res://scenes/main_scene.tscn")
+			else:
+				get_tree().change_scene_to_file("res://scenes/menu_scene.tscn")

@@ -6,9 +6,9 @@ signal item_dropped(item: Pickable)
 var camera: CameraController
 
 var masked: bool = true
-var double_jump_enabled: bool = true
-var wall_jump_enabled: bool = true
-var dash_enabled: bool = true
+var double_jump_enabled: bool = false
+var wall_jump_enabled: bool = false
+var dash_enabled: bool = false
 var speed_enabled: bool = false
 var high_jump_enabled: bool = false
 var extra_health_enabled: bool = false
@@ -22,20 +22,21 @@ var ground_surface: int = 0
 
 func _ready():
 	process_mode = PROCESS_MODE_ALWAYS
-	#reset()
+	reset()
 
 func reset():
 	opened_locks = []
 	masked = false
-	double_jump_enabled = false
-	wall_jump_enabled = false
-	dash_enabled = false
+	double_jump_enabled = true
+	wall_jump_enabled = true
+	dash_enabled = true
 	speed_enabled = false
 	high_jump_enabled = false
 	extra_health_enabled = false
 
 func _process(_delta: float) -> void:
 	if Input.is_action_just_pressed("restart"):
+		reset()
 		get_tree().change_scene_to_file("res://scenes/menu_scene.tscn")
 
 func add_camera_stress(stress: Vector2):
