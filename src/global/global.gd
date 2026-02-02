@@ -36,7 +36,7 @@ func reset():
 
 func _process(_delta: float) -> void:
 	if Input.is_action_just_pressed("restart"):
-		get_tree().reload_current_scene()
+		get_tree().change_scene_to_file("res://scenes/menu_scene.tscn")
 
 func add_camera_stress(stress: Vector2):
 	if camera == null:

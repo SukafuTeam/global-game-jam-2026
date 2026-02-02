@@ -67,6 +67,8 @@ func mission_completed():
 		3:
 			prep_mission(3)
 			prep_mission(4)
+		5:
+			get_tree().change_scene_to_file("res://scenes/victory.tscn")
 
 func prep_mission(index: int):
 	var mission = mission_scenes[index].instantiate() as MissionController

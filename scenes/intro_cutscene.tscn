@@ -15,6 +15,7 @@
 [ext_resource type="Texture2D" uid="uid://dtof5b7ne71ui" path="res://assets/images/ui/cutscenes - inicio/cena 03/balão.png" id="11_fxsd4"]
 [ext_resource type="Texture2D" uid="uid://djo6e6mnvph14" path="res://assets/images/ui/cutscenes - inicio/cena 04/altar.png" id="13_fxsd4"]
 [ext_resource type="Texture2D" uid="uid://dd543e421r0vq" path="res://assets/images/ui/cutscenes - inicio/cena 05/personagem.png" id="14_2o38y"]
+[ext_resource type="Texture2D" uid="uid://bjfyvsoq6c1gl" path="res://assets/images/ui/cutscenes - inicio/cena 03/texto.png" id="14_yx07r"]
 [ext_resource type="Texture2D" uid="uid://cxkkfq1fdojwm" path="res://assets/images/ui/cutscenes - inicio/cena 05/balão.png" id="15_k5ksj"]
 [ext_resource type="Texture2D" uid="uid://cbfdgeje5lx12" path="res://assets/images/ui/cutscenes - inicio/cena 05/menina.png" id="16_6psxe"]
 [ext_resource type="Texture2D" uid="uid://51ap8x4n6r1u" path="res://assets/images/ui/cutscenes - inicio/cena 06/fortão.png" id="17_yx07r"]
@@ -100,6 +101,10 @@ texture = ExtResource("10_pbanw")
 [node name="Balão" type="Sprite2D" parent="Slide3" unique_id=1838363787]
 position = Vector2(1264, 496)
 texture = ExtResource("11_fxsd4")
+
+[node name="Texto" type="Sprite2D" parent="Slide3" unique_id=1362963067]
+position = Vector2(1249, 524)
+texture = ExtResource("14_yx07r")
 
 [node name="Slide4" type="Node2D" parent="." unique_id=56420624]
 
