@@ -25,6 +25,7 @@ _data = [Vector2(0, 0), 0.0, 11.012513, 0, 0, Vector2(0.25392672, 1), 0.0, -0.86
 point_count = 3
 
 [node name="Altar" type="Node2D" unique_id=1520962168 node_paths=PackedStringArray("fires")]
+z_index = -5
 script = ExtResource("1_fs0oh")
 fires = [NodePath("FireParticle"), NodePath("FireParticle2"), NodePath("FireParticle3")]
 
@@ -113,6 +114,7 @@ texture = ExtResource("4_cq4p3")
 
 [node name="FireParticle" type="CPUParticles2D" parent="DeliveredContainer/DeliveredItem" unique_id=518614495]
 show_behind_parent = true
+position = Vector2(0, 32)
 amount = 100
 texture = ExtResource("1_mgv1q")
 preprocess = 5.0

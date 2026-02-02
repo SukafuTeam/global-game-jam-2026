@@ -1,12 +1,9 @@
 [gd_scene format=3 uid="uid://dp278euqxxfyr"]
 
-[ext_resource type="Texture2D" uid="uid://dhjwgvaqnlfp4" path="res://assets/images/sprites/particles/circle_01_a.png" id="1_chkqj"]
+[ext_resource type="Texture2D" uid="uid://di0yd0c8ygixm" path="res://assets/images/ui/game/item-quest-ballon.png" id="2_bqtxj"]
 [ext_resource type="Script" uid="uid://civas1lu3hcqk" path="res://src/ui/altar_tracker.gd" id="2_chkqj"]
 [ext_resource type="Texture2D" uid="uid://ctm2wl7is4ufw" path="res://assets/images/sprites/objects/altar.png" id="3_hlmp5"]
-
-[sub_resource type="Curve" id="Curve_bqtxj"]
-_data = [Vector2(0, 1), 0.0, -0.89348996, 0, 0, Vector2(1, 0), -0.8181082, 0.0, 0, 0]
-point_count = 2
+[ext_resource type="Texture2D" uid="uid://cad2tss6y4wg4" path="res://assets/images/ui/game/item-quest-ballon-arrow.png" id="4_hlmp5"]
 
 [node name="AltarTracker" type="Node2D" unique_id=869649918]
 z_index = 500
@@ -14,19 +11,16 @@ z_as_relative = false
 script = ExtResource("2_chkqj")
 
 [node name="Bubble" type="Sprite2D" parent="." unique_id=1199571002]
-scale = Vector2(0.37759194, 0.37759194)
-texture = ExtResource("1_chkqj")
+scale = Vector2(0.88059676, 0.88059694)
+texture = ExtResource("2_bqtxj")
 
 [node name="Item" type="Sprite2D" parent="." unique_id=848338755]
 scale = Vector2(0.05554202, 0.05554202)
 texture = ExtResource("3_hlmp5")
 
 [node name="Pivot" type="Node2D" parent="." unique_id=668424989]
-
-[node name="Pointer" type="Line2D" parent="Pivot" unique_id=382899145]
-self_modulate = Color(1, 1, 1, 0.5882353)
 show_behind_parent = true
-position = Vector2(58, 2)
-points = PackedVector2Array(2.5, -1.5, 64, 1)
-width = 60.0
-width_curve = SubResource("Curve_bqtxj")
+
+[node name="Sprite2D" type="Sprite2D" parent="Pivot" unique_id=1528108790]
+position = Vector2(77, 0)
+texture = ExtResource("4_hlmp5")

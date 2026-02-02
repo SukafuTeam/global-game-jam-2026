@@ -1,6 +1,8 @@
 class_name Lock
 extends StaticBody2D
 
+signal unlocked()
+
 @export var color: Color
 @export var lock_id: int
 
@@ -60,5 +62,6 @@ func open(k: Key):
 	FmodServer.play_one_shot("event:/UI/yes")
 	k.queue_free()
 	particle.restart()
+	unlocked.emit()
 	await particle.finished
 	queue_free()

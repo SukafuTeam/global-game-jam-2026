@@ -5,6 +5,11 @@ extends Node2D
 @export var destroy: Node2D
 
 @export var mask: Area2D
+@export var collecting: CPUParticles2D
+@export var left_wall: CollisionShape2D
+@export var mask_coll: CollisionShape2D
+
+@export var player: PlayerController
 
 var finished
 
@@ -13,6 +18,15 @@ func _ready() -> void:
 		if other is PlayerController:
 			finish_tutorial()
 	)
+	intro()
+
+func intro():
+	player.interactible = false
+	player.auto_move_speed = player.MOVE_SPEED * 0.4
+	player.current_auto_move_time = 0.02
+	await get_tree().create_timer(2.0).timeout
+	player.interactible = true
+	left_wall.disabled = false
 
 func _process(_delta: float) -> void:
 	if finished:
@@ -22,9 +36,26 @@ func _process(_delta: float) -> void:
 		if !button.valid:
 			return
 	
-	destroy.queue_free()
+	FmodServer.play_one_shot("event:/UI/yes")
+	var wall_sfx: FmodEvent = FmodServer.create_event_instance("event:/Interactables/wall")
+	wall_sfx.start()
+	var tween = create_tween()
+	tween.tween_property(destroy, "position:y", destroy.position.y + 320, 2.0)
+	tween.tween_callback(func():
+		wall_sfx.stop(0)
+		wall_sfx.release()
+	)
 	finished = true
 
 func finish_tutorial():
-	await get_tree().process_frame
+	mask_coll.set_deferred("disabled", true)
+	player.interactible = false
+	player.velocity = Vector2.ZERO
+	collecting.emitting = true
+	var tween = create_tween()
+	tween.tween_property(Global.camera, "zoom", Vector2.ONE * 1.2, 2.5).set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_SINE)
+	FmodServer.play_one_shot("event:/UI/yes")
+	await get_tree().create_timer(2.5).timeout
+	collecting.emitting = false
+	await get_tree().create_timer(1.0).timeout
 	get_tree().change_scene_to_file("res://scenes/intro_cutscene.tscn")

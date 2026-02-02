@@ -1,12 +1,12 @@
 [gd_scene format=3 uid="uid://3bjiwm07kvuv"]
 
 [ext_resource type="Script" uid="uid://bfqpb3l0ca7bx" path="res://src/controllers/missions/mission_controller.gd" id="1_64wpt"]
-[ext_resource type="PackedScene" uid="uid://cc8jtxpnv6qre" path="res://entities/pickables/coconut.tscn" id="2_mwxsh"]
+[ext_resource type="PackedScene" uid="uid://caai1awajnn0o" path="res://entities/pickables/melancia.tscn" id="2_64wpt"]
 
 [node name="Mission4" type="Node2D" unique_id=491431976 node_paths=PackedStringArray("item")]
 script = ExtResource("1_64wpt")
 spawn_point = Vector2(17776, 3640)
-item = NodePath("Coconut")
+item = NodePath("Melancia")
 
-[node name="Coconut" parent="." unique_id=1108538937 instance=ExtResource("2_mwxsh")]
-position = Vector2(-1094, 2221)
+[node name="Melancia" parent="." unique_id=378684654 instance=ExtResource("2_64wpt")]
+position = Vector2(-1095, 2221)

@@ -17,7 +17,7 @@ func _physics_process(_delta: float) -> void:
 	
 		Global.add_camera_stress(Vector2.ONE * 0.2)
 		if local_reset:
-			p.snap(p.spawn_point, 0.2)
+			p.snap(p.spawn_point, 0.5)
 		else:
-			p.snap(Global.safe_item_position, 0.2)
+			p.snap(Global.safe_item_position, 0.5)
 		

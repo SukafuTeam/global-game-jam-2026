@@ -26,6 +26,7 @@ colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 0.8796296, 1, 1, 1, 0)
 [node name="Lock" type="StaticBody2D" unique_id=1568173271]
 collision_mask = 12
 script = ExtResource("1_5mq1v")
+color = Color(0, 0, 1, 1)
 
 [node name="Sprite" type="Sprite2D" parent="." unique_id=1403507958]
 scale = Vector2(0.6543382, 0.6543382)
@@ -34,6 +35,7 @@ texture = ExtResource("1_bsrqb")
 [node name="BubbleContainer" type="Node2D" parent="Sprite" unique_id=381359232]
 modulate = Color(1, 1, 1, 0.39215687)
 self_modulate = Color(1, 1, 1, 0.39215687)
+show_behind_parent = true
 scale = Vector2(1.9483424, 1.9483424)
 
 [node name="Bubble" type="Sprite2D" parent="Sprite/BubbleContainer" unique_id=1815920790]

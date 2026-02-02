@@ -5,15 +5,19 @@ extends Node2D
 
 @onready var pivot: Node2D = $Pivot
 
+func _ready():
+	visible = false
+	global_position = Global.camera.get_screen_center_position()
+
 func _process(_delta: float) -> void:
 	if altar.completed:
 		queue_free()
 		return
 	
-	visible = (global_position - altar.global_position).length() > 50.0
+	visible = (global_position - altar.global_position).length() > 100.0
 	
 	var center = Global.camera.get_screen_center_position()
-	var dir = pivot.global_position - center
+	var dir = altar.global_position - center
 	pivot.global_rotation_degrees = rad_to_deg(atan2(dir.y, dir.x))
 	
 	var v_size = get_viewport_rect().size * 0.4

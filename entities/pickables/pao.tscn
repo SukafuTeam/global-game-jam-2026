@@ -1,0 +1,21 @@
+[gd_scene format=3 uid="uid://byruaoc84emco"]
+
+[ext_resource type="Script" uid="uid://cc7vmuv4al3gt" path="res://src/controllers/pickables/pickable.gd" id="1_55lwa"]
+[ext_resource type="Texture2D" uid="uid://ynuqti5jyaaq" path="res://assets/images/sprites/pickables/PAO.png" id="2_55lwa"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_440lv"]
+size = Vector2(68, 54)
+
+[node name="Pao" type="CharacterBody2D" unique_id=378684654]
+collision_layer = 8
+script = ExtResource("1_55lwa")
+metadata/_custom_type_script = "uid://cc7vmuv4al3gt"
+
+[node name="Sprite" type="Sprite2D" parent="." unique_id=1042648674]
+position = Vector2(-3, -4)
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("2_55lwa")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=858150159]
+position = Vector2(-2, -4)
+shape = SubResource("RectangleShape2D_440lv")

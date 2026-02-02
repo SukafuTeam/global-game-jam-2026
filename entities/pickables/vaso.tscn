@@ -1,0 +1,22 @@
+[gd_scene format=3 uid="uid://cc6gpa8f6uxqa"]
+
+[ext_resource type="Script" uid="uid://cc7vmuv4al3gt" path="res://src/controllers/pickables/pickable.gd" id="1_dwhug"]
+[ext_resource type="Texture2D" uid="uid://86yxvwruj371" path="res://assets/images/sprites/pickables/VASO.png" id="2_dwhug"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_440lv"]
+size = Vector2(62, 71)
+
+[node name="Vaso" type="CharacterBody2D" unique_id=378684654]
+collision_layer = 8
+script = ExtResource("1_dwhug")
+type = 2
+metadata/_custom_type_script = "uid://cc7vmuv4al3gt"
+
+[node name="Sprite" type="Sprite2D" parent="." unique_id=1042648674]
+position = Vector2(-3, -4)
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("2_dwhug")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=858150159]
+position = Vector2(-3, -2.5)
+shape = SubResource("RectangleShape2D_440lv")

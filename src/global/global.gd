@@ -4,6 +4,7 @@ signal item_picked(item: Pickable)
 signal item_dropped(item: Pickable)
 
 var camera: CameraController
+var player: PlayerController
 
 var masked: bool = true
 var double_jump_enabled: bool = false

@@ -9,8 +9,9 @@ radius = 27.073973
 [node name="Coconut" type="CharacterBody2D" unique_id=1108538937]
 collision_layer = 8
 script = ExtResource("1_5o0t1")
-bounce = 0.4
+bounce = 0.6
 should_rotate = true
+type = 6
 metadata/_custom_type_script = "uid://cc7vmuv4al3gt"
 
 [node name="Sprite" type="Sprite2D" parent="." unique_id=978004175]

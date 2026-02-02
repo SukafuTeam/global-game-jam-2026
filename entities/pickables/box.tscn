@@ -9,6 +9,7 @@ size = Vector2(68, 68)
 [node name="Box" type="CharacterBody2D" unique_id=378684654]
 collision_layer = 8
 script = ExtResource("1_440lv")
+type = 3
 metadata/_custom_type_script = "uid://cc7vmuv4al3gt"
 
 [node name="Sprite" type="Sprite2D" parent="." unique_id=1042648674]

@@ -1,0 +1,22 @@
+[gd_scene format=3 uid="uid://bv6xtd37k1ysx"]
+
+[ext_resource type="Script" uid="uid://cc7vmuv4al3gt" path="res://src/controllers/pickables/pickable.gd" id="1_ewyvg"]
+[ext_resource type="Texture2D" uid="uid://cakk8rlt267sf" path="res://assets/images/sprites/pickables/BARRIL.png" id="2_ewyvg"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_440lv"]
+size = Vector2(69, 88)
+
+[node name="Barril" type="CharacterBody2D" unique_id=378684654]
+collision_layer = 8
+script = ExtResource("1_ewyvg")
+type = 2
+metadata/_custom_type_script = "uid://cc7vmuv4al3gt"
+
+[node name="Sprite" type="Sprite2D" parent="." unique_id=1042648674]
+position = Vector2(-1, -16.12871)
+scale = Vector2(0.39709103, 0.39709103)
+texture = ExtResource("2_ewyvg")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=858150159]
+position = Vector2(-2.5, -16.128712)
+shape = SubResource("RectangleShape2D_440lv")

@@ -65,6 +65,22 @@ point_count = 1
 _data = [Vector2(0, 1), 0.0, 0.0, 0, 0]
 point_count = 1
 
+[sub_resource type="Curve" id="Curve_dchgp"]
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.20744681, 0.41573036), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="Curve" id="Curve_kdgjc"]
+_data = [Vector2(0, 0.11235964), 0.0, 0.0, 0, 0, Vector2(0.5319149, 0.8539326), 0.0, 0.0, 0, 0, Vector2(1, 0), -5.431787, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="Gradient" id="Gradient_q0i8f"]
+offsets = PackedFloat32Array(0, 0.7839506, 1)
+colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0)
+
+[sub_resource type="Gradient" id="Gradient_e4p34"]
+offsets = PackedFloat32Array(0, 0.24074075, 0.5123457, 0.72839504, 1)
+colors = PackedColorArray(1, 0, 0, 1, 0.6333333, 1, 0, 1, 0, 1, 0.75, 1, 0.33333302, 0, 1, 1, 1, 0, 0.016666412, 1)
+
 [sub_resource type="CircleShape2D" id="CircleShape2D_e4p34"]
 radius = 6.0
 
@@ -101,7 +117,7 @@ scale = Vector2(0.12918882, 0.12918882)
 [node name="SpineSlotNode" type="SpineSlotNode" parent="BodyContainer/SpineSprite" unique_id=1415002499]
 slot_name = "hold_anchor"
 show_behind_parent = true
-position = Vector2(-304.1132, 103.102615)
+position = Vector2(-304.1132, 103.10266)
 rotation = 0.46364844
 scale = Vector2(0.99999994, 0.99999994)
 
@@ -134,7 +150,7 @@ target_position = Vector2(30, 0)
 collision_mask = 3
 
 [node name="GroundCheck" type="RayCast2D" parent="Checks" unique_id=1672289126]
-target_position = Vector2(0, 60)
+target_position = Vector2(0, 141)
 
 [node name="PickChecks" type="Node2D" parent="." unique_id=284969669]
 visible = false
@@ -399,6 +415,35 @@ scale_amount_min = 0.2
 scale_amount_max = 0.3
 scale_amount_curve = SubResource("Curve_rfe5m")
 color_ramp = SubResource("Gradient_qly61")
+
+[node name="VictoryParticles" type="CPUParticles2D" parent="Particles" unique_id=1201470548]
+z_index = 500
+position = Vector2(1, -55)
+emitting = false
+amount = 100
+texture = ExtResource("5_qly61")
+lifetime = 2.0
+one_shot = true
+explosiveness = 0.89
+lifetime_randomness = 0.57
+local_coords = true
+emission_shape = 1
+emission_sphere_radius = 80.0
+direction = Vector2(0, -1)
+spread = 30.0
+gravity = Vector2(0, 400)
+initial_velocity_min = 300.0
+initial_velocity_max = 400.0
+damping_min = 500.0
+damping_max = 500.0
+damping_curve = SubResource("Curve_dchgp")
+angle_min = 200.0
+angle_max = 360.0
+scale_amount_min = 0.1
+scale_amount_max = 0.2
+scale_amount_curve = SubResource("Curve_kdgjc")
+color_ramp = SubResource("Gradient_q0i8f")
+color_initial_ramp = SubResource("Gradient_e4p34")
 
 [node name="CameraArea" type="Area2D" parent="." unique_id=1210532132]
 collision_layer = 64

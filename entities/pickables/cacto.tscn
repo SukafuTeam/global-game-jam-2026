@@ -1,0 +1,23 @@
+[gd_scene format=3 uid="uid://cse4i38tk413f"]
+
+[ext_resource type="Script" uid="uid://cc7vmuv4al3gt" path="res://src/controllers/pickables/pickable.gd" id="1_1yutd"]
+[ext_resource type="Texture2D" uid="uid://c5q6r0qnq0hhv" path="res://assets/images/sprites/pickables/Vector-2.png" id="2_1yutd"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_440lv"]
+size = Vector2(36, 65)
+
+[node name="Cacto" type="CharacterBody2D" unique_id=378684654]
+collision_layer = 8
+script = ExtResource("1_1yutd")
+bounce = 0.3
+type = 2
+metadata/_custom_type_script = "uid://cc7vmuv4al3gt"
+
+[node name="Sprite" type="Sprite2D" parent="." unique_id=1042648674]
+position = Vector2(-3, -4)
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("2_1yutd")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=858150159]
+position = Vector2(0, -3.5)
+shape = SubResource("RectangleShape2D_440lv")

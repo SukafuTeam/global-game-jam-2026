@@ -1,0 +1,24 @@
+[gd_scene format=3 uid="uid://dvfagpre2qc7a"]
+
+[ext_resource type="Script" uid="uid://cc7vmuv4al3gt" path="res://src/controllers/pickables/pickable.gd" id="1_ohku0"]
+[ext_resource type="Texture2D" uid="uid://dotvrkccc54bc" path="res://assets/images/sprites/pickables/Vector-1.png" id="2_ohku0"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_2ddn6"]
+radius = 21.552261
+
+[node name="Maca" type="CharacterBody2D" unique_id=378684654]
+collision_layer = 8
+script = ExtResource("1_ohku0")
+bounce = 0.5
+should_rotate = true
+type = 1
+metadata/_custom_type_script = "uid://cc7vmuv4al3gt"
+
+[node name="Sprite" type="Sprite2D" parent="." unique_id=1042648674]
+position = Vector2(-2, -4)
+scale = Vector2(0.6000731, 0.6000731)
+texture = ExtResource("2_ohku0")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=858150159]
+position = Vector2(-2.5, -1.5)
+shape = SubResource("CircleShape2D_2ddn6")

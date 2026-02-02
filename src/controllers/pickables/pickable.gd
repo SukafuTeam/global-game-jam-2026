@@ -6,13 +6,24 @@ const DROP_FORCE: float = 1300.0
 const DROP_FORCE_MULTIPLIER: Vector2 = Vector2(1.0, 1.0)
 const ROTATE_AMOUNT: float = 0.8
 
-const MAX_IMPACT_FORCE:float = 2500.0
+const MAX_IMPACT_FORCE:float = 2000.0
 
 const SNAP_TIME: float = 0.1
 const SNAP_HEIGHT: float = -20.0
 
+enum MaterialType {
+	DEFAULT,
+	SOFT,
+	HEAVY,
+	WOOD,
+	METAL,
+	GLASS,
+	COCONUT
+}
+
 @export var bounce: float = 0.2
 @export var should_rotate: bool = false
+@export var type: MaterialType
 
 var spawn_point: Vector2
 
@@ -38,6 +49,8 @@ func _ready() -> void:
 	spawn_point = global_position
 	original_parent = get_parent()
 	interactible = true
+	if should_rotate:
+		global_rotation_degrees = randf_range(-30, 30)
 
 func _physics_process(delta: float) -> void:
 	time_alive += delta
@@ -71,7 +84,7 @@ func _physics_process(delta: float) -> void:
 				
 				if time_alive > 3.0:
 					var force_percent = inverse_lerp(0.0, MAX_IMPACT_FORCE, last_velocity.length())
-					FmodServer.play_one_shot_attached_with_params("event:/Pickables/wood", self, {"force": force_percent})
+					play_sfx(force_percent)
 			else:
 				velocity = Vector2.ZERO
 		else:
@@ -84,7 +97,7 @@ func _physics_process(delta: float) -> void:
 		if abs(last_velocity.x) > BOUNCE_THRESHOLD:
 			if time_alive > 3.0:
 				var force_percent = inverse_lerp(0.0, MAX_IMPACT_FORCE, last_velocity.length())
-				FmodServer.play_one_shot_attached_with_params("event:/Pickables/wood", self, {"force": force_percent})
+				play_sfx(force_percent)
 			velocity.x = -last_velocity.x * bounce
 
 func snap(to: Vector2, time: float = -1.0):
@@ -92,6 +105,7 @@ func snap(to: Vector2, time: float = -1.0):
 	snap_to = to
 	current_snap_time = 0.0
 	snapping = true
+	collision.set_deferred("disabled", true)
 	snap_time = time if time > 0.0 else SNAP_TIME
 
 func update_snap(delta):
@@ -104,6 +118,8 @@ func update_snap(delta):
 		global_position = snap_to
 		snapping = false
 		velocity = Vector2.ZERO
+		if target == null:
+			collision.disabled = false
 		return
 	
 	var t = current_snap_time / snap_time
@@ -115,6 +131,7 @@ func pickup(new_target: Node2D):
 	if !interactible:
 		return
 	
+	z_index += 1
 	target = new_target
 	collision.disabled = true
 	snap(target.global_position)
@@ -127,6 +144,7 @@ func drop(new_vel: Vector2 = Vector2.ZERO):
 	snapping = false
 	interactible = false
 	
+	z_index -= 1
 	Global.item_dropped.emit(self)
 	
 	velocity = new_vel * DROP_FORCE_MULTIPLIER * DROP_FORCE
@@ -135,3 +153,25 @@ func drop(new_vel: Vector2 = Vector2.ZERO):
 	await get_tree().create_timer(0.25).timeout
 	
 	interactible = true
+
+func play_sfx(force_percent: float):
+	
+	var event = "event:/Pickables/"
+	
+	match type:
+		MaterialType.DEFAULT:
+			event += "soft"
+		MaterialType.SOFT:
+			event += "soft"
+		MaterialType.HEAVY:
+			event += "heavy"
+		MaterialType.WOOD:
+			event += "wood"
+		MaterialType.METAL:
+			event += "metal"
+		MaterialType.GLASS:
+			event += "glass"
+		MaterialType.COCONUT:
+			event += "coconut"
+			
+	FmodServer.play_one_shot_attached_with_params(event, self, {"force": force_percent})

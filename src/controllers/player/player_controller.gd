@@ -36,6 +36,15 @@ enum State {
 }
 
 
+var interactible: bool:
+	set(value):
+		if !value:
+			current_state_time = 0.0
+			state = State.GROUND
+		interactible = value
+	get:
+		return interactible
+
 var state: State:
 	set(value):
 		if value != state:
@@ -51,10 +60,10 @@ var additional_velocity: Vector2
 var was_on_floor: bool
 var can_double_jump: bool
 var can_dash: bool
-var dash_cooldown: float = -1.0
 
 var health: int
 var current_iframe_time: float = -1.0
+var elapsed_time: float
 
 var current_auto_move_time: float = 0.0
 var auto_move_speed: float = 0.0
@@ -107,8 +116,11 @@ var holding_item: Pickable
 @onready var high_jump_particle: CPUParticles2D = $Particles/HighJumpParticle
 @onready var left_wall_slide_particle: CPUParticles2D = $Particles/LeftWallSlideParticle
 @onready var right_wall_slide_particle: CPUParticles2D = $Particles/RightWallSlideParticle
+@onready var victoy_particles: CPUParticles2D = $Particles/VictoryParticles
 
 func _ready() -> void:
+	Global.player = self
+	interactible = true
 	looking_right = true
 	state = State.GROUND
 	can_dash = Global.dash_enabled
@@ -125,6 +137,10 @@ func _ready() -> void:
 		health += 1
 	
 	Global.safe_item_position = global_position
+	
+	Global.camera.position_smoothing_enabled = false
+	await get_tree().process_frame
+	Global.camera.position_smoothing_enabled = true
 
 
 func _process(delta: float) -> void:
@@ -151,7 +167,6 @@ func _process(delta: float) -> void:
 	current_kick_time -= delta
 	
 	current_iframe_time -= delta
-	dash_cooldown -= delta
 	
 	current_left_wall_slide_time -= delta
 	current_right_wall_slide_time -= delta
@@ -166,6 +181,7 @@ func _process(delta: float) -> void:
 		current_up_buffer_time = INPUT_BUFFER_TIME
 
 func _physics_process(delta: float) -> void:
+	elapsed_time += delta
 	if is_on_floor():
 		current_coyote_time = INPUT_BUFFER_TIME
 	else:
@@ -189,27 +205,37 @@ func _physics_process(delta: float) -> void:
 				current_right_wall_slide_time = INPUT_BUFFER_TIME
 				looking_right = false
 
-	# Can't turn around while dashing or wallsliding
-	if state != State.DASH and\
-		current_auto_move_time < 0.0 and\
-		!wall_sliding:
-		var input_axis = Input.get_axis("left", "right")
-		if abs(input_axis) > 0.1:
-			looking_right = input_axis > 0.0
+	if interactible:
+		# Can't turn around while dashing or wallsliding
+		if state != State.DASH and\
+			current_auto_move_time < 0.0 and\
+			!wall_sliding:
+			var input_axis = Input.get_axis("left", "right")
+			if abs(input_axis) > 0.1:
+				looking_right = input_axis > 0.0
 	
 	process_hold()
 	
 	check_damage()
 	
-	match state:
-		State.GROUND:
-			state = process_ground(delta)
-		State.AIR:
-			state = process_air(delta)
-		State.DASH:
-			state = process_dash(delta)
-		State.DAMAGE:
-			state = process_damage(delta)
+	if interactible:
+		match state:
+			State.GROUND:
+				state = process_ground(delta)
+			State.AIR:
+				state = process_air(delta)
+			State.DASH:
+				state = process_dash(delta)
+			State.DAMAGE:
+				state = process_damage(delta)
+			State.VICTORY:
+				state = process_victory(delta)
+	else:
+		if current_auto_move_time > 0.0:
+			var speed = auto_move_speed
+			if Global.speed_enabled:
+				speed *= SPEED_MULTIPLIER
+			velocity.x = speed
 	
 	was_on_floor = is_on_floor()
 	velocity += additional_velocity
@@ -223,6 +249,9 @@ func _physics_process(delta: float) -> void:
 
 #region State methods
 func check_damage():
+	if state == State.VICTORY:
+		return
+	
 	if current_iframe_time >= 0.0:
 		return
 	
@@ -247,7 +276,7 @@ func check_damage():
 func process_ground(delta: float) -> State:
 	input_move(delta)
 	
-	if current_dash_buffer_time >= 0.0 and can_dash and Global.dash_enabled and dash_cooldown <= 0.0:
+	if current_dash_buffer_time >= 0.0 and can_dash and Global.dash_enabled:
 		var should_dash = true
 		if looking_right and right_wall_check:
 			should_dash = false
@@ -270,7 +299,7 @@ func process_ground(delta: float) -> State:
 func process_air(delta: float) -> State:
 	input_move(delta)
 	
-	if current_dash_buffer_time >= 0.0 and can_dash and Global.dash_enabled and dash_cooldown <= 0.0 and !left_wall_check and !right_wall_check:
+	if current_dash_buffer_time >= 0.0 and can_dash and Global.dash_enabled and !left_wall_check and !right_wall_check:
 		if wall_sliding:
 			looking_right = !looking_right
 		can_dash = false
@@ -279,8 +308,7 @@ func process_air(delta: float) -> State:
 	
 	if wall_sliding:
 		can_double_jump = true
-		if dash_cooldown <= 0.0:
-			can_dash = true
+		can_dash = true
 		
 		velocity.y = min(velocity.y, MAX_WALL_JUMP_FALL_SPEED)
 		
@@ -301,7 +329,6 @@ func process_air(delta: float) -> State:
 			can_double_jump = false
 			on_jump()
 			return State.AIR
-		
 	
 	if is_on_floor():
 		return State.GROUND
@@ -344,6 +371,20 @@ func process_damage(delta: float) -> State:
 	
 	return State.DAMAGE
 
+func process_victory(delta: float) -> State:
+	velocity.x = 0
+	
+	current_state_time -= delta
+	if current_state_time <= 0.0:
+		return State.GROUND
+	
+	return State.VICTORY
+
+func celebrate(amount: float = 2.0):
+	state = State.VICTORY
+	current_state_time = amount
+	victoy_particles.restart()
+
 #endregion
 
 #region Hold methods
@@ -366,7 +407,7 @@ func process_hold():
 			
 			if (left_wall_check_1.is_colliding() or left_wall_check_2.is_colliding()) and\
 				(right_wall_check_1.is_colliding() or right_wall_check_2.is_colliding()):
-					holding_item.drop()
+					holding_item.drop(Vector2(randf_range(-0.1, 0.1), -0.2))
 					holding_item = null
 					velocity.y = 0.0
 		else:
@@ -459,11 +500,14 @@ func on_jump(wall_jump: bool = false):
 		high_jump_particle.direction.x = -dir
 		high_jump_particle.restart()
 
-func on_land(_hit_velocity: float):
-	body_container.scale = LAND_SCALE
+func on_land(_hit_velocity: float):	
 	can_double_jump = true
 	can_dash = true
 	
+	if elapsed_time < 0.2:
+		return
+		
+	body_container.scale = LAND_SCALE
 	right_jump_particle.restart()
 	left_jump_particle.restart()
 	
@@ -486,7 +530,7 @@ func enter_state(new_state: State):
 func exit_state(old_state: State):
 	match old_state:
 		State.DASH:
-			dash_cooldown = DASH_TIME
+			pass
 
 #endregion
 
@@ -498,6 +542,9 @@ func update_body_scale(delta):
 		)
 
 func  update_animation():
+	if state == State.VICTORY:
+		change_animation("dance")
+	
 	if state == State.DAMAGE:
 		var entry = change_animation("dizzy", 0, 0.0)
 		if entry != null:

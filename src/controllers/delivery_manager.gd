@@ -18,7 +18,6 @@ func _ready() -> void:
 		return
 		
 	missions_completed = -1
-	mission_completed()
 	
 	Global.item_picked.connect(item_picked)
 	Global.item_dropped.connect(item_dropped)
@@ -56,8 +55,12 @@ func item_delivered(altar: AltarController, item: Pickable):
 
 func mission_completed():
 	missions_completed += 1
-	FmodServer.play_one_shot("event:/UI/yes")
-	await get_tree().process_frame
+	if missions_completed > 0:
+		FmodServer.play_one_shot("event:/UI/yes")
+		Global.player.celebrate()
+	if missions_completed == 5:
+		Global.player.current_state_time = 30.0
+	await get_tree().create_timer(3.0).timeout
 	match missions_completed:
 		0:
 			prep_mission(0)
@@ -84,6 +87,7 @@ func spawn_item_tracker(target: Pickable) -> ItemTracker:
 	var tracker = item_tracker.instantiate() as ItemTracker
 	add_child(tracker)
 	tracker.item = target
+	tracker.global_position = target.global_position
 	tracker.sprite.texture = target.sprite.texture
 	return tracker
 

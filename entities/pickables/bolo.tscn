@@ -1,0 +1,23 @@
+[gd_scene format=3 uid="uid://drvxugnygvkbd"]
+
+[ext_resource type="Script" uid="uid://cc7vmuv4al3gt" path="res://src/controllers/pickables/pickable.gd" id="1_bm21e"]
+[ext_resource type="Texture2D" uid="uid://cmtbghgjwf565" path="res://assets/images/sprites/pickables/Vector.png" id="2_bm21e"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_440lv"]
+size = Vector2(70, 56.85736)
+
+[node name="Bolo" type="CharacterBody2D" unique_id=378684654]
+collision_layer = 8
+script = ExtResource("1_bm21e")
+bounce = 0.3
+type = 1
+metadata/_custom_type_script = "uid://cc7vmuv4al3gt"
+
+[node name="Sprite" type="Sprite2D" parent="." unique_id=1042648674]
+position = Vector2(1.0262451, -24.030075)
+scale = Vector2(0.63659155, 0.63659155)
+texture = ExtResource("2_bm21e")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=858150159]
+position = Vector2(-2, -13.601395)
+shape = SubResource("RectangleShape2D_440lv")

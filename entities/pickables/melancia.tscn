@@ -1,0 +1,22 @@
+[gd_scene format=3 uid="uid://caai1awajnn0o"]
+
+[ext_resource type="Script" uid="uid://cc7vmuv4al3gt" path="res://src/controllers/pickables/pickable.gd" id="1_nfwsn"]
+[ext_resource type="Texture2D" uid="uid://dfifief1u38f3" path="res://assets/images/sprites/pickables/MELANCIA.png" id="2_nfwsn"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_iw5xp"]
+radius = 43.046486
+
+[node name="Melancia" type="CharacterBody2D" unique_id=378684654]
+collision_layer = 8
+script = ExtResource("1_nfwsn")
+should_rotate = true
+type = 1
+metadata/_custom_type_script = "uid://cc7vmuv4al3gt"
+
+[node name="Sprite" type="Sprite2D" parent="." unique_id=1042648674]
+position = Vector2(-1, 0)
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("2_nfwsn")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=858150159]
+shape = SubResource("CircleShape2D_iw5xp")
