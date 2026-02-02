@@ -915,7 +915,7 @@ position = Vector2(-5.501953, 0)
 shape = SubResource("RectangleShape2D_j2yw6")
 
 [node name="GoldKey" parent="Objects" unique_id=878132375 instance=ExtResource("12_01n6w")]
-position = Vector2(3378, 539)
+position = Vector2(20811, 6780)
 color = Color(1, 0.84313726, 0, 1)
 lock_id = 5
 

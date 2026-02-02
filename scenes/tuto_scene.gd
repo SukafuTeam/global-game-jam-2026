@@ -6,6 +6,7 @@ extends Node2D
 
 @export var mask: Area2D
 @export var collecting: CPUParticles2D
+@export var collecting2: CPUParticles2D
 @export var left_wall: CollisionShape2D
 @export var mask_coll: CollisionShape2D
 
@@ -53,9 +54,11 @@ func finish_tutorial():
 	player.velocity = Vector2.ZERO
 	collecting.emitting = true
 	var tween = create_tween()
-	tween.tween_property(Global.camera, "zoom", Vector2.ONE * 1.2, 2.5).set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_SINE)
+	tween.tween_property(Global.camera, "zoom", Vector2.ONE * 1.2, 3.0).set_ease(Tween.EASE_IN_OUT).set_trans(Tween.TRANS_SINE)
 	FmodServer.play_one_shot("event:/UI/yes")
 	await get_tree().create_timer(2.5).timeout
+	collecting2.emitting = true
+	await get_tree().create_timer(0.5).timeout
 	collecting.emitting = false
-	await get_tree().create_timer(1.0).timeout
+	await get_tree().create_timer(2.0).timeout
 	get_tree().change_scene_to_file("res://scenes/intro_cutscene.tscn")
