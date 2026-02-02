@@ -27,7 +27,7 @@
 [ext_resource type="PackedScene" uid="uid://cbdoi78gk3g0v" path="res://entities/missions/mission_2.tscn" id="21_xdqt8"]
 [ext_resource type="PackedScene" uid="uid://coxtcrdidtpue" path="res://entities/ui/item_tracker.tscn" id="23_58gk3"]
 [ext_resource type="PackedScene" uid="uid://c3ack3fygq3yt" path="res://entities/missions/mission_3.tscn" id="26_6p3nn"]
-[ext_resource type="Texture2D" uid="uid://c2wa5s6kkc6d8" path="res://assets/totem_sukafu_modelo.png" id="29_02d50"]
+[ext_resource type="Texture2D" uid="uid://c2wa5s6kkc6d8" path="res://assets/images/sprites/totem_sukafu_modelo.png" id="29_02d50"]
 [ext_resource type="PackedScene" uid="uid://dp8rpoj2i2fs0" path="res://entities/ui/camera_limiter.tscn" id="29_4bgka"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_k6f3i"]

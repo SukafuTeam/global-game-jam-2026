@@ -5,6 +5,7 @@
 [ext_resource type="Texture2D" uid="uid://csd140oeyam5v" path="res://assets/images/ui/logo.png" id="2_o71fo"]
 [ext_resource type="Script" uid="uid://m4lhlbgvsg28" path="res://src/ui/input_button_container.gd" id="3_6wmco"]
 [ext_resource type="Texture2D" uid="uid://b606q1sv1oqxr" path="res://assets/images/ui/game/cancel-button.png" id="4_482oc"]
+[ext_resource type="Script" uid="uid://dk03kj3knotow" path="res://src/wing.gd" id="4_vjll7"]
 [ext_resource type="Texture2D" uid="uid://1soxlqhyr5bu" path="res://assets/images/ui/game/confirm-button.png" id="4_yfxa8"]
 [ext_resource type="PackedScene" uid="uid://dkdt73uplwiww" path="res://entities/objects/altar.tscn" id="5_u4hxd"]
 
@@ -23,6 +24,7 @@ script = ExtResource("1_6od1f")
 position = Vector2(960, 342)
 scale = Vector2(0.6812513, 0.6812513)
 texture = ExtResource("2_o71fo")
+script = ExtResource("4_vjll7")
 
 [node name="TextureRect" type="TextureRect" parent="." unique_id=81604312]
 layout_mode = 1
