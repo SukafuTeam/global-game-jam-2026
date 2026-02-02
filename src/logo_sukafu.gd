@@ -13,7 +13,7 @@ func _ready():
 	tween.tween_callback(func(): logo_sound.play())
 	tween.tween_property(logo_image, "modulate:a", 1, 2)
 	tween.tween_interval(4.0)
-	#tween.tween_property(logo_image, "modulate:a", 0, 1)
+	tween.tween_property(logo_image, "modulate:a", 0, 1)
 	tween.tween_callback(func():
 		var event = FmodServer.create_event_instance("event:/BGM/jungle")
 		event.start()
