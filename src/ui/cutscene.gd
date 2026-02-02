@@ -10,6 +10,7 @@ const FINAL_X: float = -2000
 @export var intro: bool
 
 func _ready() -> void:
+	Global.masked = true
 	var tween = create_tween()
 	tween.tween_interval(1.0)
 	for i in slides:
