@@ -89,10 +89,12 @@ func spawn_item_tracker(target: Pickable) -> ItemTracker:
 	tracker.item = target
 	tracker.global_position = target.global_position
 	tracker.sprite.texture = target.sprite.texture
+	tracker.map_tracker = Global.map.add_tracker(target, target.sprite.texture)
 	return tracker
 
 func spawn_altar_tracker(target: AltarController) -> AltarTracker:
 	var tracker = altar_tracker.instantiate() as AltarTracker
 	add_child(tracker)
 	tracker.altar = target
+	tracker.map_tracker = Global.map.add_tracker(target)
 	return tracker

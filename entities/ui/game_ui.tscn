@@ -1,25 +1,184 @@
 [gd_scene format=3 uid="uid://bokvsw4lfnisx"]
 
 [ext_resource type="PackedScene" uid="uid://l242l6374yu1" path="res://entities/ui/health_container.tscn" id="1_uvj7p"]
+[ext_resource type="Texture2D" uid="uid://d1gishjmlhiq4" path="res://assets/images/ui/game/life-hud.png" id="1_wygod"]
+[ext_resource type="Script" uid="uid://c28lwfik0apq8" path="res://src/ui/health_bar.gd" id="2_7wnj1"]
+[ext_resource type="Shader" uid="uid://ttc0mb7cnb8s" path="res://assets/shaders/dark_blur.gdshader" id="4_6wbph"]
+[ext_resource type="Texture2D" uid="uid://cvxsx7e2cb0xa" path="res://assets/images/placeholder/ui/map.png" id="4_7g2dv"]
+[ext_resource type="Script" uid="uid://cl2t8a4h33e0h" path="res://src/ui/map.gd" id="4_pp468"]
+[ext_resource type="PackedScene" uid="uid://dkulyvfj7n5p6" path="res://entities/ui/tracker_map_icon.tscn" id="5_3kqnw"]
+[ext_resource type="Texture2D" uid="uid://1soxlqhyr5bu" path="res://assets/images/ui/game/confirm-button.png" id="5_qko4k"]
+[ext_resource type="Texture2D" uid="uid://34jdhobv5bk6" path="res://assets/images/sprites/mascara.png" id="5_t6hpy"]
+[ext_resource type="Script" uid="uid://m4lhlbgvsg28" path="res://src/ui/input_button_container.gd" id="6_0yrf3"]
+[ext_resource type="Texture2D" uid="uid://cnvfnmihohq36" path="res://assets/images/ui/game/ballon-single.png" id="7_08gs2"]
+[ext_resource type="Texture2D" uid="uid://ctm2wl7is4ufw" path="res://assets/images/sprites/objects/altar.png" id="8_3kqnw"]
+[ext_resource type="Texture2D" uid="uid://dhe1cbk0truuk" path="res://assets/images/ui/game/map.png" id="10_w31hu"]
 
-[node name="GameUI" type="Control" unique_id=177702809]
-layout_mode = 3
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_w31hu"]
+shader = ExtResource("4_6wbph")
+shader_parameter/lod = 1.200000057
+shader_parameter/mix_percentage = 0.400000019
+
+[node name="GameUI" type="CanvasLayer" unique_id=1492043873]
+
+[node name="HealthContainer" type="TextureRect" parent="." unique_id=958263323 node_paths=PackedStringArray("health_containers")]
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -243.39099
+offset_top = 10.0
+offset_right = 243.39209
+offset_bottom = 161.0
+grow_horizontal = 2
+texture = ExtResource("1_wygod")
+expand_mode = 1
+stretch_mode = 5
+script = ExtResource("2_7wnj1")
+health_containers = [NodePath("HealthGrid/HealthContainer"), NodePath("HealthGrid/HealthContainer2"), NodePath("HealthGrid/HealthContainer3"), NodePath("HealthGrid/HealthContainer4"), NodePath("HealthGrid/HealthContainer5")]
+
+[node name="HealthGrid" type="HBoxContainer" parent="HealthContainer" unique_id=402485226]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 36.39145
+offset_top = 18.0
+offset_right = -36.39142
+offset_bottom = -45.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 15
+alignment = 1
+
+[node name="HealthContainer" parent="HealthContainer/HealthGrid" unique_id=218018474 instance=ExtResource("1_uvj7p")]
+layout_mode = 2
+
+[node name="HealthContainer2" parent="HealthContainer/HealthGrid" unique_id=11592035 instance=ExtResource("1_uvj7p")]
+layout_mode = 2
+
+[node name="HealthContainer3" parent="HealthContainer/HealthGrid" unique_id=1731220698 instance=ExtResource("1_uvj7p")]
+layout_mode = 2
+
+[node name="HealthContainer4" parent="HealthContainer/HealthGrid" unique_id=977474943 instance=ExtResource("1_uvj7p")]
+layout_mode = 2
+
+[node name="HealthContainer5" parent="HealthContainer/HealthGrid" unique_id=1467751931 instance=ExtResource("1_uvj7p")]
+layout_mode = 2
+
+[node name="MapIcon" type="TextureRect" parent="." unique_id=1688816465]
+offset_left = 10.0
+offset_top = 10.0
+offset_right = 150.0
+offset_bottom = 150.0
+texture = ExtResource("10_w31hu")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="TextureRect2" type="TextureRect" parent="MapIcon" unique_id=492295140]
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 35.0
+offset_top = 6.0
+offset_right = 143.0
+offset_bottom = 114.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("5_qko4k")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="InputIcon" type="TextureRect" parent="MapIcon/TextureRect2" unique_id=557361542]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -21.0
+offset_top = -21.0
+offset_right = 21.0
+offset_bottom = 21.0
+grow_horizontal = 2
+grow_vertical = 2
+expand_mode = 1
+stretch_mode = 5
+script = ExtResource("6_0yrf3")
+type = 3
+color = Color(0.72156864, 0.007843138, 0.003921569, 1)
+
+[node name="TextureRect" type="TextureRect" parent="MapIcon" unique_id=1589031016]
+layout_mode = 0
+offset_left = 143.0
+offset_top = 14.0
+offset_right = 252.0
+offset_bottom = 123.0
+texture = ExtResource("7_08gs2")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="InputIcon" type="TextureRect" parent="MapIcon/TextureRect" unique_id=1642567210]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -24.5
+offset_top = -28.5
+offset_right = 38.5
+offset_bottom = 33.5
+grow_horizontal = 2
+grow_vertical = 2
+expand_mode = 1
+stretch_mode = 5
+script = ExtResource("6_0yrf3")
+type = 3
+color = Color(0.72156864, 0.007843138, 0.003921569, 1)
+
+[node name="Map" type="ColorRect" parent="." unique_id=1828119567]
+visible = false
+material = SubResource("ShaderMaterial_w31hu")
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+script = ExtResource("4_pp468")
+map_tracker_scene = ExtResource("5_3kqnw")
+map_altar_icon = ExtResource("8_3kqnw")
 
-[node name="HealthContainer" type="HBoxContainer" parent="." unique_id=402485226]
+[node name="Background" type="TextureRect" parent="Map" unique_id=636964351]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.1
+anchor_top = 0.1
+anchor_right = 0.9
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("4_7g2dv")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Origin" type="Control" parent="Map/Background" unique_id=853218859]
+anchors_preset = 0
+offset_left = 8.0
+offset_top = 445.0
+offset_right = 8.0
+offset_bottom = 445.0
+
+[node name="PlayerIcon" type="TextureRect" parent="Map/Background/Origin" unique_id=2096178539]
+z_index = 100
 layout_mode = 0
-offset_right = 40.0
-offset_bottom = 40.0
-
-[node name="HealthContainer" parent="HealthContainer" unique_id=218018474 instance=ExtResource("1_uvj7p")]
-layout_mode = 2
-
-[node name="HealthContainer2" parent="HealthContainer" unique_id=88672197 instance=ExtResource("1_uvj7p")]
-layout_mode = 2
-
-[node name="HealthContainer3" parent="HealthContainer" unique_id=989904131 instance=ExtResource("1_uvj7p")]
-layout_mode = 2
+offset_left = -20.0
+offset_top = -40.0
+offset_right = 20.0
+pivot_offset_ratio = Vector2(0.5, 0.5)
+texture = ExtResource("5_t6hpy")
+expand_mode = 1
+stretch_mode = 5

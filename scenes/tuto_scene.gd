@@ -15,6 +15,7 @@ extends Node2D
 var finished
 
 func _ready() -> void:
+	Global.player.health = 10000000000
 	mask.body_entered.connect(func(other):
 		if other is PlayerController:
 			finish_tutorial()

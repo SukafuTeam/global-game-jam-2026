@@ -1,11 +1,26 @@
 [gd_scene format=3 uid="uid://l242l6374yu1"]
 
-[ext_resource type="Texture2D" uid="uid://cuvop3p1tduer" path="res://assets/images/placeholder/ui/health_placeholder.png" id="1_0d5as"]
+[ext_resource type="Script" uid="uid://dy3epxguw62wj" path="res://src/ui/health_container.gd" id="1_5yt8k"]
+[ext_resource type="Texture2D" uid="uid://c15vg7xks6cya" path="res://assets/images/ui/game/empty-life.png" id="1_fqa8s"]
+[ext_resource type="Texture2D" uid="uid://htn2uc36dkw3" path="res://assets/images/ui/game/life.png" id="2_5yt8k"]
 
 [node name="HealthContainer" type="TextureRect" unique_id=218018474]
-custom_minimum_size = Vector2(100, 100)
 offset_right = 40.0
 offset_bottom = 40.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+script = ExtResource("1_5yt8k")
+
+[node name="BackIcon" type="TextureRect" parent="." unique_id=2134592664]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("1_fqa8s")
+expand_mode = 1
+stretch_mode = 5
 
 [node name="FrontIcon" type="TextureRect" parent="." unique_id=1115132516]
 layout_mode = 1
@@ -14,6 +29,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-texture = ExtResource("1_0d5as")
+pivot_offset_ratio = Vector2(0.5, 0.5)
+texture = ExtResource("2_5yt8k")
 expand_mode = 1
-stretch_mode = 4
+stretch_mode = 5

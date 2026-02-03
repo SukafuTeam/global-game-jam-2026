@@ -9,6 +9,7 @@ var stress : Vector2 = Vector2.ZERO
 
 func _ready():
 	Global.camera = self
+	process_mode = Node.PROCESS_MODE_ALWAYS
 
 func _process(delta):
 	elapsed_time += delta

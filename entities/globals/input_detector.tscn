@@ -19,6 +19,10 @@
 [ext_resource type="Texture2D" uid="uid://dhw0sjo65uilu" path="res://assets/images/ui/input/playstation_dpad.png" id="13_sr1kl"]
 [ext_resource type="Texture2D" uid="uid://dttfikmn38hoy" path="res://assets/images/ui/input/keyboard_arrows.png" id="14_jshns"]
 [ext_resource type="Texture2D" uid="uid://cbag58b6b4w1h" path="res://assets/images/ui/input/switch_dpad.png" id="15_ve0uh"]
+[ext_resource type="Texture2D" uid="uid://b1cgd0xdfqeql" path="res://assets/images/ui/input/xbox_lb.png" id="16_ve0uh"]
+[ext_resource type="Texture2D" uid="uid://cpvtl8ohdte8e" path="res://assets/images/ui/input/playstation_trigger_l1.png" id="17_p6tf6"]
+[ext_resource type="Texture2D" uid="uid://17oqc4tywqm0" path="res://assets/images/ui/input/keyboard_tab.png" id="18_a0r33"]
+[ext_resource type="Texture2D" uid="uid://vsdmdka8kbph" path="res://assets/images/ui/input/switch_button_l.png" id="19_h43k4"]
 
 [node name="InputDetector" type="Node" unique_id=410384564]
 script = ExtResource("1_6l0n6")
@@ -36,6 +40,10 @@ dash_texture_playstation = ExtResource("8_a75vs")
 dash_texture_keyboard = ExtResource("9_bcyo4")
 back_texture_keyboard = ExtResource("10_ilq2h")
 dash_texture_nintendo = ExtResource("11_kocid")
+map_texture_xbox = ExtResource("16_ve0uh")
+map_texture_playstation = ExtResource("17_p6tf6")
+map_texture_keyboard = ExtResource("18_a0r33")
+map_texture_nintendo = ExtResource("19_h43k4")
 move_texture_xbox = ExtResource("12_y6b8n")
 move_texture_playstation = ExtResource("13_sr1kl")
 move_texture_keyboard = ExtResource("14_jshns")

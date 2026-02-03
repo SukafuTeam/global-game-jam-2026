@@ -2,8 +2,9 @@ class_name AltarTracker
 extends Node2D
 
 @export var altar: AltarController
-
 @onready var pivot: Node2D = $Pivot
+
+var map_tracker: TrackerMapIcon
 
 func _ready():
 	visible = false
@@ -21,7 +22,10 @@ func _process(_delta: float) -> void:
 	pivot.global_rotation_degrees = rad_to_deg(atan2(dir.y, dir.x))
 	
 	var v_size = get_viewport_rect().size * 0.4
-	var bounds_min = center - v_size
+	var bounds_min = center - v_size + Vector2(0.0, 110.0)
 	var bounds_max = center + v_size
 	global_position.x = clamp(altar.global_position.x, bounds_min.x, bounds_max.x)
 	global_position.y = clamp(altar.global_position.y, bounds_min.y, bounds_max.y)
+
+func _exit_tree():
+	Global.map.remove_tracker(map_tracker)

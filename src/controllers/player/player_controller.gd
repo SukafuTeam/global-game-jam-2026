@@ -1,6 +1,8 @@
 class_name PlayerController
 extends CharacterBody2D
 
+signal took_damage(new_health: int)
+
 const INPUT_BUFFER_TIME: float = 0.1
 const HOLD_BUFFER_TIME: float = 0.5
 
@@ -117,6 +119,8 @@ var holding_item: Pickable
 @onready var left_wall_slide_particle: CPUParticles2D = $Particles/LeftWallSlideParticle
 @onready var right_wall_slide_particle: CPUParticles2D = $Particles/RightWallSlideParticle
 @onready var victoy_particles: CPUParticles2D = $Particles/VictoryParticles
+@onready var damage_particle: CPUParticles2D = $Particles/DamageParticle
+@onready var death_filter: ColorRect = $BodyContainer/DeathFilter
 
 func _ready() -> void:
 	Global.player = self
@@ -148,7 +152,7 @@ func _process(delta: float) -> void:
 	update_animation()
 	update_partiles()
 	
-	if state == State.DAMAGE:
+	if state == State.DAMAGE and health > 0:
 		sprite.modulate = Color(1.0, 0.5, 0.5)
 	else:
 		sprite.modulate = Color.WHITE
@@ -218,6 +222,11 @@ func _physics_process(delta: float) -> void:
 	
 	check_damage()
 	
+	if health == 0.0:
+		velocity = Vector2.ZERO
+		move_and_slide()
+		return
+	
 	if interactible:
 		match state:
 			State.GROUND:
@@ -259,19 +268,35 @@ func check_damage():
 		return
 	
 	health -= 1
-	#TODO: gameover logic
+	took_damage.emit(health)
+	
+	var skin: SpineSkin = sprite.get_skeleton().get_data().find_skin("unmasked")
+	sprite.get_skeleton().set_skin(skin)
 	
 	FmodServer.play_one_shot("event:/Character/damage")
+	var track: SpineTrackEntry = sprite.get_animation_state().set_animation("dizzy", true, 0)
+	track.set_time_scale(3.0)
+	track.set_mix_duration(0.0)
+	sprite.update_skeleton(1.0)
+	damage_particle.restart()
+	
+	state = State.DAMAGE
+	current_state_time = DAMAGE_TIME
+	current_iframe_time = IFRAME_TIME if health > 0 else 999999999.0
+	velocity = Vector2(0.0, -300)
+	
+	await get_tree().process_frame
+	await get_tree().process_frame
+	
+	Global.set_camera_stress(Vector2.ONE)
 	
 	if holding_item:
 		holding_item.drop(Vector2(randf_range(--0.5, 0.5), -0.2))
 		holding_item = null
+		
+	Global.hit_stop(0.2)
 	
-	Global.set_camera_stress(Vector2.ONE)
-	state = State.DAMAGE
-	current_state_time = DAMAGE_TIME
-	current_iframe_time = IFRAME_TIME
-	velocity = Vector2(0.0, -300)
+	
 	
 func process_ground(delta: float) -> State:
 	input_move(delta)
@@ -593,15 +618,15 @@ func  update_animation():
 		State.DASH:
 			change_animation("dash", 0, 0.0)
 
-func change_animation(new_anim: String, track_id: int = 0, mix_time: float = 0.01) -> SpineTrackEntry:
+func change_animation(new_anim: String, track_id: int = 0, mix_time: float = 0.2) -> SpineTrackEntry:
 	var current = sprite.get_animation_state().get_current(0)
 	if current != null:
 		if sprite.get_animation_state().get_current(track_id).get_animation().get_name() == new_anim:
 			return null
 	
 	var track_entry: SpineTrackEntry = sprite.get_animation_state().set_animation(new_anim, true, track_id)
-	track_entry.set_mix_time(mix_time)
-	track_entry.set_mix_blend(SpineConstant.MixBlend_Replace)
+	track_entry.set_mix_duration(mix_time)
+	
 	
 	return track_entry
 

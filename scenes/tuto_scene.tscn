@@ -316,6 +316,7 @@ position = Vector2(5729, -43)
 position = Vector2(5828, -43)
 
 [node name="Mask" type="Node2D" parent="." unique_id=2058718465 node_paths=PackedStringArray("sprite")]
+z_index = 10
 position = Vector2(10115, -383)
 script = ExtResource("12_2fqtk")
 sprite = NodePath("Sprite2D")
@@ -381,6 +382,7 @@ collision_mask = 4
 shape = SubResource("CircleShape2D_2fqtk")
 
 [node name="Fireflies" type="CPUParticles2D" parent="." unique_id=813883170]
+z_index = 100
 position = Vector2(5169, -354)
 amount = 300
 texture = ExtResource("15_nlmo4")

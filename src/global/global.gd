@@ -5,6 +5,7 @@ signal item_dropped(item: Pickable)
 
 var camera: CameraController
 var player: PlayerController
+var map: MapController
 
 var masked: bool = true
 var double_jump_enabled: bool = false
