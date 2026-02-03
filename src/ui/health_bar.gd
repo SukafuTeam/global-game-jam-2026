@@ -28,16 +28,13 @@ func on_player_damage(new_health: int):
 	Global.player.z_index = 1000
 	
 	Global.camera.limit_enabled = false
+	Global.map_event.stop(0)
 	var tween = create_tween()
 	tween.set_parallel()
 	tween.tween_property(Global.player.death_filter, "modulate:a", 1.0, 1.0)
 	tween.tween_property(Global.camera,"zoom", Vector2.ONE * 2.0, 4.0).set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_CUBIC)
 	
 	await get_tree().create_timer(4.0).timeout
-	
+
 	get_tree().change_scene_to_file("res://scenes/menu_scene.tscn")
-		
-	
-	
-	
 	

@@ -21,6 +21,8 @@ func _ready() -> void:
 	
 	Global.item_picked.connect(item_picked)
 	Global.item_dropped.connect(item_dropped)
+	
+	Global.map_event.start()
 
 	
 func item_picked(item: Pickable):
@@ -71,6 +73,7 @@ func mission_completed():
 			prep_mission(3)
 			prep_mission(4)
 		5:
+			Global.map_event.stop(0)
 			get_tree().change_scene_to_file("res://scenes/victory.tscn")
 
 func prep_mission(index: int):

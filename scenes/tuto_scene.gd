@@ -14,7 +14,12 @@ extends Node2D
 
 var finished
 
+var ost_event: FmodEvent
+
 func _ready() -> void:
+	ost_event = FmodServer.create_event_instance("event:/BGM/jungle")
+	ost_event.start()
+	
 	Global.player.health = 10000000000
 	mask.body_entered.connect(func(other):
 		if other is PlayerController:
@@ -62,4 +67,5 @@ func finish_tutorial():
 	await get_tree().create_timer(0.5).timeout
 	collecting.emitting = false
 	await get_tree().create_timer(2.0).timeout
+	ost_event.stop(0)
 	get_tree().change_scene_to_file("res://scenes/intro_cutscene.tscn")

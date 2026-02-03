@@ -20,11 +20,17 @@ var safe_item_position: Vector2
 var opened_locks: Array[int] = []
 var ground_surface: int = 0
 
+var menu_event: FmodEvent
+var map_event: FmodEvent
+
 @onready var item_tracker: PackedScene = load("res://entities/ui/item_tracker.tscn")
 
 func _ready():
 	process_mode = PROCESS_MODE_ALWAYS
 	reset()
+	
+	menu_event = FmodServer.create_event_instance("event:/BGM/intro")
+	map_event = FmodServer.create_event_instance("event:/BGM/jungle")
 
 func reset():
 	opened_locks = []
@@ -38,6 +44,7 @@ func reset():
 
 func _process(_delta: float) -> void:
 	if Input.is_action_just_pressed("restart"):
+		Global.map_event.stop(0)
 		reset()
 		get_tree().change_scene_to_file("res://scenes/menu_scene.tscn")
 

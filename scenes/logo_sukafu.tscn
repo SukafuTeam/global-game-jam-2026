@@ -2,9 +2,8 @@
 
 [ext_resource type="Texture2D" uid="uid://fjjvpol8euvk" path="res://assets/images/ui/logo_aniversario.png" id="1_benyy"]
 [ext_resource type="Script" uid="uid://2s8mjawvmi4p" path="res://src/logo_sukafu.gd" id="1_gr56j"]
-[ext_resource type="AudioStream" uid="uid://b2514lmj7byyo" path="res://assets/sounds/Logo Sukafu.wav" id="3_1dxkj"]
 
-[node name="LogoSukafu" type="Control" unique_id=2005581045 node_paths=PackedStringArray("logo_sound")]
+[node name="LogoSukafu" type="Control" unique_id=2005581045]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -12,7 +11,6 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_gr56j")
-logo_sound = NodePath("AudioStreamPlayer")
 
 [node name="Background" type="ColorRect" parent="." unique_id=1149579661]
 layout_mode = 1
@@ -39,6 +37,3 @@ grow_vertical = 2
 texture = ExtResource("1_benyy")
 expand_mode = 1
 stretch_mode = 5
-
-[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="." unique_id=1788430016]
-stream = ExtResource("3_1dxkj")
