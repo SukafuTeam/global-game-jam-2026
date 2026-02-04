@@ -2,6 +2,8 @@ extends TextureRect
 
 @export var health_containers: Array[HealthContainer] = []
 
+@export var disable_itens: Array[Control] = []
+
 var blink_tween: Tween
 
 func _ready():
@@ -23,12 +25,16 @@ func on_player_damage(new_health: int):
 	if blink_tween:
 		blink_tween.kill()
 	
+	for item in disable_itens:
+		item.visible = false
+	
 	modulate.a = 0.0
 	Global.player.interactible = false
 	Global.player.z_index = 1000
 	
 	Global.camera.limit_enabled = false
 	Global.map_event.stop(0)
+	FmodServer.play_one_shot("event:/UI/no")
 	var tween = create_tween()
 	tween.set_parallel()
 	tween.tween_property(Global.player.death_filter, "modulate:a", 1.0, 1.0)
@@ -37,4 +43,3 @@ func on_player_damage(new_health: int):
 	await get_tree().create_timer(4.0).timeout
 
 	get_tree().change_scene_to_file("res://scenes/menu_scene.tscn")
-	

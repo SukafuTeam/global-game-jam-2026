@@ -4,6 +4,7 @@ class_name LogoScene
 @onready var logo_image: TextureRect = $Logo
 
 func _ready():
+	RenderingServer.set_default_clear_color(Color.BLACK)
 	Global.menu_event.set_parameter_by_name("loop", 0.0)
 	Global.menu_event.start()
 	

@@ -1,0 +1,56 @@
+[gd_scene format=3 uid="uid://d3lddbemolhre"]
+
+[ext_resource type="Script" uid="uid://dnq7a4wmp7fgv" path="res://src/global/transition.gd" id="1_3q8d3"]
+[ext_resource type="Texture2D" uid="uid://xdyp1gwrdo5" path="res://assets/images/ui/cutscenes - inicio/template/modelo_template.png" id="1_tqyll"]
+
+[node name="Transition" type="CanvasLayer" unique_id=747097896]
+layer = 100
+script = ExtResource("1_3q8d3")
+left_wall_values = Vector2(-2266, -1290)
+right_wall_values = Vector2(1328, 330)
+
+[node name="Container" type="Control" parent="." unique_id=1450998881]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="LeftWall" type="TextureRect" parent="Container" unique_id=1819711961]
+layout_mode = 1
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_left = -1290.0
+offset_top = -864.0
+offset_right = 1590.0
+offset_bottom = 756.0
+grow_vertical = 2
+rotation = 1.5707964
+pivot_offset_ratio = Vector2(0.5, 0.5)
+texture = ExtResource("1_tqyll")
+
+[node name="RightWall" type="TextureRect" parent="Container" unique_id=2032987053]
+layout_mode = 1
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_left = 330.0
+offset_top = -1187.0
+offset_right = 3210.0
+offset_bottom = 433.0
+grow_vertical = 2
+rotation = 1.5707964
+pivot_offset_ratio = Vector2(0.5, 0.5)
+texture = ExtResource("1_tqyll")
+
+[node name="Center" type="Control" parent="Container" unique_id=259398409]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+grow_horizontal = 2
+grow_vertical = 2

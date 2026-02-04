@@ -33,6 +33,7 @@ GlobalFmodBankLoader="*uid://lrjjbsy10m2o"
 Global="*uid://6vhbao6gnl4q"
 Constants="*uid://b1kyan7qddhjq"
 InputDetector="*uid://b5lu81kc72fsl"
+Transition="*uid://d3lddbemolhre"
 
 [display]
 

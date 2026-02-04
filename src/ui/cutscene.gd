@@ -34,8 +34,9 @@ func _ready() -> void:
 		i.global_position.x = INITIAL_X
 		
 		var time = slide_time
-		if counter in [2, 3, 7, 8]:
-			time = 1.5
+		if intro:
+			if counter in [2, 3, 7, 8]:
+				time = 1.5
 		
 		tween.tween_property(i, "position:x", 10.0, time*0.1)
 		tween.tween_property(i, "position:x", -10.0, time*0.8)
@@ -47,11 +48,9 @@ func _ready() -> void:
 	tween.tween_callback(func():
 		cutscene_ost.release()
 		if intro:
-			print(elapsed_time)
-			get_tree().change_scene_to_file("res://scenes/main_scene.tscn")
+			Transition.transition(Constants.MAIN_SCENE)
 		else:
-			print(elapsed_time)
-			get_tree().change_scene_to_file("res://scenes/menu_scene.tscn")
+			Transition.transition(Constants.MENU_SCENE)
 	)
 		
 func _process(delta: float) -> void:
@@ -69,6 +68,6 @@ func _process(delta: float) -> void:
 		else:
 			cutscene_ost.stop(0)
 			if intro:
-				get_tree().change_scene_to_file("res://scenes/main_scene.tscn")
+				Transition.transition(Constants.MAIN_SCENE)
 			else:
-				get_tree().change_scene_to_file("res://scenes/menu_scene.tscn")
+				Transition.transition(Constants.MENU_SCENE)

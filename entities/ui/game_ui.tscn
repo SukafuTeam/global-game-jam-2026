@@ -21,7 +21,7 @@ shader_parameter/mix_percentage = 0.400000019
 
 [node name="GameUI" type="CanvasLayer" unique_id=1492043873]
 
-[node name="HealthContainer" type="TextureRect" parent="." unique_id=958263323 node_paths=PackedStringArray("health_containers")]
+[node name="HealthContainer" type="TextureRect" parent="." unique_id=958263323 node_paths=PackedStringArray("health_containers", "disable_itens")]
 anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
@@ -35,6 +35,7 @@ expand_mode = 1
 stretch_mode = 5
 script = ExtResource("2_7wnj1")
 health_containers = [NodePath("HealthGrid/HealthContainer"), NodePath("HealthGrid/HealthContainer2"), NodePath("HealthGrid/HealthContainer3"), NodePath("HealthGrid/HealthContainer4"), NodePath("HealthGrid/HealthContainer5")]
+disable_itens = [NodePath("../MapIcon"), NodePath("../Map")]
 
 [node name="HealthGrid" type="HBoxContainer" parent="HealthContainer" unique_id=402485226]
 layout_mode = 1

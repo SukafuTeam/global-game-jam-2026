@@ -64,8 +64,8 @@ func mission_completed():
 		Global.player.current_state_time = 30.0
 	await get_tree().create_timer(3.0).timeout
 	match missions_completed:
-		0:
-			prep_mission(0)
+		#0:
+			#prep_mission(0)
 		1:
 			prep_mission(1)
 			prep_mission(2)
@@ -74,7 +74,7 @@ func mission_completed():
 			prep_mission(4)
 		5:
 			Global.map_event.stop(0)
-			get_tree().change_scene_to_file("res://scenes/victory.tscn")
+			Transition.transition(Constants.VICTORY_SCENE)
 
 func prep_mission(index: int):
 	var mission = mission_scenes[index].instantiate() as MissionController

@@ -1,13 +1,39 @@
 [gd_scene format=3 uid="uid://cqtulki2u6gt0"]
 
 [ext_resource type="Script" uid="uid://ysu2p1etpmvs" path="res://src/menu_scene.gd" id="1_6od1f"]
-[ext_resource type="PackedScene" uid="uid://h2wucwbiou3" path="res://entities/background/jungle_background.tscn" id="1_vrre2"]
+[ext_resource type="Texture2D" uid="uid://dk6gffbdmu1vn" path="res://assets/images/sprites/backgrounds/jungle/jungle_05.png" id="2_cycrn"]
 [ext_resource type="Texture2D" uid="uid://csd140oeyam5v" path="res://assets/images/ui/logo.png" id="2_o71fo"]
 [ext_resource type="Script" uid="uid://m4lhlbgvsg28" path="res://src/ui/input_button_container.gd" id="3_6wmco"]
+[ext_resource type="Texture2D" uid="uid://dh2gynyhkpuo6" path="res://assets/images/sprites/backgrounds/jungle/jungle_04.png" id="3_usvko"]
 [ext_resource type="Texture2D" uid="uid://b606q1sv1oqxr" path="res://assets/images/ui/game/cancel-button.png" id="4_482oc"]
+[ext_resource type="Texture2D" uid="uid://bgtny42gy30cb" path="res://assets/images/sprites/backgrounds/jungle/jungle_03.png" id="4_p05g3"]
 [ext_resource type="Script" uid="uid://dk03kj3knotow" path="res://src/wing.gd" id="4_vjll7"]
 [ext_resource type="Texture2D" uid="uid://1soxlqhyr5bu" path="res://assets/images/ui/game/confirm-button.png" id="4_yfxa8"]
+[ext_resource type="Shader" uid="uid://dceudoqmb3dwp" path="res://src/shaders/godrays.gdshader" id="5_7hrt7"]
 [ext_resource type="PackedScene" uid="uid://dkdt73uplwiww" path="res://entities/objects/altar.tscn" id="5_u4hxd"]
+[ext_resource type="Texture2D" uid="uid://cayosvl0v1ymi" path="res://assets/images/sprites/backgrounds/jungle/jungle_02.png" id="6_1lbo3"]
+[ext_resource type="Texture2D" uid="uid://bmlc07gvsxyso" path="res://assets/images/sprites/backgrounds/jungle/jungle_01.png" id="7_mcgkg"]
+[ext_resource type="Texture2D" uid="uid://c00urj1i1t126" path="res://assets/images/sprites/particles/circle_05_a.png" id="8_o7vxd"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_b6imc"]
+shader = ExtResource("5_7hrt7")
+shader_parameter/angle = 0.38
+shader_parameter/position = 0.2
+shader_parameter/spread = 0.642000030495
+shader_parameter/cutoff = -0.009999952975
+shader_parameter/falloff = 0.0
+shader_parameter/edge_fade = 0.2310000109725
+shader_parameter/speed = 3.52
+shader_parameter/ray1_density = 8.0
+shader_parameter/ray2_density = 30.0
+shader_parameter/ray2_intensity = 0.3
+shader_parameter/color = Color(0.64705884, 0.5058824, 0, 1)
+shader_parameter/hdr = false
+shader_parameter/seed = 5.0
+
+[sub_resource type="Gradient" id="Gradient_my6g0"]
+offsets = PackedFloat32Array(0, 0.2345679, 0.4351852, 0.6203704, 1)
+colors = PackedColorArray(1, 1, 1, 0, 1, 1, 1, 0.78014183, 1, 1, 1, 1, 1, 1, 1, 0.8142077, 1, 1, 1, 0)
 
 [node name="Menu" type="Control" unique_id=83057012]
 layout_mode = 3
@@ -18,15 +44,141 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_6od1f")
 
-[node name="JungleBackground" parent="." unique_id=970253655 instance=ExtResource("1_vrre2")]
+[node name="MenuBackground" type="Parallax2D" parent="." unique_id=1082253302]
+scale = Vector2(0.7398944, 0.7398944)
+scroll_offset = Vector2(-4.9999995, 289)
+
+[node name="Back" type="Parallax2D" parent="MenuBackground" unique_id=355049199]
+scroll_scale = Vector2(0, 0)
+
+[node name="Jungle05" type="Sprite2D" parent="MenuBackground/Back" unique_id=543955957]
+position = Vector2(0, -737)
+texture = ExtResource("2_cycrn")
+centered = false
+
+[node name="BackForest" type="Parallax2D" parent="MenuBackground" unique_id=2054418222]
+scroll_scale = Vector2(0.2, 0.2)
+repeat_size = Vector2(3374, 0)
+
+[node name="Jungle04" type="Sprite2D" parent="MenuBackground/BackForest" unique_id=1071464292]
+position = Vector2(-1385, -528)
+texture = ExtResource("3_usvko")
+centered = false
+
+[node name="MidForest" type="Parallax2D" parent="MenuBackground" unique_id=731556801]
+repeat_size = Vector2(3547, 0)
+
+[node name="GodRays" type="ColorRect" parent="MenuBackground/MidForest" unique_id=1940332520]
+material = SubResource("ShaderMaterial_b6imc")
+offset_right = 3547.0
+offset_bottom = 1080.0
+
+[node name="Jungle03" type="Sprite2D" parent="MenuBackground/MidForest" unique_id=2001522544]
+position = Vector2(0, -889)
+texture = ExtResource("4_p05g3")
+centered = false
+
+[node name="FrontForest" type="Parallax2D" parent="MenuBackground" unique_id=349457148]
+repeat_size = Vector2(4775, 0)
+
+[node name="Jungle02" type="Sprite2D" parent="MenuBackground/FrontForest" unique_id=1397225236]
+position = Vector2(0, -1002)
+texture = ExtResource("6_1lbo3")
+centered = false
+
+[node name="Particles1" type="Parallax2D" parent="MenuBackground" unique_id=1142443198]
+z_as_relative = false
+scroll_scale = Vector2(1.1, 1.1)
+repeat_size = Vector2(3840, 0)
+
+[node name="Fireflies" type="CPUParticles2D" parent="MenuBackground/Particles1" unique_id=1033149843]
+position = Vector2(1920, 58)
+amount = 50
+texture = ExtResource("8_o7vxd")
+lifetime = 30.0
+preprocess = 10.0
+lifetime_randomness = 0.58
+local_coords = true
+emission_shape = 3
+emission_rect_extents = Vector2(1920, 1600)
+direction = Vector2(0, -1)
+spread = 90.0
+gravity = Vector2(0, -3)
+initial_velocity_min = 3.0
+initial_velocity_max = 5.0
+tangential_accel_min = -3.0
+tangential_accel_max = 3.0
+scale_amount_min = 0.05
+scale_amount_max = 0.08
+color = Color(1, 0.99215686, 0.78039217, 1)
+color_ramp = SubResource("Gradient_my6g0")
+
+[node name="Trees" type="Parallax2D" parent="MenuBackground" unique_id=82831885]
+repeat_size = Vector2(7303, 0)
+
+[node name="Jungle01" type="Sprite2D" parent="MenuBackground/Trees" unique_id=301717130]
+position = Vector2(-713, -1006)
+texture = ExtResource("7_mcgkg")
+centered = false
+
+[node name="Particles2" type="Parallax2D" parent="MenuBackground" unique_id=454538963]
+z_as_relative = false
+scroll_scale = Vector2(1.2, 1.2)
+scroll_offset = Vector2(0, 447.36115)
+repeat_size = Vector2(3840, 0)
+
+[node name="Fireflies" type="CPUParticles2D" parent="MenuBackground/Particles2" unique_id=1270670362]
+position = Vector2(1920, 0)
+amount = 100
+texture = ExtResource("8_o7vxd")
+lifetime = 30.0
+preprocess = 10.0
+lifetime_randomness = 0.58
+local_coords = true
+emission_shape = 3
+emission_rect_extents = Vector2(1920, 1600)
+direction = Vector2(0, -1)
+spread = 90.0
+gravity = Vector2(0, -3)
+initial_velocity_min = 3.0
+initial_velocity_max = 5.0
+tangential_accel_min = -3.0
+tangential_accel_max = 3.0
+scale_amount_min = 0.05
+scale_amount_max = 0.08
+color = Color(1, 0.99266666, 0.78, 1)
+color_ramp = SubResource("Gradient_my6g0")
+
+[node name="Altars" type="Parallax2D" parent="MenuBackground" unique_id=834222689]
+repeat_size = Vector2(2800, 0)
+
+[node name="Altar" parent="MenuBackground/Altars" unique_id=1520962168 instance=ExtResource("5_u4hxd")]
+z_index = 0
+z_as_relative = false
+position = Vector2(496.01672, 1194.7651)
+scale = Vector2(2.350593, 2.350593)
+decoration = true
+
+[node name="Altar2" parent="MenuBackground/Altars" unique_id=1409612059 instance=ExtResource("5_u4hxd")]
+z_index = 0
+z_as_relative = false
+position = Vector2(2086.7842, 1194.7651)
+scale = Vector2(2.350593, 2.350593)
+decoration = true
+
+[node name="Filter" type="ColorRect" parent="." unique_id=1454518018]
+layout_mode = 0
+offset_right = 1920.0
+offset_bottom = 1080.0
+color = Color(0, 0, 0, 1)
 
 [node name="Logo" type="Sprite2D" parent="." unique_id=1785432582]
-position = Vector2(960, 342)
+position = Vector2(960, 323)
 scale = Vector2(0.6812513, 0.6812513)
 texture = ExtResource("2_o71fo")
 script = ExtResource("4_vjll7")
 
-[node name="TextureRect" type="TextureRect" parent="." unique_id=81604312]
+[node name="Play" type="TextureRect" parent="." unique_id=81604312]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -39,11 +191,12 @@ offset_right = 85.0
 offset_bottom = 354.0
 grow_horizontal = 2
 grow_vertical = 2
+pivot_offset_ratio = Vector2(0.5, 0.5)
 texture = ExtResource("4_yfxa8")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="InputIcon" type="TextureRect" parent="TextureRect" unique_id=1869242207]
+[node name="InputIcon" type="TextureRect" parent="Play" unique_id=1869242207]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -62,17 +215,7 @@ script = ExtResource("3_6wmco")
 type = 5
 color = Color(0.72156864, 0.007843138, 0.003921569, 1)
 
-[node name="Altar" parent="TextureRect" unique_id=1520962168 instance=ExtResource("5_u4hxd")]
-position = Vector2(-634, 415)
-scale = Vector2(1.576139, 1.576139)
-decoration = true
-
-[node name="Altar2" parent="TextureRect" unique_id=964409717 instance=ExtResource("5_u4hxd")]
-position = Vector2(826, 384)
-scale = Vector2(1.576139, 1.576139)
-decoration = true
-
-[node name="TextureRect2" type="TextureRect" parent="." unique_id=1880207631]
+[node name="Exit" type="TextureRect" parent="." unique_id=1880207631]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -89,7 +232,7 @@ texture = ExtResource("4_482oc")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="InputIcon" type="TextureRect" parent="TextureRect2" unique_id=1781995789]
+[node name="InputIcon" type="TextureRect" parent="Exit" unique_id=1781995789]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5

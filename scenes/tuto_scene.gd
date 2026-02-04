@@ -29,6 +29,7 @@ func _ready() -> void:
 
 func intro():
 	player.interactible = false
+	await get_tree().create_timer(1.0).timeout
 	player.auto_move_speed = player.MOVE_SPEED * 0.4
 	player.current_auto_move_time = 0.02
 	await get_tree().create_timer(2.0).timeout
@@ -68,4 +69,5 @@ func finish_tutorial():
 	collecting.emitting = false
 	await get_tree().create_timer(2.0).timeout
 	ost_event.stop(0)
-	get_tree().change_scene_to_file("res://scenes/intro_cutscene.tscn")
+	Transition.transition(Constants.INTRO_SCENE)
+	#get_tree().change_scene_to_file("res://scenes/intro_cutscene.tscn")
