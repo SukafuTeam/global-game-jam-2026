@@ -64,8 +64,8 @@ func mission_completed():
 		Global.player.current_state_time = 30.0
 	await get_tree().create_timer(3.0).timeout
 	match missions_completed:
-		#0:
-			#prep_mission(0)
+		0:
+			prep_mission(0)
 		1:
 			prep_mission(1)
 			prep_mission(2)
