@@ -17,7 +17,7 @@ var finished
 var ost_event: FmodEvent
 
 func _ready() -> void:
-	ost_event = FmodServer.create_event_instance("event:/BGM/jungle")
+	ost_event = FmodServer.create_event_instance("event:/BGM/tuto")
 	ost_event.start()
 	
 	Global.player.health = 10000000000
