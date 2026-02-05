@@ -109,7 +109,6 @@ visible = false
 polygon = PackedVector2Array(0, -112, 0, 0, -80, -112)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1457256562]
-visible = false
 position = Vector2(0, -61)
 shape = SubResource("CapsuleShape2D_b0kkn")
 
@@ -118,7 +117,7 @@ shape = SubResource("CapsuleShape2D_b0kkn")
 [node name="SpineSprite" type="SpineSprite" parent="BodyContainer" unique_id=39657710]
 skeleton_data_res = ExtResource("2_b0kkn")
 preview_skin = "masked"
-preview_animation = "dizzy"
+preview_animation = "-- Empty --"
 preview_frame = true
 preview_time = 0.0
 position = Vector2(0, -39)
@@ -127,8 +126,9 @@ scale = Vector2(0.12918882, 0.12918882)
 [node name="SpineSlotNode" type="SpineSlotNode" parent="BodyContainer/SpineSprite" unique_id=1415002499]
 slot_name = "hold_anchor"
 show_behind_parent = true
-position = Vector2(-290.8244, 199.6001)
-rotation = 0.26687834
+position = Vector2(-304.1132, 103.10266)
+rotation = 0.46364844
+scale = Vector2(0.99999994, 0.99999994)
 
 [node name="RightPickAnchor" type="Marker2D" parent="BodyContainer/SpineSprite/SpineSlotNode" unique_id=512607645]
 position = Vector2(173.37077, 104.2581)
@@ -176,7 +176,7 @@ target_position = Vector2(30, 0)
 collision_mask = 3
 
 [node name="GroundCheck" type="RayCast2D" parent="Checks" unique_id=1672289126]
-target_position = Vector2(0, 141)
+target_position = Vector2(0, 44)
 
 [node name="PickChecks" type="Node2D" parent="." unique_id=284969669]
 visible = false

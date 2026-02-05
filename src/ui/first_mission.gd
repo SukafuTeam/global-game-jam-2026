@@ -22,21 +22,21 @@ func play_intro(_other: Node2D):
 	
 	var tween = create_tween()
 	tween.tween_interval(1.0)
-	tween.tween_property(Global.camera, "global_position", first_path.global_position, 1.0)
-	tween.tween_callback(func(): 
-		Global.camera.reparent(first_path)
-	)
+	tween.tween_callback(func(): Global.camera.position_smoothing_enabled = false)
+	tween.tween_property(Global.camera, "global_position", first_path.global_position, 0.2)
+	tween.tween_callback(func(): Global.camera.reparent(first_path))
 	tween.tween_property(first_path, "progress_ratio", 1.0, 7.0).set_ease(Tween.EASE_IN_OUT).set_trans(Tween.TRANS_CUBIC)
-	tween.tween_interval(1.0)
+	tween.tween_interval(0.2)
 	tween.tween_callback(func(): Global.camera.reparent(second_path))
 	tween.tween_property(second_path, "progress_ratio", 1.0, 9.0).set_ease(Tween.EASE_IN_OUT).set_trans(Tween.TRANS_CUBIC)
-	tween.tween_interval(1.0)
+	tween.tween_interval(0.2)
 	tween.tween_callback(func(): Global.camera.reparent(third_path))
 	tween.tween_property(third_path, "progress_ratio", 1.0, 5.0).set_ease(Tween.EASE_IN_OUT).set_trans(Tween.TRANS_CUBIC)
-	tween.tween_interval(0.5)
+	tween.tween_property(Global.camera, "global_position", Global.player.global_position + Vector2(0.0, -56.0), 0.2)
 	tween.tween_callback(func():
-		Global.camera.reparent(Global.player, false)
+		Global.camera.reparent(Global.player, true)
 		Global.camera.limit_enabled = true
 		Global.player.interactible = true
+		Global.camera.position_smoothing_enabled = true
 		queue_free()
 	)

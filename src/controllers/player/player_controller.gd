@@ -176,7 +176,7 @@ func _process(delta: float) -> void:
 	current_right_wall_slide_time -= delta
 	
 	if Input.is_action_just_pressed("jump"):
-		current_jump_buffer_time = INPUT_BUFFER_TIME
+		current_jump_buffer_time = INPUT_BUFFER_TIME * 2
 	if Input.is_action_just_pressed("hold"):
 		current_hold_buffer_time = HOLD_BUFFER_TIME
 	if Input.is_action_just_pressed("dash"):
@@ -349,7 +349,7 @@ func process_air(delta: float) -> State:
 				auto_move_speed = -WALL_JUMP_SPEED
 				return State.AIR
 	
-	if can_double_jump and Global.double_jump_enabled:
+	if can_double_jump and Global.double_jump_enabled and !ground_check.is_colliding():
 		if current_jump_buffer_time >= 0.0:
 			can_double_jump = false
 			on_jump()
@@ -415,6 +415,12 @@ func celebrate(amount: float = 2.0):
 #region Hold methods
 func process_hold():
 	if state == State.DAMAGE:
+		return
+	
+	if !interactible:
+		if holding_item != null:
+			holding_item.drop()
+			holding_item = null
 		return
 	
 	left_holding_collision.disabled = true

@@ -6,56 +6,56 @@
 [ext_resource type="PackedScene" uid="uid://dvfagpre2qc7a" path="res://entities/pickables/maca.tscn" id="6_kc13u"]
 [ext_resource type="PackedScene" uid="uid://dr6qi0plb1myn" path="res://entities/pickables/box.tscn" id="6_lmayb"]
 
-[node name="Mission2" type="Node2D" unique_id=89047445 node_paths=PackedStringArray("wall", "buttons", "item")]
+[node name="Mission2" type="Node2D" unique_id=505185373 node_paths=PackedStringArray("wall", "buttons", "item")]
 script = ExtResource("1_fcih8")
 wall = NodePath("Wall")
 buttons = [NodePath("Button"), NodePath("Button2"), NodePath("Button3"), NodePath("Button4")]
 spawn_point = Vector2(8256, -1984)
 item = NodePath("Maca")
 
-[node name="Wall" type="TileMapLayer" parent="." unique_id=1978401767]
+[node name="Wall" type="TileMapLayer" parent="." unique_id=988561651]
 tile_map_data = PackedByteArray(0, 0, 255, 255, 251, 255, 1, 0, 1, 0, 3, 0, 0, 0, 0, 0, 251, 255, 1, 0, 2, 0, 3, 0, 0, 0, 1, 0, 251, 255, 1, 0, 3, 0, 3, 0, 0, 0)
 tile_set = ExtResource("2_fcih8")
 
 [node name="Button" parent="." unique_id=1307563553 instance=ExtResource("4_ebj3r")]
-position = Vector2(-321, -126)
+position = Vector2(-354, -126)
 type = 1
 
-[node name="Button2" parent="." unique_id=1757614039 instance=ExtResource("4_ebj3r")]
-position = Vector2(-320, 257)
+[node name="Button2" parent="." unique_id=1925139378 instance=ExtResource("4_ebj3r")]
+position = Vector2(-353, 257)
 type = 1
 
-[node name="Button3" parent="." unique_id=415110438 instance=ExtResource("4_ebj3r")]
-position = Vector2(385, 257)
+[node name="Button3" parent="." unique_id=1369934484 instance=ExtResource("4_ebj3r")]
+position = Vector2(415, 257)
 type = 1
 
-[node name="Button4" parent="." unique_id=2121001163 instance=ExtResource("4_ebj3r")]
-position = Vector2(385, -127)
+[node name="Button4" parent="." unique_id=472558263 instance=ExtResource("4_ebj3r")]
+position = Vector2(415, -127)
 type = 1
 
 [node name="Maca" parent="." unique_id=378684654 instance=ExtResource("6_kc13u")]
 position = Vector2(30, -359)
 
-[node name="Box" parent="." unique_id=1912889005 instance=ExtResource("6_lmayb")]
-position = Vector2(-673, 213)
+[node name="Box" parent="." unique_id=1016867410 instance=ExtResource("6_lmayb")]
+position = Vector2(-754, 142)
 
-[node name="Box2" parent="." unique_id=597668992 instance=ExtResource("6_lmayb")]
-position = Vector2(-537, 259)
+[node name="Box2" parent="." unique_id=1589338933 instance=ExtResource("6_lmayb")]
+position = Vector2(-610, 373)
 
-[node name="Box3" parent="." unique_id=90936027 instance=ExtResource("6_lmayb")]
+[node name="Box3" parent="." unique_id=1922728978 instance=ExtResource("6_lmayb")]
 position = Vector2(-133, 271)
 
-[node name="Box4" parent="." unique_id=2110657761 instance=ExtResource("6_lmayb")]
+[node name="Box4" parent="." unique_id=748138294 instance=ExtResource("6_lmayb")]
 position = Vector2(-35, 224)
 
-[node name="Box5" parent="." unique_id=23148054 instance=ExtResource("6_lmayb")]
+[node name="Box5" parent="." unique_id=568297742 instance=ExtResource("6_lmayb")]
 position = Vector2(50, 294)
 
-[node name="Box6" parent="." unique_id=604072475 instance=ExtResource("6_lmayb")]
+[node name="Box6" parent="." unique_id=246889870 instance=ExtResource("6_lmayb")]
 position = Vector2(138, 167)
 
-[node name="Box7" parent="." unique_id=1723026859 instance=ExtResource("6_lmayb")]
-position = Vector2(586, 192)
+[node name="Box7" parent="." unique_id=1258805104 instance=ExtResource("6_lmayb")]
+position = Vector2(827, 136)
 
-[node name="Box8" parent="." unique_id=1256332355 instance=ExtResource("6_lmayb")]
-position = Vector2(667, 289)
+[node name="Box8" parent="." unique_id=1337964189 instance=ExtResource("6_lmayb")]
+position = Vector2(677, 350)

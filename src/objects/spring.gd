@@ -13,9 +13,16 @@ func _ready() -> void:
 func on_body_entered(other: Node2D):
 	var c = other as CharacterBody2D
 	
+	if (c is PlayerController):
+		var p = c as PlayerController
+		p.state = PlayerController.State.AIR
+		p.can_dash = true
+		p.can_double_jump = true
+	
 	c.velocity = global_transform.basis_xform(Vector2.UP) * impulse_force
 	
-	FmodServer.play_one_shot("event:/Interactables/bounce")
+	if (global_position - Global.player.global_position).length() < 1500.0:
+		FmodServer.play_one_shot("event:/Interactables/bounce")
 	
 	if tween:
 		tween.kill()

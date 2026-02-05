@@ -155,6 +155,8 @@ func drop(new_vel: Vector2 = Vector2.ZERO):
 	interactible = true
 
 func play_sfx(force_percent: float):
+	if (global_position - Global.player.global_position).length() > 1500:
+		return
 	
 	var event = "event:/Pickables/"
 	
