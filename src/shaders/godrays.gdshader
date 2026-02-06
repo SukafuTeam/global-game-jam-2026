@@ -105,5 +105,5 @@ void fragment()
 	// With "Screen" blend mode:
 	shine = screen(texture(SCREEN_TEXTURE, SCREEN_UV), vec4(color)).rgb;
 	
-	COLOR = vec4(shine, rays * color.a);
+	COLOR = vec4(shine, rays * color.a * COLOR.a);
 }

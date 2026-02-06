@@ -2,7 +2,9 @@
 
 [ext_resource type="Script" uid="uid://yf5pccjbwj0i" path="res://src/ui/cutscene.gd" id="1_ts1t5"]
 [ext_resource type="Texture2D" uid="uid://xdyp1gwrdo5" path="res://assets/images/ui/cutscenes - inicio/template/modelo_template.png" id="2_7132d"]
+[ext_resource type="Shader" uid="uid://q3pdvwpbl10e" path="res://src/shaders/offset_uc.gdshader" id="3_w13b5"]
 [ext_resource type="Texture2D" uid="uid://b7d01lfjd5xjw" path="res://assets/images/ui/cutscene_vitoria/totem.png" id="4_73dpb"]
+[ext_resource type="Texture2D" uid="uid://b6v8np16j7e6m" path="res://assets/images/ui/cutscenes - inicio/cena 01/altar.png" id="5_wdhy8"]
 [ext_resource type="Texture2D" uid="uid://qpvvgxso4po4" path="res://assets/images/ui/cutscenes - inicio/cena 08/beleza.png" id="6_eaoty"]
 [ext_resource type="Texture2D" uid="uid://ce5v72xxkn5wo" path="res://assets/images/ui/cutscenes - inicio/cena 03/nuvem.png" id="7_04qlw"]
 [ext_resource type="Texture2D" uid="uid://cabnrv6mgu75v" path="res://assets/images/ui/cutscenes - inicio/cena 03/personagem.png" id="8_aeqvq"]
@@ -10,18 +12,39 @@
 [ext_resource type="Shader" uid="uid://dceudoqmb3dwp" path="res://src/shaders/godrays.gdshader" id="10_ehqec"]
 [ext_resource type="Texture2D" uid="uid://bsbddyqyr75l7" path="res://assets/images/ui/cutscene_vitoria/coração.png" id="10_rlw0o"]
 [ext_resource type="Texture2D" uid="uid://1soxlqhyr5bu" path="res://assets/images/ui/game/confirm-button.png" id="11_m35g4"]
+[ext_resource type="Script" uid="uid://vopbpq4bpt3g" path="res://src/ui/heart_animation.gd" id="12_0ya2q"]
 [ext_resource type="Script" uid="uid://m4lhlbgvsg28" path="res://src/ui/input_button_container.gd" id="12_wdhy8"]
 [ext_resource type="Texture2D" uid="uid://b2531xyufusnj" path="res://assets/images/ui/cutscenes - inicio/cena 09/belezinha.png" id="21_y5t2y"]
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_rlw0o"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_0iwmx"]
+shader = ExtResource("3_w13b5")
+shader_parameter/speed_multiplier = 0.02
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_wdhy8"]
 shader = ExtResource("10_ehqec")
-shader_parameter/angle = 0.74
+shader_parameter/angle = 2.64
+shader_parameter/position = 1.015
+shader_parameter/spread = 0.0
+shader_parameter/cutoff = -0.26399996504
+shader_parameter/falloff = 0.4310000204725
+shader_parameter/edge_fade = 1.0
+shader_parameter/speed = 10.0
+shader_parameter/ray1_density = 8.0
+shader_parameter/ray2_density = 30.0
+shader_parameter/ray2_intensity = 0.3
+shader_parameter/color = Color(1, 0.90083337, 0.65, 1)
+shader_parameter/hdr = false
+shader_parameter/seed = 5.0
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_w13b5"]
+shader = ExtResource("10_ehqec")
+shader_parameter/angle = 0.615
 shader_parameter/position = 0.35
 shader_parameter/spread = 0.3130000148675
-shader_parameter/cutoff = 0.04300004954250003
-shader_parameter/falloff = 0.2
-shader_parameter/edge_fade = 0.15
-shader_parameter/speed = 1.0
+shader_parameter/cutoff = -0.04499995463749995
+shader_parameter/falloff = 0.42000001995
+shader_parameter/edge_fade = 0.4470000212325
+shader_parameter/speed = 10.0
 shader_parameter/ray1_density = 8.0
 shader_parameter/ray2_density = 30.0
 shader_parameter/ray2_intensity = 0.3
@@ -32,54 +55,98 @@ shader_parameter/seed = 5.0
 [node name="Credits" type="Node2D" unique_id=1722850136 node_paths=PackedStringArray("slides")]
 script = ExtResource("1_ts1t5")
 slides = [NodePath("Slide1"), NodePath("Slide2"), NodePath("Slide3")]
+slide_time = 4.0
 
-[node name="ModeloTemplate" type="Sprite2D" parent="." unique_id=425643846]
+[node name="ModeloTemplate" type="Sprite2D" parent="." unique_id=1784556957]
 position = Vector2(960.49994, 540)
 scale = Vector2(1.3354167, 1.2044444)
 texture = ExtResource("2_7132d")
 
+[node name="UpFilter" type="ColorRect" parent="ModeloTemplate" unique_id=1697436036]
+clip_children = 1
+offset_left = -719.25116
+offset_top = -448.33948
+offset_right = 717.0046
+offset_bottom = -324.63098
+
+[node name="ModeloTemplate" type="Sprite2D" parent="ModeloTemplate/UpFilter" unique_id=914809475]
+texture_repeat = 2
+material = SubResource("ShaderMaterial_0iwmx")
+position = Vector2(719.62585, 448.33945)
+texture = ExtResource("2_7132d")
+
+[node name="DownFilter" type="ColorRect" parent="ModeloTemplate" unique_id=669276122]
+clip_children = 1
+offset_left = 720.0
+offset_top = 447.50916
+offset_right = 2156.2556
+offset_bottom = 571.21765
+rotation = -3.1415927
+
+[node name="ModeloTemplate" type="Sprite2D" parent="ModeloTemplate/DownFilter" unique_id=47571551]
+texture_repeat = 2
+material = SubResource("ShaderMaterial_0iwmx")
+position = Vector2(719.62585, 448.33945)
+texture = ExtResource("2_7132d")
+
 [node name="Slide1" type="Node2D" parent="." unique_id=1941217899]
 
-[node name="Personagem" type="Sprite2D" parent="Slide1" unique_id=779036833]
-position = Vector2(313, 691)
-texture = ExtResource("21_y5t2y")
-
 [node name="Totem" type="Sprite2D" parent="Slide1" unique_id=1742734898]
-position = Vector2(1293, 542)
+visible = false
+position = Vector2(1317.0001, 542)
 scale = Vector2(1.1698626, 1.1698626)
 texture = ExtResource("4_73dpb")
 
+[node name="Personagem" type="Sprite2D" parent="Slide1" unique_id=1593435702]
+position = Vector2(393, 691)
+texture = ExtResource("8_aeqvq")
+
+[node name="GodRays2" type="ColorRect" parent="Slide1" unique_id=737328705]
+material = SubResource("ShaderMaterial_wdhy8")
+offset_left = 183.00021
+offset_top = 84.000046
+offset_right = 2192.2358
+offset_bottom = 809.00006
+rotation = 3.1407819
+pivot_offset_ratio = Vector2(0.5, 0.5)
+
+[node name="Altar" type="Sprite2D" parent="Slide1" unique_id=999242941]
+position = Vector2(1272, 590)
+scale = Vector2(0.7964293, 0.7964293)
+texture = ExtResource("5_wdhy8")
+
 [node name="Slide2" type="Node2D" parent="." unique_id=200826763]
 
-[node name="GodRays" type="ColorRect" parent="Slide2" unique_id=1392732500]
-material = SubResource("ShaderMaterial_rlw0o")
-offset_left = 720.0
-offset_top = 170.0
+[node name="GodRays" type="ColorRect" parent="Slide2" unique_id=1119774352]
+material = SubResource("ShaderMaterial_w13b5")
+offset_left = 349.0
+offset_top = 173.0
 offset_right = 1934.0
-offset_bottom = 895.0
+offset_bottom = 1023.0
 
 [node name="Beleza" type="Sprite2D" parent="Slide2" unique_id=237362382]
 position = Vector2(1476.0001, 455)
-rotation = -0.1453146
+rotation = -0.14531459
 texture = ExtResource("6_eaoty")
 
 [node name="Nuvem" type="Sprite2D" parent="Slide2" unique_id=1925408963]
 position = Vector2(1441, 285)
 texture = ExtResource("7_04qlw")
 
-[node name="Personagem" type="Sprite2D" parent="Slide2" unique_id=1391338759]
-position = Vector2(313, 691)
-texture = ExtResource("8_aeqvq")
+[node name="Personagem2" type="Sprite2D" parent="Slide2" unique_id=779036833]
+position = Vector2(394, 691)
+texture = ExtResource("21_y5t2y")
 
 [node name="Slide3" type="Node2D" parent="." unique_id=1054367195]
 
 [node name="Casal" type="Sprite2D" parent="Slide3" unique_id=131842892]
-position = Vector2(945, 630)
+position = Vector2(985, 630)
 texture = ExtResource("9_aeqvq")
 
 [node name="Coração" type="Sprite2D" parent="Slide3" unique_id=1888352347]
-position = Vector2(974, 323)
+position = Vector2(1009, 341)
 texture = ExtResource("10_rlw0o")
+script = ExtResource("12_0ya2q")
 
 [node name="Skip" type="TextureRect" parent="." unique_id=796979142]
 anchors_preset = 8
@@ -116,3 +183,7 @@ stretch_mode = 5
 script = ExtResource("12_wdhy8")
 type = 5
 color = Color(0.72156864, 0.007843138, 0.003921569, 1)
+
+[node name="Marker2D" type="Marker2D" parent="." unique_id=1893808901]
+position = Vector2(960, 540)
+gizmo_extents = 273.2
