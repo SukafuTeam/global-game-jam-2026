@@ -58,7 +58,6 @@ var state: State:
 var current_state_time: float = 0.0
 var looking_right: bool
 var last_velocity: Vector2
-var additional_velocity: Vector2
 var was_on_floor: bool
 var can_double_jump: bool
 var can_dash: bool
@@ -189,18 +188,6 @@ func _physics_process(delta: float) -> void:
 	if is_on_floor():
 		current_coyote_time = INPUT_BUFFER_TIME
 	else:
-		# Adds gravity
-		var grav = Constants.GRAVITY
-		if velocity.y > 0.0:
-			grav *= FALL_GRAVITY_MULTIPLIER
-			
-			if Global.high_jump_enabled:
-				grav *= 1.5
-		
-		velocity.y += grav * delta
-		
-		velocity.y = min(velocity.y, MAX_FALL_SPEED)
-		
 		if (is_on_wall_only() or left_wall_check or right_wall_check) and Global.wall_jump_enabled:
 			if left_wall_check and Input.is_action_pressed("left"):
 				current_left_wall_slide_time = INPUT_BUFFER_TIME
@@ -208,6 +195,17 @@ func _physics_process(delta: float) -> void:
 			if right_wall_check and Input.is_action_pressed("right"):
 				current_right_wall_slide_time = INPUT_BUFFER_TIME
 				looking_right = false
+	
+	# Adds gravity
+	var grav = Constants.GRAVITY
+	if velocity.y > 0.0:
+		grav *= FALL_GRAVITY_MULTIPLIER
+		
+		if Global.high_jump_enabled:
+			grav *= 1.5
+	
+	velocity.y += grav * delta	
+	velocity.y = min(velocity.y, MAX_FALL_SPEED)
 
 	if interactible:
 		# Can't turn around while dashing or wallsliding
@@ -247,11 +245,9 @@ func _physics_process(delta: float) -> void:
 			velocity.x = speed
 	
 	was_on_floor = is_on_floor()
-	velocity += additional_velocity
 	last_velocity = velocity
 	
 	move_and_slide()
-	additional_velocity = Vector2.ZERO
 	
 	if is_on_floor() and !was_on_floor:
 		on_land(last_velocity.y)
@@ -312,7 +308,7 @@ func process_ground(delta: float) -> State:
 		else:
 			current_dash_buffer_time = 0.0
 	
-	if current_jump_buffer_time >= 0.0 and current_coyote_time:
+	if current_jump_buffer_time >= 0.0 and current_coyote_time >= 0.0:
 		on_jump()
 		return State.AIR
 		
@@ -349,8 +345,8 @@ func process_air(delta: float) -> State:
 				auto_move_speed = -WALL_JUMP_SPEED
 				return State.AIR
 	
-	if can_double_jump and Global.double_jump_enabled and !ground_check.is_colliding():
-		if current_jump_buffer_time >= 0.0:
+	if can_double_jump and Global.double_jump_enabled:
+		if current_jump_buffer_time >= 0.0 and !ground_check.is_colliding():
 			can_double_jump = false
 			on_jump()
 			return State.AIR
@@ -531,7 +527,7 @@ func on_jump(wall_jump: bool = false):
 		high_jump_particle.direction.x = -dir
 		high_jump_particle.restart()
 
-func on_land(_hit_velocity: float):	
+func on_land(_hit_velocity: float):
 	can_double_jump = true
 	can_dash = true
 	
@@ -611,14 +607,14 @@ func  update_animation():
 				change_animation("idle")
 		State.AIR:
 			if wall_sliding:
-				change_animation("walljump")
+				change_animation("walljump", 0, 0.1)
 				return
 			
 			if velocity.y <= 0.0:
 				if Global.double_jump_enabled and can_double_jump:
-					change_animation("jump")
+					change_animation("jump", 0, 0.1)
 				else:
-					change_animation("double_jump")
+					change_animation("double_jump", 0, 0.1)
 			else:
 				change_animation("fall")
 		State.DASH:

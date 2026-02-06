@@ -4,7 +4,6 @@
 [ext_resource type="Texture2D" uid="uid://d1gishjmlhiq4" path="res://assets/images/ui/game/life-hud.png" id="1_wygod"]
 [ext_resource type="Script" uid="uid://c28lwfik0apq8" path="res://src/ui/health_bar.gd" id="2_7wnj1"]
 [ext_resource type="Shader" uid="uid://ttc0mb7cnb8s" path="res://assets/shaders/dark_blur.gdshader" id="4_6wbph"]
-[ext_resource type="Texture2D" uid="uid://cvxsx7e2cb0xa" path="res://assets/images/placeholder/ui/map.png" id="4_7g2dv"]
 [ext_resource type="Script" uid="uid://cl2t8a4h33e0h" path="res://src/ui/map.gd" id="4_pp468"]
 [ext_resource type="PackedScene" uid="uid://dkulyvfj7n5p6" path="res://entities/ui/tracker_map_icon.tscn" id="5_3kqnw"]
 [ext_resource type="Texture2D" uid="uid://1soxlqhyr5bu" path="res://assets/images/ui/game/confirm-button.png" id="5_qko4k"]
@@ -13,6 +12,7 @@
 [ext_resource type="Texture2D" uid="uid://cnvfnmihohq36" path="res://assets/images/ui/game/ballon-single.png" id="7_08gs2"]
 [ext_resource type="Texture2D" uid="uid://ctm2wl7is4ufw" path="res://assets/images/sprites/objects/altar.png" id="8_3kqnw"]
 [ext_resource type="Texture2D" uid="uid://dhe1cbk0truuk" path="res://assets/images/ui/game/map.png" id="10_w31hu"]
+[ext_resource type="Texture2D" uid="uid://hgr40ks1css1" path="res://assets/images/ui/mapa.png" id="12_0yrf3"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_w31hu"]
 shader = ExtResource("4_6wbph")
@@ -162,7 +162,7 @@ anchor_right = 0.9
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-texture = ExtResource("4_7g2dv")
+texture = ExtResource("12_0yrf3")
 expand_mode = 1
 stretch_mode = 5
 

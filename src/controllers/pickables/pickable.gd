@@ -28,7 +28,6 @@ enum MaterialType {
 var spawn_point: Vector2
 
 var interactible: bool
-var additional_velocity: Vector2
 var original_parent: Node2D
 var target: Node2D
 var time_alive: float = 0.0

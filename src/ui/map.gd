@@ -5,7 +5,7 @@ const PLAYER_OFFSET: Vector2 = Vector2(-20, -35)
 const MAP_CLOSE_Y: float = -1000.0
 const MAP_OPEN_Y: float = 108.0
 const BACKGROUND_CLOSE_VALUES = Vector2(0.0, 0.0)
-const BACKGROUND_OPEN_VALUES = Vector2(1.2, 0.3)
+const BACKGROUND_OPEN_VALUES = Vector2(2.0, 0.5)
 
 @export var map_tracker_scene: PackedScene
 @export var map_altar_icon: Texture
@@ -77,7 +77,7 @@ func map_hide():
 	can_change = false
 	tween = create_tween()
 	tween.set_parallel()
-	tween.tween_property(background, "position:y", MAP_CLOSE_Y, 0.3)
+	tween.tween_property(background, "position:y", MAP_CLOSE_Y, 0.1)
 	tween.tween_property(self, "shader_lod", BACKGROUND_CLOSE_VALUES.x, 0.1)
 	tween.tween_property(self, "shader_mix", BACKGROUND_CLOSE_VALUES.y, 0.1)
 	
