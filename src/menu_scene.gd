@@ -45,13 +45,19 @@ func _ready():
 	done = true
 
 func _process(_delta: float) -> void:
-	if Input.is_action_just_pressed("jump") or Input.is_action_just_pressed("ui_accept"):
-		if !done:
+	if !done:
+		if Input.is_action_just_pressed("jump") or\
+		Input.is_action_just_pressed("ui_accept") or\
+		Input.is_action_just_pressed("dash") or\
+		Input.is_action_just_pressed("ui_cancel"):
 			done = true
 			tween.custom_step(10.0)
 			tween.kill()
 			return
 		
+		return
+		
+	if Input.is_action_just_pressed("jump") or Input.is_action_just_pressed("ui_accept"):
 		Global.menu_event.stop(0)
 		Transition.transition(Constants.TUTO_SCENE)
 	
